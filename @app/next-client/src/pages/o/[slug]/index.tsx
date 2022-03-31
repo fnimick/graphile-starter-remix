@@ -67,7 +67,7 @@ const OrganizationPageInner: FC<OrganizationPageInnerProps> = (props) => {
               <span>
                 Customize this page in
                 <br />
-                <code>@app/client/src/pages/o/[slug]/index.tsx</code>
+                <code>@app/next-client/src/pages/o/[slug]/index.tsx</code>
               </span>
             }
           />

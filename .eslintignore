@@ -3,5 +3,5 @@ node_modules
 /data/schema.graphql
 /data/schema.sql
 /@app/graphql/index.*
-/@app/client/.next
+/@app/next-client/.next
 .next

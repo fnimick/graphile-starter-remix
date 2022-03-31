@@ -29,9 +29,9 @@
       "request": "launch",
       "name": "Launch localhost:5678",
       "url": "http://localhost:5678/",
-      "webRoot": "${workspaceFolder}/@app/client/src",
+      "webRoot": "${workspaceFolder}/@app/next-client/src",
       "pathMapping": {
-        "/_next": "${workspaceFolder}/@app/client/.next"
+        "/_next": "${workspaceFolder}/@app/next-client/.next"
       }
     }
   ]

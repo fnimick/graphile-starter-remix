@@ -1,4 +1,4 @@
-# @app/client
+# @app/next-client
 
 This is the React frontend of our application, built with
 [Next.js](https://nextjs.org/). Next.js uses the

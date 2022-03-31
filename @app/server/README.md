@@ -6,7 +6,7 @@ The server is responsible for:
 - serving the GraphQL endpoint (via
   [PostGraphile](https://graphile.org/postgraphile/), based on database in
   `@app/db`)
-- server-side rendering (SSR) of the `@app/client` thanks to
+- server-side rendering (SSR) of the `@app/next-client` thanks to
   [Next.js](https://nextjs.org/)
 
 The server does not perform background tasks such as sending emails, that is the

@@ -1,6 +1,6 @@
 overwrite: true
 schema: "../../data/schema.graphql"
-documents: "../client/src/**/*.graphql"
+documents: "../next-client/src/**/*.graphql"
 config:
   avoidOptionals:
     field: true

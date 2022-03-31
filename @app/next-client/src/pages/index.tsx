@@ -80,8 +80,8 @@ const Home: NextPage = () => {
 
           <Title level={4}>
             This page:{" "}
-            <a href="https://github.com/graphile/starter/blob/main/@app/client/src/pages/index.tsx">
-              <code>@app/client/src/pages/index.tsx</code>
+            <a href="https://github.com/graphile/starter/blob/main/@app/next-client/src/pages/index.tsx">
+              <code>@app/next-client/src/pages/index.tsx</code>
             </a>
           </Title>
           <Paragraph>

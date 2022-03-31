@@ -14,7 +14,7 @@ export default async function installSSR(app: Express) {
   // Ref: https://unpkg.com/next@9.0.3/dist/server/next.js
   const nextApp = next({
     dev: isDev,
-    dir: `${__dirname}/../../../client/src`,
+    dir: `${__dirname}/../../../next-client/src`,
     quiet: !isDev,
     // Don't specify 'conf' key
   });

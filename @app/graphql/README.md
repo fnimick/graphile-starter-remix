@@ -2,7 +2,8 @@
 
 This folder contains the auto-generated types and components produced by
 [`graphql-code-generator`](https://github.com/dotansimha/graphql-code-generator),
-from the GraphQL files found inside `@app/client`. You can import them like:
+from the GraphQL files found inside `@app/next-client`. You can import them
+like:
 
 ```js
 /*
