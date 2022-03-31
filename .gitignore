@@ -7,6 +7,7 @@ dist
 /@app/e2e/cypress/videos
 /@app/e2e/cypress/screenshots
 /@app/graphql/index.*
+/@app/graphql/modules.*
 .agignore
 *.tsbuildinfo
 .ethereal

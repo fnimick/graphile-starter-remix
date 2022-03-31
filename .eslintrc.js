@@ -158,5 +158,8 @@ module.exports = {
 
     "import/no-deprecated": "warn",
     "import/no-duplicates": "error",
+
+    // Remix handles this for us
+    "react/react-in-jsx-scope": "off",
   },
 };

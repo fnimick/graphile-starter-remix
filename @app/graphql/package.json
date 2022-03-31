@@ -19,6 +19,8 @@
     "@graphql-codegen/add": "^2.0.1",
     "@graphql-codegen/cli": "^1.17.9",
     "@graphql-codegen/typescript": "^1.17.10",
+    "@graphql-codegen/typescript-graphql-files-modules": "2.1.1",
+    "@graphql-codegen/typescript-graphql-request": "4.4.5",
     "@graphql-codegen/typescript-operations": "^1.17.8",
     "@graphql-codegen/typescript-react-apollo": "2.2.5",
     "cross-env": "^7.0.2",

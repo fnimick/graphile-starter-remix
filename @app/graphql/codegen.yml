@@ -24,3 +24,6 @@ generates:
       - "typescript"
       - "typescript-operations"
       - "typescript-react-apollo"
+  # modules.d.ts:
+  #   plugins:
+  #     - "typescript-graphql-files-modules"
