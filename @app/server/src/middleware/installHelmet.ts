@@ -20,6 +20,8 @@ const CSP_DIRECTIVES = {
     // it.
     ROOT_URL.replace(/^http/, "ws"),
   ],
+  // Remix requires 'unsafe-inline' due to https://github.com/remix-run/remix/issues/183
+  "script-src": ["'self'", "'unsafe-inline'"],
 };
 
 export default function installHelmet(app: Express) {
@@ -32,7 +34,7 @@ export default function installHelmet(app: Express) {
                 ...CSP_DIRECTIVES,
                 // Dev needs 'unsafe-eval' due to
                 // https://github.com/vercel/next.js/issues/14221
-                "script-src": ["'self'", "'unsafe-eval'"],
+                "script-src": ["'self'", "'unsafe-eval'", "'unsafe-inline'"],
               },
             },
           }

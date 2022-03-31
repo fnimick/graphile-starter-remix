@@ -20,6 +20,7 @@ services:
       # let's us run docker & docker-compose from inside container (used for yarn setup)
       - /var/run/docker.sock:/var/run/docker.sock
       - nm_root:/work/node_modules
+      - nm_app_client:/work/@app/client/node_modules
       - nm_app_client:/work/@app/next-client/node_modules
       - nm_app_config:/work/@app/config/node_modules
       - nm_app_db:/work/@app/db/node_modules
@@ -66,6 +67,7 @@ services:
       # let's us run docker & docker-compose from inside container (used for yarn setup)
       - /var/run/docker.sock:/var/run/docker.sock
       - nm_root:/work/node_modules
+      - nm_app_client:/work/@app/client/node_modules
       - nm_app_client:/work/@app/next-client/node_modules
       - nm_app_config:/work/@app/config/node_modules
       - nm_app_db:/work/@app/db/node_modules

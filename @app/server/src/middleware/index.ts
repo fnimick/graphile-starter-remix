@@ -7,6 +7,7 @@ import installHelmet from "./installHelmet";
 import installLogging from "./installLogging";
 import installPassport from "./installPassport";
 import installPostGraphile from "./installPostGraphile";
+import installRemix from "./installRemix";
 import installSameOrigin from "./installSameOrigin";
 import installSession from "./installSession";
 import installSharedStatic from "./installSharedStatic";
@@ -23,6 +24,7 @@ export {
   installLogging,
   installPassport,
   installPostGraphile,
+  installRemix,
   installSameOrigin,
   installSession,
   installSharedStatic,
