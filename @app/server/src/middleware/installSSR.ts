@@ -28,7 +28,9 @@ export default async function installSSR(app: Express) {
     console.error(e);
     process.exit(1);
   });
-  app.get("*", async (req, res) => {
+  console.log("ROOT URL");
+  console.log(process.env.ROOT_URL);
+  app.get("/next*", async (req, res) => {
     const handler = await handlerPromise;
     const parsedUrl = parse(req.url, true);
     handler(req, res, {

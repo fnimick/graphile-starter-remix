@@ -36,6 +36,7 @@ if (!process.env.ROOT_URL) {
       withLess
     )({
       poweredByHeader: false,
+      basePath: "/next",
       distDir: `../.next`,
       trailingSlash: false,
       lessLoaderOptions: {
