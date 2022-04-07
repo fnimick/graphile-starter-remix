@@ -1,3 +1,4 @@
+import { companyName, projectName } from "@app/config";
 import {
   json,
   Links,
@@ -8,6 +9,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLoaderData,
 } from "remix";
 
 import { LoaderContext } from "./types/context";
@@ -25,9 +27,14 @@ export const loader: LoaderFunction = async ({
 }) => {
   const sdk = await context.graphqlSdk;
   const data = await sdk.Shared();
-  console.log(data);
-  console.log("root loader");
-  return json({});
+  const user = data.currentUser;
+  return json({
+    user,
+    ENV: {
+      ROOT_URL: process.env.ROOT_URL,
+      T_AND_C_URL: process.env.T_AND_C_URL,
+    },
+  });
 };
 
 export default function App() {
