@@ -24,6 +24,11 @@ generates:
       - "typescript"
       - "typescript-operations"
       - "typescript-react-apollo"
+  remix-types.ts:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-graphql-request"
   # modules.d.ts:
   #   plugins:
   #     - "typescript-graphql-files-modules"

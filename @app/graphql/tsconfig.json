@@ -11,5 +11,5 @@
     "module": "commonjs",
     "jsx": "react"
   },
-  "include": ["index.tsx", "modules.d.ts"]
+  "include": ["index.tsx", "remix-types.ts"]
 }

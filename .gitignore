@@ -7,6 +7,7 @@ dist
 /@app/e2e/cypress/videos
 /@app/e2e/cypress/screenshots
 /@app/graphql/index.*
+/@app/graphql/remix-types.*
 /@app/graphql/modules.*
 .agignore
 *.tsbuildinfo
