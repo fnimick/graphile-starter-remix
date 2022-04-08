@@ -9,15 +9,15 @@ import { User } from "../../graphql/remix-types";
  * @param {string} id The route id
  * @returns {JSON|undefined} The router data or undefined if not found
  */
-export function useMatchesData(
+export function useMatchesData<T = Record<string, unknown>>(
   id: string
-): Record<string, unknown> | undefined {
+): T | undefined {
   const matchingRoutes = useMatches();
   const route = useMemo(
     () => matchingRoutes.find((route) => route.id === id),
     [matchingRoutes, id]
   );
-  return route?.data;
+  return route?.data as unknown as T;
 }
 
 function isUser(user: any): user is User {

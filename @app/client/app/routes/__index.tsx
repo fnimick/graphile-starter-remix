@@ -1,9 +1,12 @@
 import { CrownOutlined, DownOutlined } from "@ant-design/icons";
-import { Warn } from "@app/components";
 import { Avatar, Col, Dropdown, Layout, Menu, Row, Typography } from "antd";
 import { Link, Outlet } from "remix";
 
+import { RootLoader } from "~/root";
 import { useMatchesData, useOptionalUser } from "~/utils";
+
+import { Warn } from "../components/Warn";
+import { companyName, projectName } from "@app/config";
 
 const { Header, Content, Footer } = Layout;
 const { Text } = Typography;
@@ -11,7 +14,7 @@ const { Text } = Typography;
 export const contentMinHeight = "calc(100vh - 64px - 70px)";
 
 export default function RootIndex() {
-  const rootData = useMatchesData("root");
+  const rootData = useMatchesData<RootLoader>("root");
   const currentUser = useOptionalUser();
   return (
     <Layout>
@@ -24,7 +27,7 @@ export default function RootIndex() {
       >
         <Row justify="space-between">
           <Col span={6}>
-            <Link to="/">insert project name</Link>
+            <Link to="/">{projectName}</Link>
           </Col>
           <Col span={12}>
             {/* TODO - add child route titles back in */}
@@ -112,7 +115,7 @@ export default function RootIndex() {
         </Row>
       </Header>
       <Content style={{ minHeight: contentMinHeight }}>
-        {/* <Outlet /> */}
+        <Outlet />
       </Content>
       <Footer>
         <div
@@ -123,9 +126,9 @@ export default function RootIndex() {
           }}
         >
           <Text>
-            Copyright &copy; {new Date().getFullYear()} insert company name. All
+            Copyright &copy; {new Date().getFullYear()} {companyName}. All
             rights reserved.
-            {rootData.ENV.T_AND_C_URL ? (
+            {rootData?.ENV.T_AND_C_URL ? (
               <span>
                 {" "}
                 <a

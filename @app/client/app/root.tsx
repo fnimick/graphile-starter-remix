@@ -1,4 +1,4 @@
-import { companyName, projectName } from "@app/config";
+// import { companyName, projectName } from "@app/config";
 import {
   json,
   Links,
@@ -9,9 +9,9 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  useLoaderData,
 } from "remix";
 
+import { User } from "../../graphql/remix-types";
 import { LoaderContext } from "./types/context";
 
 export const meta: MetaFunction = () => ({
@@ -19,6 +19,14 @@ export const meta: MetaFunction = () => ({
   title: "New Remix App",
   viewport: "width=device-width,initial-scale=1",
 });
+
+export interface RootLoader {
+  user?: User;
+  ENV: {
+    ROOT_URL?: string;
+    T_AND_C_URL?: string;
+  };
+}
 
 export const loader: LoaderFunction = async ({
   context,
