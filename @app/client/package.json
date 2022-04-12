@@ -6,13 +6,16 @@
   "license": "",
   "sideEffects": false,
   "scripts": {
-    "build": "remix build",
+    "build": "remix build && yarn run build:css",
+    "build:css": "lessc --js app/styles/main.less app/css/main.css",
     "dev": "remix build && run-p dev:*",
     "dev:remix": "remix watch",
+    "dev:less": "watch 'yarn run build:css' ./app/styles",
     "postinstall": "remix setup node",
     "start": "cross-env NODE_ENV=production node ./build/index.js"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.6.2",
     "@app/config": "0.0.0",
     "@remix-run/express": "^1.3.5",
     "@remix-run/react": "^1.3.5",
@@ -22,10 +25,12 @@
     "compression": "^1.7.4",
     "cross-env": "^7.0.3",
     "express": "^4.17.1",
+    "less": "4.1.2",
     "morgan": "^1.10.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "remix": "^1.3.5"
+    "remix": "^1.3.5",
+    "watch": "^1.0.2"
   },
   "devDependencies": {
     "@remix-run/dev": "^1.3.5",

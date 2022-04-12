@@ -1,4 +1,5 @@
-// import { companyName, projectName } from "@app/config";
+import compiledStyles from "./css/main.css";
+import nprogressStyles from "nprogress/nprogress.css";
 import {
   json,
   Links,
@@ -48,6 +49,19 @@ export const loader: LoaderFunction = async ({
     },
   });
 };
+
+export function links() {
+  return [
+    {
+      rel: "stylesheet",
+      href: compiledStyles,
+    },
+    {
+      rel: "stylesheet",
+      href: nprogressStyles,
+    },
+  ];
+}
 
 export default function App() {
   const { cspNonce } = useLoaderData();
