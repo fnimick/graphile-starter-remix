@@ -1,6 +1,6 @@
 import { CrownOutlined, DownOutlined } from "@ant-design/icons";
 import { Avatar, Col, Dropdown, Layout, Menu, Row, Typography } from "antd";
-import { Link, Outlet, useMatches } from "remix";
+import { Link, Outlet, useLocation, useMatches } from "remix";
 
 import { RootLoader } from "~/root";
 import { useMatchesData, useOptionalUser } from "~/utils";
@@ -17,19 +17,19 @@ export default function RootIndex() {
   const rootData = useMatchesData<RootLoader>("root");
   const matches = useMatches();
   const currentUser = useOptionalUser();
+  const { pathname, search, hash } = useLocation();
 
   const renderContentPadding = !(
     matches.filter((match) => match.handle?.noPad).length > 0
   );
-
   const hideLogin =
     matches.filter((match) => match.handle?.hideLogin).length > 0;
-
   const titleHandle: any | undefined = matches
     .filter((match) => match.handle?.title)
     .pop()?.handle;
-
   const { title, titleHref } = titleHandle ?? {};
+
+  const currentRouteURL = `${pathname}${search}${hash}`;
 
   return (
     <Layout>
@@ -121,8 +121,10 @@ export default function RootIndex() {
                 </span>
               </Dropdown>
             ) : hideLogin ? null : (
-              // TODO: return to current page
-              <Link to={`/login`} data-cy="header-login-button">
+              <Link
+                to={`/login?next=${encodeURIComponent(currentRouteURL)}`}
+                data-cy="header-login-button"
+              >
                 Sign in
               </Link>
             )}
