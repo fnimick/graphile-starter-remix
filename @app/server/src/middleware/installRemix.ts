@@ -4,6 +4,8 @@ import { DocumentNode, execute } from "graphql";
 import { HeadersInit } from "node-fetch";
 import postgraphile from "postgraphile";
 
+import { LoaderContext } from "@app/lib";
+
 import { getSdk } from "../../../graphql/remix-types";
 
 if (!process.env.NODE_ENV) {
@@ -25,7 +27,8 @@ export default async function installRemix(app: Express) {
   const remixApp = createRequestHandler({
     build: require(`${__dirname}/../../../client/build`),
     mode: process.env.NODE_ENV,
-    getLoadContext(req, res) {
+    getLoadContext(req, res): LoaderContext {
+      const cspNonce: string = res.locals.cspNonce;
       const postgraphileInstance = app.get(
         "postgraphileMiddleware"
       ) as ReturnType<typeof postgraphile>;
@@ -54,7 +57,7 @@ export default async function installRemix(app: Express) {
         };
         return getSdk(client as any);
       }
-      return { graphqlSdk: graphqlSdk() };
+      return { cspNonce, graphqlSdk: graphqlSdk() };
     },
   });
 
