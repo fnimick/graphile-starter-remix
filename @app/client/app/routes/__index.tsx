@@ -1,11 +1,11 @@
 import { CrownOutlined, DownOutlined } from "@ant-design/icons";
 import { Avatar, Col, Dropdown, Layout, Menu, Row, Typography } from "antd";
-import { Link, Outlet } from "remix";
+import { Link, Outlet, useMatches } from "remix";
 
 import { RootLoader } from "~/root";
 import { useMatchesData, useOptionalUser } from "~/utils";
 
-import { Warn } from "../components/Warn";
+import { H3, StandardWidth, Warn } from "../components";
 import { companyName, projectName } from "@app/config";
 
 const { Header, Content, Footer } = Layout;
@@ -15,7 +15,22 @@ export const contentMinHeight = "calc(100vh - 64px - 70px)";
 
 export default function RootIndex() {
   const rootData = useMatchesData<RootLoader>("root");
+  const matches = useMatches();
   const currentUser = useOptionalUser();
+
+  const renderContentPadding = !(
+    matches.filter((match) => match.handle?.noPad).length > 0
+  );
+
+  const hideLogin =
+    matches.filter((match) => match.handle?.hideLogin).length > 0;
+
+  const titleHandle: any | undefined = matches
+    .filter((match) => match.handle?.title)
+    .pop()?.handle;
+
+  const { title, titleHref } = titleHandle ?? {};
+
   return (
     <Layout>
       <Header
@@ -31,7 +46,7 @@ export default function RootIndex() {
           </Col>
           <Col span={12}>
             {/* TODO - add child route titles back in */}
-            {/* <H3
+            <H3
               style={{
                 margin: 0,
                 padding: 0,
@@ -41,13 +56,13 @@ export default function RootIndex() {
               data-cy="layout-header-title"
             >
               {titleHref ? (
-                <Link href={titleHref} as={titleHrefAs}>
+                <Link to={titleHref}>
                   <a data-cy="layout-header-titlelink">{title}</a>
                 </Link>
               ) : (
                 title
               )}
-            </H3> */}
+            </H3>
           </Col>
           <Col span={6} style={{ textAlign: "right" }}>
             {currentUser ? (
@@ -105,9 +120,9 @@ export default function RootIndex() {
                   </Warn>
                 </span>
               </Dropdown>
-            ) : (
+            ) : hideLogin ? null : (
               // TODO: return to current page
-              <Link to={`/login}`} data-cy="header-login-button">
+              <Link to={`/login`} data-cy="header-login-button">
                 Sign in
               </Link>
             )}
@@ -115,7 +130,13 @@ export default function RootIndex() {
         </Row>
       </Header>
       <Content style={{ minHeight: contentMinHeight }}>
-        <Outlet />
+        {renderContentPadding ? (
+          <StandardWidth>
+            <Outlet />
+          </StandardWidth>
+        ) : (
+          <Outlet />
+        )}
       </Content>
       <Footer>
         <div
