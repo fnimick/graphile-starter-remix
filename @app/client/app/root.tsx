@@ -1,20 +1,21 @@
-import compiledStyles from "./css/main.css";
 import nprogressStyles from "nprogress/nprogress.css";
 import {
-  json,
   Links,
   LiveReload,
-  LoaderFunction,
   Meta,
   MetaFunction,
   Outlet,
   Scripts,
   ScrollRestoration,
-  useLoaderData,
 } from "remix";
 
 import { User } from "../../graphql/remix-types";
-import { LoaderContext } from "@app/lib";
+import compiledStyles from "./css/main.css";
+import {
+  jsonTyped,
+  TypedDataFunctionArgs,
+  useLoaderDataTyped,
+} from "./utils/remix-typed";
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
@@ -29,20 +30,18 @@ export interface RootLoader {
     T_AND_C_URL?: string;
   };
   cspNonce: string;
+  csrfToken: string;
 }
 
-export const loader: LoaderFunction = async ({
-  context,
-}: {
-  context: LoaderContext;
-}) => {
-  const { cspNonce, graphqlSdk } = context;
+export const loader = async ({ context }: TypedDataFunctionArgs) => {
+  const { cspNonce, graphqlSdk, csrfToken } = context;
   const sdk = await graphqlSdk;
   const data = await sdk.Shared();
   const user = data.currentUser;
-  return json({
+  return jsonTyped({
     user,
     cspNonce,
+    csrfToken: csrfToken(),
     ENV: {
       ROOT_URL: process.env.ROOT_URL,
       T_AND_C_URL: process.env.T_AND_C_URL,
@@ -64,7 +63,7 @@ export function links() {
 }
 
 export default function App() {
-  const { cspNonce } = useLoaderData();
+  const { cspNonce } = useLoaderDataTyped<typeof loader>();
   return (
     <html lang="en">
       <head>

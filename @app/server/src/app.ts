@@ -91,6 +91,12 @@ export async function makeApp({
     [];
   app.set("websocketMiddlewares", websocketMiddlewares);
 
+  /**
+   * Set up form body parsing. This is necessary for parsing the _csrf token for
+   * the csrf middleware, for Remix POST requests.
+   */
+  app.use(express.urlencoded());
+
   /*
    * Middleware is installed from the /server/middleware directory. These
    * helpers may augment the express app with new settings and/or install

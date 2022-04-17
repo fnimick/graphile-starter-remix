@@ -1,12 +1,10 @@
 import { CrownOutlined, DownOutlined } from "@ant-design/icons";
+import { companyName, projectName } from "@app/config";
 import { Avatar, Col, Dropdown, Layout, Menu, Row, Typography } from "antd";
 import { Link, Outlet, useLocation, useMatches } from "remix";
-
-import { RootLoader } from "~/root";
-import { useMatchesData, useOptionalUser } from "~/utils";
+import { useOptionalUser, useRootMatchesData } from "~/utils/hooks";
 
 import { H3, StandardWidth, Warn } from "../components";
-import { companyName, projectName } from "@app/config";
 
 const { Header, Content, Footer } = Layout;
 const { Text } = Typography;
@@ -14,7 +12,7 @@ const { Text } = Typography;
 export const contentMinHeight = "calc(100vh - 64px - 70px)";
 
 export default function RootIndex() {
-  const rootData = useMatchesData<RootLoader>("root");
+  const rootData = useRootMatchesData();
   const matches = useMatches();
   const currentUser = useOptionalUser();
   const { pathname, search, hash } = useLocation();

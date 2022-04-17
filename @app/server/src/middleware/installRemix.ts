@@ -28,6 +28,7 @@ export default async function installRemix(app: Express) {
     build: require(`${__dirname}/../../../client/build`),
     mode: process.env.NODE_ENV,
     getLoadContext(req, res): LoaderContext {
+      const csrfToken = req.csrfToken;
       const cspNonce: string = res.locals.cspNonce;
       const postgraphileInstance = app.get(
         "postgraphileMiddleware"
@@ -57,7 +58,7 @@ export default async function installRemix(app: Express) {
         };
         return getSdk(client as any);
       }
-      return { cspNonce, graphqlSdk: graphqlSdk() };
+      return { cspNonce, csrfToken, graphqlSdk: graphqlSdk() };
     },
   });
 

@@ -1,7 +1,9 @@
 import { useMatches } from "@remix-run/react";
 import { useMemo } from "react";
+import { loader } from "~/root";
 
-import { User } from "../../graphql/remix-types";
+import { User } from "../../../graphql/remix-types";
+import { DataFunctionTyped, InferLoaderData, JsonValue } from "./remix-typed";
 
 /**
  * This base hook is used in other hooks to quickly search for specific data
@@ -9,7 +11,7 @@ import { User } from "../../graphql/remix-types";
  * @param {string} id The route id
  * @returns {JSON|undefined} The router data or undefined if not found
  */
-export function useMatchesData<T = Record<string, unknown>>(
+function useMatchesData<T = Record<string, unknown>>(
   id: string
 ): T | undefined {
   const matchingRoutes = useMatches();
@@ -18,6 +20,16 @@ export function useMatchesData<T = Record<string, unknown>>(
     [matchingRoutes, id]
   );
   return route?.data as unknown as T;
+}
+
+export function useMatchesDataTyped<
+  DataFunction extends DataFunctionTyped<JsonValue>
+>(id: string) {
+  return useMatchesData<InferLoaderData<DataFunction>>(id);
+}
+
+export function useRootMatchesData() {
+  return useMatchesDataTyped<typeof loader>("root")!;
 }
 
 function isUser(user: any): user is User {
