@@ -41,7 +41,7 @@ export const loader = async ({ context }: TypedDataFunctionArgs) => {
   return jsonTyped({
     user,
     cspNonce,
-    csrfToken: csrfToken(),
+    csrfToken,
     ENV: {
       ROOT_URL: process.env.ROOT_URL,
       T_AND_C_URL: process.env.T_AND_C_URL,
