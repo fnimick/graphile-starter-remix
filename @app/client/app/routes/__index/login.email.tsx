@@ -7,7 +7,10 @@ import {
   useActionData,
   useSearchParams,
 } from "remix";
+import { AuthenticityTokenInput } from "remix-utils";
+import { validateCsrfToken } from "~/utils/csrf";
 import { useRootMatchesData } from "~/utils/hooks";
+import { TypedDataFunctionArgs } from "~/utils/remix-typed";
 import { isSafe } from "~/utils/uri";
 
 export const handle = { hideLogin: true, title: "Login" };
@@ -19,8 +22,11 @@ interface ActionData {
   };
 }
 
-export const action: ActionFunction = async ({ request }) => {
-  console.log("called");
+export const action: ActionFunction = async ({
+  request,
+  context,
+}: TypedDataFunctionArgs) => {
+  await validateCsrfToken(request, context);
   return null;
 };
 
@@ -29,7 +35,6 @@ export default function Login() {
   const rawNext = searchParams.get("next");
   const next = isSafe(rawNext) ? rawNext : "/";
 
-  const { csrfToken } = useRootMatchesData();
   const actionData = useActionData() as ActionData;
   const emailRef = React.useRef<HTMLInputElement>(null);
   const passwordRef = React.useRef<HTMLInputElement>(null);
@@ -100,7 +105,7 @@ export default function Login() {
         </div>
 
         <input type="hidden" name="redirectTo" value={next} />
-        <input type="hidden" name="_csrf" value={csrfToken} />
+        <AuthenticityTokenInput />
         <button
           type="submit"
           className="w-full rounded bg-blue-500  py-2 px-4 text-white hover:bg-blue-600 focus:bg-blue-400"

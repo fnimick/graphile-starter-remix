@@ -7,7 +7,9 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useCatch,
 } from "remix";
+import { AuthenticityTokenProvider } from "remix-utils";
 
 import { User } from "../../graphql/remix-types";
 import compiledStyles from "./css/main.css";
@@ -63,7 +65,7 @@ export function links() {
 }
 
 export default function App() {
-  const { cspNonce } = useLoaderDataTyped<typeof loader>();
+  const { cspNonce, csrfToken } = useLoaderDataTyped<typeof loader>();
   return (
     <html lang="en">
       <head>
@@ -71,10 +73,51 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Outlet />
+        <AuthenticityTokenProvider token={csrfToken}>
+          <Outlet />
+        </AuthenticityTokenProvider>
         <ScrollRestoration nonce={cspNonce} />
         <Scripts nonce={cspNonce} />
         <LiveReload nonce={cspNonce} />
+      </body>
+    </html>
+  );
+}
+
+export function ErrorBoundary({ error }: any) {
+  // const { cspNonce } = useLoaderDataTyped<typeof loader>();
+  console.error(error);
+  return (
+    <html>
+      <head>
+        <title>Oh no!</title>
+        <Meta />
+        <Links />
+      </head>
+      <body>
+        <div>An error occurred</div>
+        {/* <Scripts nonce={cspNonce} /> */}
+      </body>
+    </html>
+  );
+}
+
+export function CatchBoundary() {
+  const caught = useCatch();
+  // const { cspNonce } = useLoaderDataTyped<typeof loader>();
+  return (
+    <html>
+      <head>
+        <title>Oh no!</title>
+        <Meta />
+        <Links />
+      </head>
+      <body>
+        <div>
+          ERROR: {caught.statusText} {caught.status}
+        </div>
+        <div>{caught.data?.message}</div>
+        {/* <Scripts nonce={cspNonce} /> */}
       </body>
     </html>
   );
