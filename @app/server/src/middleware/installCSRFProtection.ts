@@ -7,6 +7,11 @@ export default (app: Express) => {
     cookie: false,
   });
 
+  const insecureCsrfProtection = csrf({
+    cookie: false,
+    ignoreMethods: ["GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS"],
+  });
+
   app.use((req, res, next) => {
     if (
       req.method === "POST" &&
@@ -16,8 +21,14 @@ export default (app: Express) => {
     ) {
       // Bypass CSRF for GraphiQL
       next();
-    } else {
+    } else if (
+      req.path.startsWith("/graphql") ||
+      req.path.startsWith("/next")
+    ) {
       csrfProtection(req, res, next);
+    } else {
+      // disable CSRF parsing for remix, but still add `req.csrfToken()` method
+      insecureCsrfProtection(req, res, next);
     }
   });
 };

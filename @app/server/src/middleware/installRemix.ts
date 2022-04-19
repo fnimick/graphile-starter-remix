@@ -3,6 +3,7 @@ import { Express, static as staticMiddleware } from "express";
 import { DocumentNode, execute } from "graphql";
 import { HeadersInit } from "node-fetch";
 import postgraphile from "postgraphile";
+import Tokens from "csrf";
 
 import { LoaderContext } from "@app/lib";
 
@@ -11,6 +12,8 @@ import { getSdk } from "../../../graphql/remix-types";
 if (!process.env.NODE_ENV) {
   throw new Error("No NODE_ENV envvar! Try `export NODE_ENV=development`");
 }
+
+const tokens = new Tokens();
 
 // const isDev = process.env.NODE_ENV === "development";
 
@@ -30,6 +33,11 @@ export default async function installRemix(app: Express) {
     getLoadContext(req, res): LoaderContext {
       const csrfToken = req.csrfToken();
       const cspNonce: string = res.locals.cspNonce;
+
+      function validateCsrfToken(token: string) {
+        return tokens.verify((req.session as any).csrfSecret, token);
+      }
+
       const postgraphileInstance = app.get(
         "postgraphileMiddleware"
       ) as ReturnType<typeof postgraphile>;
@@ -58,7 +66,12 @@ export default async function installRemix(app: Express) {
         };
         return getSdk(client as any);
       }
-      return { cspNonce, csrfToken, graphqlSdk: graphqlSdk() };
+      return {
+        cspNonce,
+        csrfToken,
+        graphqlSdk: graphqlSdk(),
+        validateCsrfToken,
+      };
     },
   });
 
