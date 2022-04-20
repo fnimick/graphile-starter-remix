@@ -1,8 +1,9 @@
 import { CrownOutlined, DownOutlined } from "@ant-design/icons";
 import { companyName, projectName } from "@app/config";
 import { Avatar, Col, Dropdown, Layout, Menu, Row, Typography } from "antd";
-import { Link, Outlet, useLocation, useMatches } from "remix";
+import { Form, Link, Outlet, useLocation, useMatches } from "remix";
 import { useOptionalUser, useRootMatchesData } from "~/utils/hooks";
+import { redirectTyped, TypedDataFunctionArgs } from "~/utils/remix-typed";
 
 import { H3, StandardWidth, Warn } from "../components";
 
@@ -43,7 +44,6 @@ export default function RootIndex() {
             <Link to="/">{projectName}</Link>
           </Col>
           <Col span={12}>
-            {/* TODO - add child route titles back in */}
             <H3
               style={{
                 margin: 0,
@@ -97,9 +97,13 @@ export default function RootIndex() {
                         <Warn okay={currentUser.isVerified}>Settings</Warn>
                       </Link>
                     </Menu.Item>
-                    {/* <Menu.Item>
-                      <a onClick={handleLogout}>Logout</a>
-                    </Menu.Item> */}
+                    <Menu.Item>
+                      <Form method="post" action="/logout">
+                        <button className="button-link" type="submit">
+                          Logout
+                        </button>
+                      </Form>
+                    </Menu.Item>
                   </Menu>
                 }
               >
