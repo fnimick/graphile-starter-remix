@@ -2,9 +2,16 @@ import { UserAddOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Col, Row } from "antd";
 import { useSearchParams } from "remix";
 import { ButtonLink, SocialLoginOptions } from "~/components";
+import { redirectTyped, TypedDataFunctionArgs } from "~/utils/remix-typed";
 import { isSafe } from "~/utils/uri";
+import { requireNoUser } from "~/utils/users";
 
 export const handle = { hideLogin: true, title: "Login" };
+
+export const loader = async ({ context }: TypedDataFunctionArgs) => {
+  await requireNoUser(context);
+  return null;
+};
 
 export default function Login() {
   const [searchParams] = useSearchParams();

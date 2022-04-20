@@ -9,11 +9,16 @@ import {
 } from "remix";
 import { AuthenticityTokenInput } from "remix-utils";
 import { validateCsrfToken } from "~/utils/csrf";
-import { useRootMatchesData } from "~/utils/hooks";
 import { TypedDataFunctionArgs } from "~/utils/remix-typed";
 import { isSafe } from "~/utils/uri";
+import { requireNoUser } from "~/utils/users";
 
 export const handle = { hideLogin: true, title: "Register" };
+
+export const loader = async ({ context }: TypedDataFunctionArgs) => {
+  await requireNoUser(context);
+  return null;
+};
 
 interface ActionData {
   errors?: {

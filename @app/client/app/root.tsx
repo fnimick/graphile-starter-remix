@@ -17,7 +17,7 @@ import {
   jsonTyped,
   TypedDataFunctionArgs,
   useLoaderDataTyped,
-} from "./utils/remix-typed";
+} from "~/utils/remix-typed";
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
