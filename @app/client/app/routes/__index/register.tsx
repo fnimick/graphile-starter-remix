@@ -13,10 +13,12 @@ import { useRootMatchesData } from "~/utils/hooks";
 import { TypedDataFunctionArgs } from "~/utils/remix-typed";
 import { isSafe } from "~/utils/uri";
 
-export const handle = { hideLogin: true, title: "Login" };
+export const handle = { hideLogin: true, title: "Register" };
 
 interface ActionData {
   errors?: {
+    name?: string;
+    username?: string;
     email?: string;
     password?: string;
   };
@@ -29,15 +31,17 @@ export const action: ActionFunction = async ({
   await validateCsrfToken(request, context);
   const sdk = await context.graphqlSdk;
   const data = await request.formData();
-  const result = await sdk.Login({
-    username: data.get("email") as string,
+  const result = await sdk.Register({
+    username: data.get("username") as string,
     password: data.get("password") as string,
+    email: data.get("email") as string,
+    name: data.get("name") as string,
   });
   console.log(result);
   return null;
 };
 
-export default function Login() {
+export default function Register() {
   const [searchParams] = useSearchParams();
   const rawNext = searchParams.get("next");
   const next = isSafe(rawNext) ? rawNext : "/";
@@ -57,6 +61,56 @@ export default function Login() {
   return (
     <Row justify="center" style={{ marginTop: 32 }}>
       <Form method="post" className="space-y-6" noValidate>
+        <div>
+          <label
+            htmlFor="name"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Name
+          </label>
+          <div className="mt-1">
+            <input
+              ref={emailRef}
+              id="name"
+              required
+              autoFocus={true}
+              name="name"
+              type="text"
+              autoComplete="name"
+              className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
+            />
+            {actionData?.errors?.name && (
+              <div className="pt-1 text-red-700" id="email-error">
+                {actionData.errors.name}
+              </div>
+            )}
+          </div>
+        </div>
+        <div>
+          <label
+            htmlFor="username"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Username
+          </label>
+          <div className="mt-1">
+            <input
+              ref={emailRef}
+              id="name"
+              required
+              autoFocus={true}
+              name="username"
+              type="text"
+              autoComplete="username"
+              className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
+            />
+            {actionData?.errors?.username && (
+              <div className="pt-1 text-red-700" id="email-error">
+                {actionData.errors.username}
+              </div>
+            )}
+          </div>
+        </div>
         <div>
           <label
             htmlFor="email"

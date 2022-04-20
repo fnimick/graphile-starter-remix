@@ -1,6 +1,6 @@
 import { createRequestHandler } from "@remix-run/express";
 import { Express, static as staticMiddleware } from "express";
-import { DocumentNode, execute } from "graphql";
+import { DocumentNode, execute, GraphQLError } from "graphql";
 import { HeadersInit } from "node-fetch";
 import postgraphile from "postgraphile";
 import Tokens from "csrf";
@@ -49,19 +49,24 @@ export default async function installRemix(app: Express) {
             variables?: V,
             requestHeaders?: HeadersInit
           ): Promise<T> {
-            return await postgraphileInstance.withPostGraphileContextFromReqRes(
-              req,
-              res,
-              {},
-              (context) =>
-                execute(
-                  schema,
-                  document,
-                  null,
-                  { ...(context as any as object), ...requestHeaders },
-                  variables
-                )
-            );
+            const { data, errors }: { data?: T; errors?: GraphQLError[] } =
+              await postgraphileInstance.withPostGraphileContextFromReqRes(
+                req,
+                res,
+                {},
+                (context) =>
+                  execute(
+                    schema,
+                    document,
+                    null,
+                    { ...(context as any as object), ...requestHeaders },
+                    variables
+                  )
+              );
+            if (errors != null) {
+              throw errors[0]; // TODO: fix this
+            }
+            return data!;
           },
         };
         return getSdk(client as any);

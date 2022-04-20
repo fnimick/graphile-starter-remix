@@ -33,11 +33,11 @@ export function useRootMatchesData() {
 }
 
 function isUser(user: any): user is User {
-  return user && typeof user === "object" && typeof user.email === "string";
+  return user && typeof user === "object" && typeof user.name === "string";
 }
 
 export function useOptionalUser(): User | undefined {
-  const data = useMatchesData("root");
+  const data = useRootMatchesData();
   if (!data || !isUser(data.user)) {
     return undefined;
   }
