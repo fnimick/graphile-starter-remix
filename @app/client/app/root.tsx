@@ -104,6 +104,22 @@ export function ErrorBoundary({ error }: any) {
 
 export function CatchBoundary() {
   const caught = useCatch();
+  console.log(caught);
+  if (caught.status === 422) {
+    return (
+      <html>
+        <head>
+          <title>Oh no!</title>
+          <Meta />
+          <Links />
+        </head>
+        <body>
+          <div>Your session has expired - please reload the application.</div>
+          {/* <Scripts nonce={cspNonce} /> */}
+        </body>
+      </html>
+    );
+  }
   // const { cspNonce } = useLoaderDataTyped<typeof loader>();
   return (
     <html>

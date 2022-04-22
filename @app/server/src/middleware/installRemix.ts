@@ -1,13 +1,13 @@
+import { GraphqlQueryError, LoaderContext } from "@app/lib";
 import { createRequestHandler } from "@remix-run/express";
+import Tokens from "csrf";
 import { Express, static as staticMiddleware } from "express";
 import { DocumentNode, execute, GraphQLError } from "graphql";
 import { HeadersInit } from "node-fetch";
 import postgraphile from "postgraphile";
-import Tokens from "csrf";
-
-import { LoaderContext } from "@app/lib";
 
 import { getSdk } from "../../../graphql/remix-types";
+import handleErrors from "../utils/handleErrors";
 
 if (!process.env.NODE_ENV) {
   throw new Error("No NODE_ENV envvar! Try `export NODE_ENV=development`");
@@ -63,8 +63,10 @@ export default async function installRemix(app: Express) {
                     variables
                   )
               );
-            if (errors != null) {
-              throw errors[0]; // TODO: fix this
+            if (errors != null && errors.length > 0) {
+              const handledErrors = handleErrors(errors);
+              throw new GraphqlQueryError(errors[0].message, handledErrors);
+              // throw new GraphqlQueryError(errors[0].message, errors);
             }
             return data!;
           },

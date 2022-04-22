@@ -1,11 +1,10 @@
 import { LoaderContext } from "@app/lib";
-import { ExtendedResponseInit, json } from "remix-utils";
+import { ThrownResponse, json } from "remix";
 
-export function unprocessableEntity<Data = unknown>(
-  data: Data,
-  init?: Omit<ExtendedResponseInit, "status">
-) {
-  return json<Data>(data, { ...init, status: 422 });
+export type CsrfErrorResponse = ThrownResponse<422, string>;
+
+export function unprocessableEntity<Data = unknown>(data: Data) {
+  return json<Data>(data, { status: 422 });
 }
 
 export async function validateCsrfToken(

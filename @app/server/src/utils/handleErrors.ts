@@ -91,6 +91,8 @@ function conflictFieldsFromError(err: any) {
 export default function handleErrors(
   errors: readonly GraphQLError[]
 ): Array<any> {
+  console.log("handle errors called");
+  console.log(errors.map((error) => error.originalError));
   return errors.map((error) => {
     const { message: rawMessage, locations, path, originalError } = error;
     const code = originalError ? originalError["code"] : null;
@@ -103,6 +105,7 @@ export default function handleErrors(
       extensions: {
         exception,
       },
+      code,
     };
   });
 }
