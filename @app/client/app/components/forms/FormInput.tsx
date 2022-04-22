@@ -1,16 +1,20 @@
-import { Form, Input, InputProps } from "antd";
+import { ColProps, Form, Input, InputProps } from "antd";
 import { useField } from "remix-validated-form";
 
 type FormInputProps = {
   name: string;
-  label?: string;
+  label?: React.ReactNode;
   isRequired?: boolean;
+  labelCol?: ColProps;
+  wrapperCol?: ColProps;
 };
 
 export const FormInput = ({
   name,
   label,
   isRequired,
+  labelCol,
+  wrapperCol,
   ...rest
 }: FormInputProps & InputProps) => {
   const { getInputProps, error } = useField(name);
@@ -22,6 +26,8 @@ export const FormInput = ({
         help={error}
         label={label}
         name={name}
+        labelCol={labelCol}
+        wrapperCol={wrapperCol}
       >
         <Input {...getInputProps({ id: name, ...rest })} />
       </Form.Item>

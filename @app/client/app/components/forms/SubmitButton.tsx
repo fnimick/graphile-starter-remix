@@ -1,11 +1,14 @@
-import { Button } from "antd";
+import { Button, ButtonProps } from "antd";
 import { useIsSubmitting } from "remix-validated-form";
 
 interface SubmitButtonProps {
   label: string;
 }
 
-export const SubmitButton = ({ label }: SubmitButtonProps) => {
+export const SubmitButton = ({
+  label,
+  ...rest
+}: SubmitButtonProps & ButtonProps) => {
   const isSubmitting = useIsSubmitting();
   return (
     <Button
@@ -13,6 +16,7 @@ export const SubmitButton = ({ label }: SubmitButtonProps) => {
       type="primary"
       disabled={isSubmitting}
       loading={isSubmitting}
+      {...rest}
     >
       {label}
     </Button>

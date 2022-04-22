@@ -1,212 +1,227 @@
-import { Row } from "antd";
-import React from "react";
-import {
-  ActionFunction,
-  Form,
-  Link,
-  useActionData,
-  useSearchParams,
-} from "remix";
+import { QuestionCircleOutlined } from "@ant-design/icons";
+import { formItemLayout, getCodeFromError } from "@app/lib";
+import { withZod } from "@remix-validated-form/with-zod";
+import { Alert, Form, Row, Tooltip } from "antd";
+import { json, useActionData, useSearchParams } from "remix";
 import { AuthenticityTokenInput } from "remix-utils";
+import { ValidatedForm, validationError } from "remix-validated-form";
+import * as z from "zod";
+import { FormInput } from "~/components/forms/FormInput";
+import { SubmitButton } from "~/components/forms/SubmitButton";
 import { validateCsrfToken } from "~/utils/csrf";
-import { TypedDataFunctionArgs } from "~/utils/remix-typed";
+import { GraphqlQueryErrorResult } from "~/utils/errors";
+import { redirectTyped, TypedDataFunctionArgs } from "~/utils/remix-typed";
 import { isSafe } from "~/utils/uri";
 import { requireNoUser } from "~/utils/users";
 
-export const handle = { hideLogin: true, title: "Register" };
+export const handle = { hideLogin: true, title: "Login" };
 
 export const loader = async ({ context }: TypedDataFunctionArgs) => {
   await requireNoUser(context);
   return null;
 };
 
-interface ActionData {
-  errors?: {
-    name?: string;
-    username?: string;
-    email?: string;
-    password?: string;
-  };
-}
-
-export const action: ActionFunction = async ({
-  request,
-  context,
-}: TypedDataFunctionArgs) => {
+export const action = async ({ request, context }: TypedDataFunctionArgs) => {
   await validateCsrfToken(request, context);
   const sdk = await context.graphqlSdk;
-  const data = await request.formData();
-  const result = await sdk.Register({
-    username: data.get("username") as string,
-    password: data.get("password") as string,
-    email: data.get("email") as string,
-    name: data.get("name") as string,
-  });
-  console.log(result);
-  return null;
+  const fieldValues = await registerFormValidator.validate(
+    await request.formData()
+  );
+  if (fieldValues.error) {
+    return validationError(fieldValues.error, {
+      username: fieldValues.submittedData.username,
+    });
+  }
+  const { name, username, email, password, redirectTo } = fieldValues.data;
+  try {
+    await sdk.Register({ name, username, email, password });
+    return redirectTyped(redirectTo ?? "/");
+  } catch (e) {
+    const { password, confirm, ...restSubmittedValues } =
+      fieldValues.submittedData;
+    const code = getCodeFromError(e);
+    if (code === "WEAKP") {
+      return validationError(
+        {
+          fieldErrors: {
+            password:
+              "The server believes this passphrase is too weak, please make it stronger.",
+          },
+        },
+        restSubmittedValues
+      );
+    }
+    if (code === "EMTKN") {
+      return validationError(
+        {
+          fieldErrors: {
+            email:
+              "An account with this email address has already been registered, consider using the 'Forgot passphrase' function.",
+          },
+        },
+        restSubmittedValues
+      );
+    }
+    if (code === "NUNIQ") {
+      return validationError(
+        {
+          fieldErrors: {
+            username:
+              "An account with this username has already been registered, please try a different username.",
+          },
+        },
+        restSubmittedValues
+      );
+    }
+    if (code === "23514") {
+      return validationError(
+        {
+          fieldErrors: {
+            username:
+              "This username is not allowed; usernames must be between 2 and 24 characters long (inclusive), must start with a letter, and must contain only alphanumeric characters and underscores.",
+          },
+        },
+        restSubmittedValues
+      );
+    }
+    return json<GraphqlQueryErrorResult>({
+      message: e.message,
+      code,
+      error: true,
+    });
+  }
 };
+
+const registerSchema = z
+  .object({
+    name: z.string().nonempty("Please input your name."),
+    username: z
+      .string()
+      .nonempty("Please input your username")
+      .min(2, "Username must be at least 2 characters long.")
+      .max(24, "Username must be no more than 24 characters long.")
+      .regex(/^([a-zA-Z]|$)/, "Username must start with a letter.")
+      .regex(
+        /^([^_]|_[^_]|_$)*$/,
+        "Username must not contain two underscores next to each other."
+      )
+      .regex(
+        /^[a-zA-Z0-9_]*$/,
+        "Username must contain only alphanumeric characters and underscores."
+      ),
+    email: z
+      .string()
+      .nonempty("Please input your E-mail.")
+      .email("The input is not valid E-mail."),
+    password: z.string().nonempty("Please input your passphrase."),
+    confirm: z.string().nonempty("Please input your passphrase."),
+    redirectTo: z.string().optional(),
+  })
+  .refine(({ password, confirm }) => password === confirm, {
+    message: "Make sure your passphrase is the same in both passphrase boxes.",
+    path: ["confirm"],
+  });
+
+const registerFormValidator = withZod(registerSchema);
 
 export default function Register() {
   const [searchParams] = useSearchParams();
   const rawNext = searchParams.get("next");
   const next = isSafe(rawNext) ? rawNext : "/";
 
-  const actionData = useActionData() as ActionData;
-  const emailRef = React.useRef<HTMLInputElement>(null);
-  const passwordRef = React.useRef<HTMLInputElement>(null);
-
-  React.useEffect(() => {
-    if (actionData?.errors?.email) {
-      emailRef.current?.focus();
-    } else if (actionData?.errors?.password) {
-      passwordRef.current?.focus();
-    }
-  }, [actionData]);
+  const { message, code, error } =
+    useActionData<GraphqlQueryErrorResult>() ?? {};
 
   return (
     <Row justify="center" style={{ marginTop: 32 }}>
-      <Form method="post" className="space-y-6" noValidate>
-        <div>
-          <label
-            htmlFor="name"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Name
-          </label>
-          <div className="mt-1">
-            <input
-              ref={emailRef}
-              id="name"
-              required
-              autoFocus={true}
-              name="name"
-              type="text"
-              autoComplete="name"
-              className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
-            />
-            {actionData?.errors?.name && (
-              <div className="pt-1 text-red-700" id="email-error">
-                {actionData.errors.name}
-              </div>
-            )}
-          </div>
-        </div>
-        <div>
-          <label
-            htmlFor="username"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Username
-          </label>
-          <div className="mt-1">
-            <input
-              ref={emailRef}
-              id="name"
-              required
-              autoFocus={true}
-              name="username"
-              type="text"
-              autoComplete="username"
-              className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
-            />
-            {actionData?.errors?.username && (
-              <div className="pt-1 text-red-700" id="email-error">
-                {actionData.errors.username}
-              </div>
-            )}
-          </div>
-        </div>
-        <div>
-          <label
-            htmlFor="email"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Email address
-          </label>
-          <div className="mt-1">
-            <input
-              ref={emailRef}
-              id="email"
-              required
-              autoFocus={true}
-              name="email"
-              type="email"
-              autoComplete="email"
-              aria-invalid={actionData?.errors?.email ? true : undefined}
-              aria-describedby="email-error"
-              className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
-            />
-            {actionData?.errors?.email && (
-              <div className="pt-1 text-red-700" id="email-error">
-                {actionData.errors.email}
-              </div>
-            )}
-          </div>
-        </div>
-
-        <div>
-          <label
-            htmlFor="password"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Password
-          </label>
-          <div className="mt-1">
-            <input
-              id="password"
-              ref={passwordRef}
-              name="password"
-              type="password"
-              autoComplete="current-password"
-              aria-invalid={actionData?.errors?.password ? true : undefined}
-              aria-describedby="password-error"
-              className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
-            />
-            {actionData?.errors?.password && (
-              <div className="pt-1 text-red-700" id="password-error">
-                {actionData.errors.password}
-              </div>
-            )}
-          </div>
-        </div>
-
-        <input type="hidden" name="redirectTo" value={next} />
+      <ValidatedForm
+        validator={registerFormValidator}
+        method="post"
+        style={{ width: "100%" }}
+      >
         <AuthenticityTokenInput />
-        <button
-          type="submit"
-          className="w-full rounded bg-blue-500  py-2 px-4 text-white hover:bg-blue-600 focus:bg-blue-400"
-        >
-          Log in
-        </button>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center">
-            <input
-              id="remember"
-              name="remember"
-              type="checkbox"
-              className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+        <FormInput
+          name="name"
+          label={
+            <span data-cy="registerpage-name-label">
+              Name&nbsp;
+              <Tooltip title="What is your name?">
+                <QuestionCircleOutlined />
+              </Tooltip>
+            </span>
+          }
+          isRequired
+          type="text"
+          autoComplete="name"
+          data-cy="registerpage-input-name"
+          {...formItemLayout}
+        />
+        <FormInput
+          name="username"
+          label={
+            <span>
+              Username&nbsp;
+              <Tooltip title="What do you want others to call you?">
+                <QuestionCircleOutlined />
+              </Tooltip>
+            </span>
+          }
+          isRequired
+          type="text"
+          autoComplete="username"
+          data-cy="registerpage-input-username"
+          {...formItemLayout}
+        />
+        <FormInput
+          name="email"
+          label="E-mail"
+          isRequired
+          type="email"
+          autoComplete="email"
+          data-cy="registerpage-input-email"
+          {...formItemLayout}
+        />
+        <FormInput
+          name="password"
+          label="Passphrase"
+          isRequired
+          type="password"
+          autoComplete="new-password"
+          data-cy="registerpage-input-password"
+          {...formItemLayout}
+        />
+        <FormInput
+          name="confirm"
+          label="Confirm passphrase"
+          isRequired
+          type="password"
+          autoComplete="new-password"
+          data-cy="registerpage-input-password2"
+          {...formItemLayout}
+        />
+        {error ? (
+          <Form.Item>
+            <Alert
+              type="error"
+              message={`Registration failed`}
+              description={
+                <span>
+                  {message}
+                  {code ? (
+                    <span>
+                      {" "}
+                      (Error code: <code>ERR_{code}</code>)
+                    </span>
+                  ) : null}
+                </span>
+              }
             />
-            <label
-              htmlFor="remember"
-              className="ml-2 block text-sm text-gray-900"
-            >
-              Remember me
-            </label>
-          </div>
-          <div className="text-center text-sm text-gray-500">
-            Don't have an account?{" "}
-            <Link
-              className="text-blue-500 underline"
-              to={{
-                pathname: "/register",
-                search: searchParams.toString(),
-              }}
-            >
-              Sign up
-            </Link>
-          </div>
-        </div>
-      </Form>
+          </Form.Item>
+        ) : null}
+        <Form.Item>
+          <SubmitButton label="Register" data-cy="registerpage-submit-button" />
+        </Form.Item>
+      </ValidatedForm>
     </Row>
   );
 }

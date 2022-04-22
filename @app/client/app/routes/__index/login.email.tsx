@@ -59,14 +59,14 @@ export const action = async ({ request, context }: TypedDataFunctionArgs) => {
 };
 
 const loginSchema = z.object({
-  username: z.string().nonempty("Username may not be empty"),
-  password: z.string().nonempty("Passphrase may not be empty"),
+  username: z.string().nonempty("Please input your username"),
+  password: z.string().nonempty("Please input your passphrase"),
   redirectTo: z.string().optional(),
 });
 
 const loginFormValidator = withZod(loginSchema);
 
-export default function Login() {
+export default function LoginEmail() {
   const [searchParams] = useSearchParams();
   const rawNext = searchParams.get("next");
   const next = isSafe(rawNext) ? rawNext : "/";
