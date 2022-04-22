@@ -30,6 +30,14 @@ const CSP_DIRECTIVES = (cspNonce: string) => ({
   "script-src": ["'self'", `'nonce-${cspNonce}'`],
 });
 
+/**
+ * This is require to include the `origin` header in POST requests when
+ * javascript is disabled, in Remix. This allows Session middleware to work by
+ * enabling the request to be detected as same-origin via `installSameOrigin`
+ * middleware.
+ */
+const REFERRER_POLICY = { policy: "strict-origin-when-cross-origin" };
+
 export default function installHelmet(app: Express) {
   // Add a cryptographic nonce for remix support
   app.use((req, res, next) => {
@@ -46,6 +54,7 @@ export default function installHelmet(app: Express) {
                 "script-src": [...cspDirectives["script-src"], "'unsafe-eval'"],
               },
             },
+            referrerPolicy: REFERRER_POLICY,
           }
         : {
             contentSecurityPolicy: {
@@ -53,6 +62,7 @@ export default function installHelmet(app: Express) {
                 ...cspDirectives,
               },
             },
+            referrerPolicy: REFERRER_POLICY,
           }
     );
     helmetMiddleware(req, res, next);
