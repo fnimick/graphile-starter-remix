@@ -1,5 +1,5 @@
 import { QuestionCircleOutlined } from "@ant-design/icons";
-import { formItemLayout, getCodeFromError } from "@app/lib";
+import { formItemLayout, getCodeFromError, tailFormItemLayout } from "@app/lib";
 import { withZod } from "@remix-validated-form/with-zod";
 import { Alert, Form, Row, Tooltip } from "antd";
 import { useState } from "react";
@@ -207,13 +207,14 @@ export default function Register() {
           autoComplete="new-password"
           data-cy="registerpage-input-password"
           {...formItemLayout}
-        />
-        <PasswordStrength
-          passwordStrength={passwordStrength}
-          suggestions={passwordSuggestions}
-          isDirty={passwordDirty}
-          isFocussed={passwordFocused}
-        />
+        >
+          <PasswordStrength
+            passwordStrength={passwordStrength}
+            suggestions={passwordSuggestions}
+            isDirty={passwordDirty}
+            isFocussed={passwordFocused}
+          />
+        </FormInput>
         <FormInput
           name="confirm"
           label="Confirm passphrase"
@@ -242,7 +243,7 @@ export default function Register() {
             />
           </Form.Item>
         ) : null}
-        <Form.Item>
+        <Form.Item {...tailFormItemLayout}>
           <SubmitButton label="Register" data-cy="registerpage-submit-button" />
         </Form.Item>
       </ValidatedForm>

@@ -13,7 +13,6 @@ export const SubmitButton = ({
   return (
     <Button
       htmlType="submit"
-      type="primary"
       disabled={isSubmitting}
       loading={isSubmitting}
       {...rest}

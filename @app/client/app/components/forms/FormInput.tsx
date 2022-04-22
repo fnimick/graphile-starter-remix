@@ -7,6 +7,7 @@ type FormInputProps = {
   isRequired?: boolean;
   labelCol?: ColProps;
   wrapperCol?: ColProps;
+  children?: React.ReactNode;
 };
 
 export const FormInput = ({
@@ -15,6 +16,7 @@ export const FormInput = ({
   isRequired,
   labelCol,
   wrapperCol,
+  children,
   ...rest
 }: FormInputProps & InputProps) => {
   const { getInputProps, error } = useField(name);
@@ -30,6 +32,7 @@ export const FormInput = ({
         wrapperCol={wrapperCol}
       >
         <Input {...getInputProps({ id: name, ...rest })} />
+        {children}
       </Form.Item>
     </>
   );

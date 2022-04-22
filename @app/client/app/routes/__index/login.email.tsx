@@ -127,7 +127,7 @@ export default function LoginEmail() {
               </Form.Item>
             ) : null}
             <Form.Item>
-              <SubmitButton label="Sign in" />
+              <SubmitButton label="Sign in" type="primary" />
               <Link style={{ marginLeft: 16 }} to="/login">
                 Use a different sign in method
               </Link>
