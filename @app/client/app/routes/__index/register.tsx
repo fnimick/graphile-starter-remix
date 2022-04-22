@@ -2,14 +2,17 @@ import { QuestionCircleOutlined } from "@ant-design/icons";
 import { formItemLayout, getCodeFromError } from "@app/lib";
 import { withZod } from "@remix-validated-form/with-zod";
 import { Alert, Form, Row, Tooltip } from "antd";
+import { useState } from "react";
 import { json, useActionData, useSearchParams } from "remix";
 import { AuthenticityTokenInput } from "remix-utils";
 import { ValidatedForm, validationError } from "remix-validated-form";
 import * as z from "zod";
+import { PasswordStrength } from "~/components";
 import { FormInput } from "~/components/forms/FormInput";
 import { SubmitButton } from "~/components/forms/SubmitButton";
 import { validateCsrfToken } from "~/utils/csrf";
 import { GraphqlQueryErrorResult } from "~/utils/errors";
+import { setPasswordStrengthInfo } from "~/utils/passwords";
 import { redirectTyped, TypedDataFunctionArgs } from "~/utils/remix-typed";
 import { isSafe } from "~/utils/uri";
 import { requireNoUser } from "~/utils/users";
@@ -132,6 +135,11 @@ export default function Register() {
   const { message, code, error } =
     useActionData<GraphqlQueryErrorResult>() ?? {};
 
+  const [passwordStrength, setPasswordStrength] = useState<number>(0);
+  const [passwordSuggestions, setPasswordSuggestions] = useState<string[]>([]);
+  const [passwordFocused, setPasswordFocused] = useState(false);
+  const [passwordDirty, setPasswordDirty] = useState(false);
+
   return (
     <Row justify="center" style={{ marginTop: 32 }}>
       <ValidatedForm
@@ -186,9 +194,25 @@ export default function Register() {
           label="Passphrase"
           isRequired
           type="password"
+          onChange={(e) => {
+            setPasswordStrengthInfo(
+              e.target.value,
+              setPasswordStrength,
+              setPasswordSuggestions
+            );
+            setPasswordDirty(true);
+          }}
+          onFocus={() => setPasswordFocused(true)}
+          onBlur={() => setPasswordFocused(false)}
           autoComplete="new-password"
           data-cy="registerpage-input-password"
           {...formItemLayout}
+        />
+        <PasswordStrength
+          passwordStrength={passwordStrength}
+          suggestions={passwordSuggestions}
+          isDirty={passwordDirty}
+          isFocussed={passwordFocused}
         />
         <FormInput
           name="confirm"
