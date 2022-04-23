@@ -148,6 +148,7 @@ export default function Register() {
         style={{ width: "100%" }}
       >
         <AuthenticityTokenInput />
+        <input type="hidden" name="redirectTo" value={next} />
         <FormInput
           name="name"
           label={

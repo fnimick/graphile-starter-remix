@@ -33,6 +33,7 @@ export const action = async ({ request, context }: TypedDataFunctionArgs) => {
     });
   }
   const { username, password, redirectTo } = fieldValues.data;
+  console.log(redirectTo);
   try {
     await sdk.Login({ username, password });
     return redirectTyped(redirectTo ?? "/");
@@ -84,6 +85,7 @@ export default function LoginEmail() {
             style={{ width: "100%" }}
           >
             <AuthenticityTokenInput />
+            <input type="hidden" name="redirectTo" value={next} />
             <FormInput
               name="username"
               placeholder="E-mail or Username"
