@@ -1,16 +1,19 @@
 import { formItemLayout, getCodeFromError, tailFormItemLayout } from "@app/lib";
 import { withZod } from "@remix-validated-form/with-zod";
 import { Alert, Form, PageHeader } from "antd";
+import { useRef } from "react";
+import { useState } from "react";
 import { json, useActionData } from "remix";
 import { AuthenticityTokenInput } from "remix-utils";
 import { ValidatedForm, validationError } from "remix-validated-form";
 import * as z from "zod";
+import { PasswordStrength } from "~/components";
 import { FormInput } from "~/components/forms/FormInput";
 import { SubmitButton } from "~/components/forms/SubmitButton";
 import { validateCsrfToken } from "~/utils/csrf";
 import { GraphqlQueryErrorResult } from "~/utils/errors";
+import { setPasswordStrengthInfo } from "~/utils/passwords";
 import {
-  jsonTyped,
   redirectTyped,
   TypedDataFunctionArgs,
   useLoaderDataTyped,
@@ -21,46 +24,47 @@ export const handle = { title: "Settings: Profile" };
 
 export async function loader({ request, context }: TypedDataFunctionArgs) {
   await requireUser(request, context);
-  const sdk = await context.graphqlSdk;
-  const { currentUser } = await sdk.SettingsProfile();
-  return jsonTyped(currentUser);
+  return null;
 }
 
-const profileSchema = z.object({
-  name: z.string().nonempty("Please enter your name"),
-  username: z.string().nonempty("Please choose a username"),
+const securitySchema = z.object({
+  oldPassword: z.string().nonempty("Please input your passphrase"),
+  newPassword: z.string().nonempty("Please confirm your passphrase"),
 });
 
-const profileFormValidator = withZod(profileSchema);
+const securityFormValidator = withZod(securitySchema);
 
 export async function action({ request, context }: TypedDataFunctionArgs) {
   await validateCsrfToken(request, context);
   const sdk = await context.graphqlSdk;
-  const fieldValues = await profileFormValidator.validate(
+  const fieldValues = await securityFormValidator.validate(
     await request.formData()
   );
   if (fieldValues.error) {
     return validationError(fieldValues.error);
   }
-  const { name, username } = fieldValues.data;
-  const { currentUser } = await sdk.SettingsProfile();
-  if (currentUser == null) {
-    throw redirectTyped(
-      `/login?next=${encodeURIComponent(new URL(request.url).pathname)}`
-    );
-  }
+  const { oldPassword, newPassword } = fieldValues.data;
   try {
-    await sdk.UpdateUser({
-      id: currentUser.id,
-      patch: { name, username },
-    });
+    await sdk.ChangePassword({ oldPassword, newPassword });
   } catch (e) {
     const code = getCodeFromError(e);
-    if (code === "NUNIQ") {
+    if (code === "LOGIN") {
+      throw redirectTyped(
+        `/login?next=${encodeURIComponent(new URL(request.url).pathname)}`
+      );
+    }
+    if (code === "WEAKP") {
       return validationError({
         fieldErrors: {
-          username:
-            "This username is already in use, please pick a different name",
+          newPassword:
+            "The server believes this passphrase is too weak, please make it stronger",
+        },
+      });
+    }
+    if (code === "CREDS") {
+      return validationError({
+        fieldErrors: {
+          oldPassword: "Incorrect old passphrase",
         },
       });
     }
@@ -79,41 +83,60 @@ export default function Profile() {
   const { message, code, error, success } =
     useActionData<GraphqlQueryErrorResult & { success?: true }>() ?? {};
 
+  const [passwordStrength, setPasswordStrength] = useState<number>(0);
+  const [passwordSuggestions, setPasswordSuggestions] = useState<string[]>([]);
+  const [passwordFocused, setPasswordFocused] = useState(false);
+  const [passwordDirty, setPasswordDirty] = useState(false);
+
+  // TODO: ant design inputs cannot be reset from the outside with `form.reset()`
+
   return (
     <div>
-      <PageHeader title="Edit profile" />
-
+      <PageHeader title="Change passphrase" />
       <ValidatedForm
-        validator={profileFormValidator}
+        validator={securityFormValidator}
         method="post"
         style={{ width: "100%" }}
-        defaultValues={{
-          name: user?.name ?? undefined,
-          username: user?.username ?? undefined,
-        }}
       >
         <AuthenticityTokenInput />
         <FormInput
-          name="name"
-          label="Name"
+          name="oldPassword"
+          label="Old passphrase"
           required
-          type="text"
-          autoComplete="name"
+          type="password"
+          autoComplete="current-password"
           {...formItemLayout}
         />
         <FormInput
-          name="username"
-          label="Username"
+          name="newPassword"
+          label="New passphrase"
           required
-          type="text"
-          autoComplete="username"
+          type="password"
+          onChange={(e) => {
+            setPasswordStrengthInfo(
+              e.target.value,
+              setPasswordStrength,
+              setPasswordSuggestions
+            );
+            setPasswordDirty(true);
+          }}
+          onFocus={() => setPasswordFocused(true)}
+          onBlur={() => setPasswordFocused(false)}
+          autoComplete="new-password"
           {...formItemLayout}
-        />
+        >
+          <PasswordStrength
+            passwordStrength={passwordStrength}
+            suggestions={passwordSuggestions}
+            isDirty={passwordDirty}
+            isFocussed={passwordFocused}
+          />
+        </FormInput>
         {error ? (
           <Form.Item>
             <Alert
               type="error"
-              message={`Updating username`}
+              message={`Changing passphrase failed`}
               description={
                 <span>
                   {message}
@@ -129,11 +152,11 @@ export default function Profile() {
           </Form.Item>
         ) : success ? (
           <Form.Item>
-            <Alert type="success" message={`Profile updated`} />
+            <Alert type="success" message={`Password changed!`} />
           </Form.Item>
         ) : null}
         <Form.Item {...tailFormItemLayout}>
-          <SubmitButton htmlType="submit" label="Update Profile" />
+          <SubmitButton htmlType="submit" label="Change Passphrase" />
         </Form.Item>
       </ValidatedForm>
     </div>
