@@ -30,8 +30,12 @@ export const FormInput = ({
         name={name}
         labelCol={labelCol}
         wrapperCol={wrapperCol}
+        required={isRequired}
       >
-        <Input {...getInputProps({ id: name, ...rest })} />
+        <Input
+          required={isRequired}
+          {...getInputProps({ id: name, ...rest })}
+        />
         {children}
       </Form.Item>
     </>
