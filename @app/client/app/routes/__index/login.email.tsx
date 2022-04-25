@@ -89,7 +89,7 @@ export default function LoginEmail() {
             <FormInput
               name="username"
               placeholder="E-mail or Username"
-              isRequired
+              required
               type="text"
               autoComplete="username"
               size="large"
@@ -98,7 +98,7 @@ export default function LoginEmail() {
             <FormInput
               name="password"
               placeholder="Passphrase"
-              isRequired
+              required
               type="password"
               autoComplete="current-password"
               size="large"

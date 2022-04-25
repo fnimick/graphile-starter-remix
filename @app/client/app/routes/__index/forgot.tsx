@@ -68,7 +68,7 @@ export default function ForgotPassword() {
       <FormInput
         name="email"
         placeholder="Email"
-        isRequired
+        required
         type="email"
         autoComplete="email"
         prefix={<UserOutlined style={{ color: "rgba(0,0,0,.25)" }} />}

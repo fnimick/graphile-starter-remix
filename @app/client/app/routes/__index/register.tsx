@@ -159,7 +159,7 @@ export default function Register() {
               </Tooltip>
             </span>
           }
-          isRequired
+          required
           type="text"
           autoComplete="name"
           data-cy="registerpage-input-name"
@@ -175,7 +175,7 @@ export default function Register() {
               </Tooltip>
             </span>
           }
-          isRequired
+          required
           type="text"
           autoComplete="username"
           data-cy="registerpage-input-username"
@@ -184,7 +184,7 @@ export default function Register() {
         <FormInput
           name="email"
           label="E-mail"
-          isRequired
+          required
           type="email"
           autoComplete="email"
           data-cy="registerpage-input-email"
@@ -193,7 +193,7 @@ export default function Register() {
         <FormInput
           name="password"
           label="Passphrase"
-          isRequired
+          required
           type="password"
           onChange={(e) => {
             setPasswordStrengthInfo(
@@ -219,7 +219,7 @@ export default function Register() {
         <FormInput
           name="confirm"
           label="Confirm passphrase"
-          isRequired
+          required
           type="password"
           autoComplete="new-password"
           data-cy="registerpage-input-password2"

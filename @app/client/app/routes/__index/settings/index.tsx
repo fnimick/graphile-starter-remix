@@ -96,7 +96,7 @@ export default function Profile() {
         <FormInput
           name="name"
           label="Name"
-          isRequired
+          required
           type="text"
           autoComplete="name"
           {...formItemLayout}
@@ -104,7 +104,7 @@ export default function Profile() {
         <FormInput
           name="username"
           label="Username"
-          isRequired
+          required
           type="text"
           autoComplete="username"
           {...formItemLayout}

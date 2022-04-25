@@ -4,7 +4,7 @@ import { useField } from "remix-validated-form";
 type FormInputProps = {
   name: string;
   label?: React.ReactNode;
-  isRequired?: boolean;
+  required?: boolean;
   labelCol?: ColProps;
   wrapperCol?: ColProps;
   children?: React.ReactNode;
@@ -13,7 +13,7 @@ type FormInputProps = {
 export const FormInput = ({
   name,
   label,
-  isRequired,
+  required,
   labelCol,
   wrapperCol,
   children,
@@ -30,12 +30,9 @@ export const FormInput = ({
         name={name}
         labelCol={labelCol}
         wrapperCol={wrapperCol}
-        required={isRequired}
+        required={required}
       >
-        <Input
-          required={isRequired}
-          {...getInputProps({ id: name, ...rest })}
-        />
+        <Input required={required} {...getInputProps({ id: name, ...rest })} />
         {children}
       </Form.Item>
     </>
