@@ -2,8 +2,8 @@ import { CrownOutlined, DownOutlined } from "@ant-design/icons";
 import { companyName, projectName } from "@app/config";
 import { Avatar, Col, Dropdown, Layout, Menu, Row, Typography } from "antd";
 import { Form, Link, Outlet, useLocation, useMatches } from "remix";
+import { AuthenticityTokenInput } from "remix-utils";
 import { useOptionalUser, useRootMatchesData } from "~/utils/hooks";
-import { redirectTyped, TypedDataFunctionArgs } from "~/utils/remix-typed";
 
 import { H3, StandardWidth, Warn } from "../components";
 
@@ -99,6 +99,7 @@ export default function RootIndex() {
                     </Menu.Item>
                     <Menu.Item>
                       <Form method="post" action="/logout">
+                        <AuthenticityTokenInput />
                         <button className="button-link" type="submit">
                           Logout
                         </button>
