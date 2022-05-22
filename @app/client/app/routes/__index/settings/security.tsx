@@ -77,7 +77,7 @@ export async function action({ request, context }: TypedDataFunctionArgs) {
   return { success: true };
 }
 
-export default function Profile() {
+export default function Passphrase() {
   const user = useLoaderDataTyped<typeof loader>();
 
   const { message, code, error, success } =
