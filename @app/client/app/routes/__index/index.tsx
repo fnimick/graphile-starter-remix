@@ -25,23 +25,16 @@ export default function RootContent() {
           <Text mark>Please read the next few sections before continuing.</Text>{" "}
         </Paragraph>
 
-        <Title level={4}>Next.js and page load delays: dev only</Title>
+        <Title level={4}>Remix</Title>
         <Paragraph>
-          We use Next.js to serve the React app. This gives us server-side
+          We use Remix to serve the React app. This gives us server-side
           rendering, routing, bundle splitting, hot reloading, and much more.
-          However, in development when you visit a page it must first be loaded
-          from the file system and transpiled and bundled by the server, served
-          to the client, and then executed. This means there can be a small
-          delay when loading a web page for the first time in development. In
-          production, this delay should be vastly smaller, and can be eliminated
-          with pre-fetching. You can read more about this in the{" "}
-          <a href="https://nextjs.org/docs#prefetching-pages">Next.js docs</a>
         </Paragraph>
 
         <Title level={4}>Page hangs: development only</Title>
         <Paragraph>
-          If the page hangs this is likely because the Next server was
-          restarted. Please reload the page.
+          If the page hangs (or shows a connection error) this is likely because
+          the Remix server was restarted. Please reload the page.
         </Paragraph>
 
         <Title level={4}>Emails</Title>
@@ -71,13 +64,13 @@ export default function RootContent() {
 
         <Title level={4}>
           This page:{" "}
-          <a href="https://github.com/graphile/starter/blob/main/@app/next-client/src/pages/index.tsx">
-            <code>@app/next-client/src/pages/index.tsx</code>
+          <a href="https://github.com/fnimick/starter/blob/migrate-remix/@app/client/app/routes/__index/index.tsx">
+            <code>@app/client/app/routes/__index/index.tsx</code>
           </a>
         </Title>
         <Paragraph>
           If you edit this file and save, the page in the browser should
-          automatically update.
+          automatically refresh and update.
         </Paragraph>
 
         <Title level={4}>
