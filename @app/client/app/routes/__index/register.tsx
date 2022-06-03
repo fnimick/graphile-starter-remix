@@ -1,19 +1,22 @@
 import { QuestionCircleOutlined } from "@ant-design/icons";
 import { formItemLayout, getCodeFromError, tailFormItemLayout } from "@app/lib";
+import { json } from "@remix-run/node";
+import { useActionData, useSearchParams } from "@remix-run/react";
 import { withZod } from "@remix-validated-form/with-zod";
 import { Alert, Form, Row, Tooltip } from "antd";
 import { useState } from "react";
-import { json, useActionData, useSearchParams } from "remix";
 import { AuthenticityTokenInput } from "remix-utils";
 import { ValidatedForm, validationError } from "remix-validated-form";
 import * as z from "zod";
+
 import { PasswordStrength } from "~/components";
 import { FormInput } from "~/components/forms/FormInput";
 import { SubmitButton } from "~/components/forms/SubmitButton";
 import { validateCsrfToken } from "~/utils/csrf";
-import { GraphqlQueryErrorResult } from "~/utils/errors";
+import type { GraphqlQueryErrorResult } from "~/utils/errors";
 import { setPasswordStrengthInfo } from "~/utils/passwords";
-import { redirectTyped, TypedDataFunctionArgs } from "~/utils/remix-typed";
+import type { TypedDataFunctionArgs } from "~/utils/remix-typed";
+import { redirectTyped } from "~/utils/remix-typed";
 import { isSafe } from "~/utils/uri";
 import { requireNoUser } from "~/utils/users";
 
@@ -146,6 +149,7 @@ export default function Register() {
         validator={registerFormValidator}
         method="post"
         style={{ width: "100%" }}
+        noValidate
       >
         <AuthenticityTokenInput />
         <input type="hidden" name="redirectTo" value={next} />

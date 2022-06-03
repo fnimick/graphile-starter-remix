@@ -1,19 +1,34 @@
 import { getCodeFromError } from "@app/lib";
+import { json } from "@remix-run/node";
+import { useActionData, useSearchParams } from "@remix-run/react";
 import { withZod } from "@remix-validated-form/with-zod";
 import { Alert, Col, Form, Row } from "antd";
-import { json, useActionData, useSearchParams } from "remix";
 import { AuthenticityTokenInput } from "remix-utils";
 import { ValidatedForm, validationError } from "remix-validated-form";
 import * as z from "zod";
+
 import { FormInput } from "~/components/forms/FormInput";
 import { SubmitButton } from "~/components/forms/SubmitButton";
 import { validateCsrfToken } from "~/utils/csrf";
-import { jsonTyped } from "~/utils/remix-typed";
-
 import type { GraphqlQueryErrorResult } from "~/utils/errors";
 import type { TypedDataFunctionArgs } from "~/utils/remix-typed";
+import { jsonTyped, useLoaderDataTyped } from "~/utils/remix-typed";
 
 export const handle = { hideLogin: true, title: "Login" };
+
+export const loader = async ({ request, context }: TypedDataFunctionArgs) => {
+  const url = new URL(request.url);
+  const id = url.searchParams.get("id");
+  const token = url.searchParams.get("token");
+  if (id && token) {
+    const sdk = await context.graphqlSdk;
+    const result = await sdk.VerifyEmail({ id, token });
+    if (result.verifyEmail?.success) {
+      return jsonTyped({ success: true });
+    }
+  }
+  return jsonTyped({ success: false });
+};
 
 export const action = async ({ request, context }: TypedDataFunctionArgs) => {
   await validateCsrfToken(request, context);
@@ -60,11 +75,13 @@ export default function Verify() {
   const { success, message, code, error } =
     useActionData<GraphqlQueryErrorResult & { success?: true }>() ?? {};
 
+  const { success: loaderSuccess } = useLoaderDataTyped<typeof loader>();
+
   return (
     <Row justify="center" style={{ marginTop: 32 }}>
       <Col xs={24} sm={12}>
         <Row>
-          {success ? (
+          {success || loaderSuccess ? (
             <Alert
               type="success"
               showIcon

@@ -1,16 +1,19 @@
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { getCodeFromError } from "@app/lib";
+import { json } from "@remix-run/node";
+import { Link, useActionData, useSearchParams } from "@remix-run/react";
 import { withZod } from "@remix-validated-form/with-zod";
 import { Alert, Col, Form, Row } from "antd";
-import { json, Link, useActionData, useSearchParams } from "remix";
 import { AuthenticityTokenInput } from "remix-utils";
 import { ValidatedForm, validationError } from "remix-validated-form";
 import * as z from "zod";
+
 import { FormInput } from "~/components/forms/FormInput";
 import { SubmitButton } from "~/components/forms/SubmitButton";
 import { validateCsrfToken } from "~/utils/csrf";
-import { GraphqlQueryErrorResult } from "~/utils/errors";
-import { redirectTyped, TypedDataFunctionArgs } from "~/utils/remix-typed";
+import type { GraphqlQueryErrorResult } from "~/utils/errors";
+import type { TypedDataFunctionArgs } from "~/utils/remix-typed";
+import { redirectTyped } from "~/utils/remix-typed";
 import { isSafe } from "~/utils/uri";
 import { requireNoUser } from "~/utils/users";
 
@@ -33,7 +36,6 @@ export const action = async ({ request, context }: TypedDataFunctionArgs) => {
     });
   }
   const { username, password, redirectTo } = fieldValues.data;
-  console.log(redirectTo);
   try {
     await sdk.Login({ username, password });
     return redirectTyped(redirectTo ?? "/");
@@ -94,6 +96,7 @@ export default function LoginEmail() {
               autoComplete="username"
               size="large"
               prefix={<UserOutlined style={{ color: "rgba(0,0,0,.25)" }} />}
+              data-cy="loginpage-input-username"
             />
             <FormInput
               name="password"
@@ -103,11 +106,10 @@ export default function LoginEmail() {
               autoComplete="current-password"
               size="large"
               prefix={<LockOutlined style={{ color: "rgba(0,0,0,.25)" }} />}
+              data-cy="loginpage-input-password"
             />
             <Form.Item>
-              <Link to="/forgot">
-                <a>Forgotten passphrase?</a>
-              </Link>
+              <Link to="/forgot">Forgotten passphrase?</Link>
             </Form.Item>
             {error ? (
               <Form.Item>
@@ -129,7 +131,11 @@ export default function LoginEmail() {
               </Form.Item>
             ) : null}
             <Form.Item>
-              <SubmitButton label="Sign in" type="primary" />
+              <SubmitButton
+                label="Sign in"
+                type="primary"
+                data-cy="loginpage-button-submit"
+              />
               <Link style={{ marginLeft: 16 }} to="/login">
                 Use a different sign in method
               </Link>
