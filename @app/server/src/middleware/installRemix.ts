@@ -1,3 +1,4 @@
+import { getSdk } from "@app/graphql";
 import { GraphqlQueryError, LoaderContext } from "@app/lib";
 import { createRequestHandler } from "@remix-run/express";
 import Tokens from "csrf";
@@ -6,7 +7,6 @@ import { DocumentNode, execute, GraphQLError } from "graphql";
 import { HeadersInit } from "node-fetch";
 import postgraphile from "postgraphile";
 
-import { getSdk } from "../../../graphql/remix-types";
 import handleErrors from "../utils/handleErrors";
 
 if (!process.env.NODE_ENV) {

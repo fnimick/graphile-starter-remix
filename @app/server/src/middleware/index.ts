@@ -11,7 +11,6 @@ import installRemix from "./installRemix";
 import installSameOrigin from "./installSameOrigin";
 import installSession from "./installSession";
 import installSharedStatic from "./installSharedStatic";
-import installSSR from "./installSSR";
 import installWorkerUtils from "./installWorkerUtils";
 
 export {
@@ -28,6 +27,5 @@ export {
   installSameOrigin,
   installSession,
   installSharedStatic,
-  installSSR,
   installWorkerUtils,
 };

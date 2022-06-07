@@ -12,8 +12,9 @@
   },
   "dependencies": {
     "@app/client": "0.0.0",
-    "@app/next-client": "0.0.0",
     "@app/config": "0.0.0",
+    "@app/graphql": "0.0.0",
+    "@app/lib": "0.0.0",
     "@graphile-contrib/pg-simplify-inflector": "^6.0.0",
     "@graphile/pg-pubsub": "^4.12.1",
     "@graphile/pro": "^1.0.2",
@@ -44,6 +45,7 @@
     "lodash": "^4.17.21",
     "morgan": "^1.10.0",
     "next": "^10.2.3",
+    "node-fetch": "3.2.4",
     "passport": "^0.4.1",
     "passport-github2": "^0.1.12",
     "pg": "^8.6.0",

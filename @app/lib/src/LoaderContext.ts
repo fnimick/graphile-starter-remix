@@ -1,4 +1,4 @@
-import { getSdk } from "../../graphql/remix-types";
+import { getSdk } from "@app/graphql";
 
 export interface LoaderContext {
   cspNonce: string;

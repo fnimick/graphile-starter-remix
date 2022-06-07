@@ -23,16 +23,6 @@
       "port": 9757,
       "restart": true,
       "outFiles": ["${workspaceFolder}/@app/worker/dist/**/*.js"]
-    },
-    {
-      "type": "chrome",
-      "request": "launch",
-      "name": "Launch localhost:5678",
-      "url": "http://localhost:5678/",
-      "webRoot": "${workspaceFolder}/@app/next-client/src",
-      "pathMapping": {
-        "/_next": "${workspaceFolder}/@app/next-client/.next"
-      }
     }
   ]
 }

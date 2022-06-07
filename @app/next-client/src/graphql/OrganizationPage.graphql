@@ -1,3 +1,0 @@
-query OrganizationPage($slug: String!) {
-  ...OrganizationPage_Query
-}
