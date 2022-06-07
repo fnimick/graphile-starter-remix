@@ -1,16 +1,19 @@
 import { UserOutlined } from "@ant-design/icons";
 import { getCodeFromError } from "@app/lib";
+import { json } from "@remix-run/node";
+import { Link, useActionData } from "@remix-run/react";
 import { withZod } from "@remix-validated-form/with-zod";
 import { Alert, Form } from "antd";
-import { json, Link, useActionData } from "remix";
 import { AuthenticityTokenInput } from "remix-utils";
 import { ValidatedForm, validationError } from "remix-validated-form";
 import * as z from "zod";
+
 import { FormInput } from "~/components/forms/FormInput";
 import { SubmitButton } from "~/components/forms/SubmitButton";
 import { validateCsrfToken } from "~/utils/csrf";
-import { GraphqlQueryErrorResult } from "~/utils/errors";
-import { redirectTyped, TypedDataFunctionArgs } from "~/utils/remix-typed";
+import type { GraphqlQueryErrorResult } from "~/utils/errors";
+import type { TypedDataFunctionArgs } from "~/utils/remix-typed";
+import { redirectTyped } from "~/utils/remix-typed";
 import { requireNoUser } from "~/utils/users";
 
 export const handle = { hideLogin: true, title: "Forgot Password" };
@@ -100,9 +103,7 @@ export default function ForgotPassword() {
         </Link>
       </Form.Item>
       <Form.Item>
-        <Link to="/login/email">
-          <a>Remembered your password? Log in.</a>
-        </Link>
+        <Link to="/login/email">Remembered your password? Log in.</Link>
       </Form.Item>
     </ValidatedForm>
   );

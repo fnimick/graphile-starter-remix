@@ -1,23 +1,21 @@
-import nprogressStyles from "nprogress/nprogress.css";
+import type { User } from "@app/graphql";
+import type { MetaFunction } from "@remix-run/node";
 import {
   Links,
   LiveReload,
   Meta,
-  MetaFunction,
   Outlet,
   Scripts,
   ScrollRestoration,
   useCatch,
-} from "remix";
+} from "@remix-run/react";
+import nprogressStyles from "nprogress/nprogress.css";
 import { AuthenticityTokenProvider } from "remix-utils";
 
-import { User } from "../../graphql/remix-types";
+import type { TypedDataFunctionArgs } from "~/utils/remix-typed";
+import { jsonTyped, useLoaderDataTyped } from "~/utils/remix-typed";
+
 import compiledStyles from "./css/main.css";
-import {
-  jsonTyped,
-  TypedDataFunctionArgs,
-  useLoaderDataTyped,
-} from "~/utils/remix-typed";
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",

@@ -1,4 +1,4 @@
-import { User } from "@app/graphql";
+import type { User } from "@app/graphql";
 import { Result } from "antd";
 import React from "react";
 

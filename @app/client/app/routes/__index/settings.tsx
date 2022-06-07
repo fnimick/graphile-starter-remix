@@ -1,9 +1,10 @@
+import { Link, Outlet, useLocation } from "@remix-run/react";
 import { Layout, Menu, Typography } from "antd";
-import { TextProps } from "antd/lib/typography/Text";
-import { Link, Outlet, useLocation, useResolvedPath } from "remix";
+import type { TextProps } from "antd/lib/typography/Text";
+
 import { StandardWidth, Warn } from "~/components";
 import { useUser } from "~/utils/hooks";
-import { TypedDataFunctionArgs } from "~/utils/remix-typed";
+import type { TypedDataFunctionArgs } from "~/utils/remix-typed";
 import { requireUser } from "~/utils/users";
 
 import { contentMinHeight } from "../__index";

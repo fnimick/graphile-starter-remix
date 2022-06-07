@@ -1,4 +1,5 @@
-import { LoaderContext } from "@app/lib";
+import type { LoaderContext } from "@app/lib";
+
 import { redirectTyped } from "~/utils/remix-typed";
 
 export async function requireNoUser(context: LoaderContext) {

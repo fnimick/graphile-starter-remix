@@ -1,8 +1,9 @@
-import { CrownOutlined, DownOutlined } from "@ant-design/icons";
+import { DownOutlined } from "@ant-design/icons";
 import { companyName, projectName } from "@app/config";
+import { Form, Link, Outlet, useLocation, useMatches } from "@remix-run/react";
 import { Avatar, Col, Dropdown, Layout, Menu, Row, Typography } from "antd";
-import { Form, Link, Outlet, useLocation, useMatches } from "remix";
 import { AuthenticityTokenInput } from "remix-utils";
+
 import { useOptionalUser, useRootMatchesData } from "~/utils/hooks";
 
 import { H3, StandardWidth, Warn } from "../components";
@@ -54,8 +55,8 @@ export default function RootIndex() {
               data-cy="layout-header-title"
             >
               {titleHref ? (
-                <Link to={titleHref}>
-                  <a data-cy="layout-header-titlelink">{title}</a>
+                <Link to={titleHref} data-cy="layout-header-titlelink">
+                  {title}
                 </Link>
               ) : (
                 title
@@ -67,31 +68,6 @@ export default function RootIndex() {
               <Dropdown
                 overlay={
                   <Menu>
-                    {currentUser.organizationMemberships.nodes.map(
-                      ({ organization, isOwner }) => (
-                        <Menu.Item key={organization?.id}>
-                          <Link to={`/o/${organization?.slug}`}>
-                            {organization?.name}
-                            {isOwner ? (
-                              <span>
-                                {" "}
-                                <CrownOutlined />
-                              </span>
-                            ) : (
-                              ""
-                            )}
-                          </Link>
-                        </Menu.Item>
-                      )
-                    )}
-                    <Menu.Item>
-                      <Link
-                        to="/create-organization"
-                        data-cy="layout-link-create-organization"
-                      >
-                        Create organization
-                      </Link>
-                    </Menu.Item>
                     <Menu.Item>
                       <Link to="/settings" data-cy="layout-link-settings">
                         <Warn okay={currentUser.isVerified}>Settings</Warn>

@@ -1,5 +1,6 @@
-import { LoaderContext } from "@app/lib";
-import { ThrownResponse, json } from "remix";
+import type { LoaderContext } from "@app/lib";
+import { json } from "@remix-run/node";
+import type { ThrownResponse } from "@remix-run/react";
 
 export type CsrfErrorResponse = ThrownResponse<422, string>;
 

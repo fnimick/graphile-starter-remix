@@ -1,5 +1,6 @@
 import { validateCsrfToken } from "~/utils/csrf";
-import { redirectTyped, TypedDataFunctionArgs } from "~/utils/remix-typed";
+import type { TypedDataFunctionArgs } from "~/utils/remix-typed";
+import { redirectTyped } from "~/utils/remix-typed";
 
 export const action = async ({ request, context }: TypedDataFunctionArgs) => {
   await validateCsrfToken(request, context);

@@ -1,6 +1,6 @@
+import { Link } from "@remix-run/react";
 import { Button } from "antd";
-import { ButtonProps } from "antd/lib/button";
-import { Link } from "remix";
+import type { ButtonProps } from "antd/lib/button";
 
 export function ButtonLink(props: ButtonProps & { href: string; as?: string }) {
   const { href, as, ...rest } = props;

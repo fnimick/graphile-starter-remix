@@ -1,6 +1,7 @@
+import { useSearchParams } from "@remix-run/react";
 import { Alert } from "antd";
-import { useSearchParams } from "remix";
-import { TypedDataFunctionArgs } from "~/utils/remix-typed";
+
+import type { TypedDataFunctionArgs } from "~/utils/remix-typed";
 import { requireNoUser } from "~/utils/users";
 
 export const handle = { hideLogin: true, title: "Forgot Password" };

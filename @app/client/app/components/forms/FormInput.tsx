@@ -1,4 +1,5 @@
-import { ColProps, Form, Input, InputProps } from "antd";
+import type { ColProps, InputProps } from "antd";
+import { Form, Input } from "antd";
 import { useField } from "remix-validated-form";
 
 type FormInputProps = {

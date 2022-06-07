@@ -1,8 +1,9 @@
 import { UserAddOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Col, Row } from "antd";
-import { useSearchParams } from "remix";
+import { useSearchParams } from "@remix-run/react";
+import { Col, Row } from "antd";
+
 import { ButtonLink, SocialLoginOptions } from "~/components";
-import { redirectTyped, TypedDataFunctionArgs } from "~/utils/remix-typed";
+import type { TypedDataFunctionArgs } from "~/utils/remix-typed";
 import { isSafe } from "~/utils/uri";
 import { requireNoUser } from "~/utils/users";
 
@@ -47,8 +48,9 @@ export default function Login() {
               block
               type="default"
               href={`/register?next=${encodeURIComponent(next)}`}
+              data-cy="loginpage-button-register"
             >
-              <a data-cy="loginpage-button-register">Create an account</a>
+              Create an account
             </ButtonLink>
           </Col>
         </Row>

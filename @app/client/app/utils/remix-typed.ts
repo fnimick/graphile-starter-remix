@@ -1,14 +1,7 @@
-import { LoaderContext } from "@app/lib";
+import type { LoaderContext } from "@app/lib";
+import { json, redirect } from "@remix-run/node";
+import { useActionData, useFetcher, useLoaderData } from "@remix-run/react";
 import type { DataFunctionArgs } from "@remix-run/server-runtime";
-import {
-  AppData,
-  json,
-  LoaderFunction,
-  redirect,
-  useActionData,
-  useFetcher,
-  useLoaderData,
-} from "remix";
 
 // https://gist.github.com/fnimick/479bbfeb1d0649dc63603d478797cf2e
 

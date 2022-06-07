@@ -1,9 +1,14 @@
+import type { User } from "@app/graphql";
 import { useMatches } from "@remix-run/react";
 import { useMemo } from "react";
-import { loader } from "~/root";
 
-import { User } from "../../../graphql/remix-types";
-import { DataFunctionTyped, InferLoaderData, JsonValue } from "./remix-typed";
+import type { loader } from "~/root";
+
+import type {
+  DataFunctionTyped,
+  InferLoaderData,
+  JsonValue,
+} from "./remix-typed";
 
 /**
  * This base hook is used in other hooks to quickly search for specific data

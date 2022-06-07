@@ -1,8 +1,7 @@
 import { SyncOutlined } from "@ant-design/icons";
-import { ApolloError } from "@apollo/client";
+import type { ApolloError } from "@apollo/client";
 import { Alert, Button, Result } from "antd";
 import Paragraph from "antd/lib/typography/Paragraph";
-import React from "react";
 
 export interface ErrorAlertProps {
   error: ApolloError | Error;
