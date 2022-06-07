@@ -4,4 +4,4 @@ node_modules
 /data/schema.sql
 /@app/graphql/index.*
 /@app/client/build
-.next
+/@app/client/public/build
