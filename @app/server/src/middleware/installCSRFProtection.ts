@@ -21,10 +21,7 @@ export default (app: Express) => {
     ) {
       // Bypass CSRF for GraphiQL
       next();
-    } else if (
-      req.path.startsWith("/graphql") ||
-      req.path.startsWith("/next")
-    ) {
+    } else if (req.path.startsWith("/graphql")) {
       csrfProtection(req, res, next);
     } else {
       // disable CSRF parsing for remix, but still add `req.csrfToken()` method
