@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.6.2",
-    "@apollo/client": "^3.3.19",
+    "@apollo/client": "3.6.7",
     "@app/config": "0.0.0",
     "@app/graphql": "0.0.0",
     "@app/lib": "0.0.0",

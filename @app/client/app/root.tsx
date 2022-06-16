@@ -1,4 +1,6 @@
-import type { User } from "@app/graphql";
+import type { ApolloClient } from "@apollo/client";
+import { ApolloProvider } from "@apollo/client";
+import { CurrentUserUpdatedDocument } from "@app/graphql";
 import type { MetaFunction } from "@remix-run/node";
 import {
   Links,
@@ -10,42 +12,42 @@ import {
   useCatch,
 } from "@remix-run/react";
 import nprogressStyles from "nprogress/nprogress.css";
-import { AuthenticityTokenProvider } from "remix-utils";
+import { useState } from "react";
+import { AuthenticityTokenProvider, useHydrated } from "remix-utils";
 
+import { SubscriptionReload } from "~/components";
+import { initApollo, resetWebsocketConnection } from "~/context/apollo.client";
 import type { TypedDataFunctionArgs } from "~/utils/remix-typed";
 import { jsonTyped, useLoaderDataTyped } from "~/utils/remix-typed";
 
 import compiledStyles from "./css/main.css";
-
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
   title: "New Remix App",
   viewport: "width=device-width,initial-scale=1",
 });
 
-export interface RootLoader {
-  user?: User;
-  ENV: {
-    ROOT_URL?: string;
-    T_AND_C_URL?: string;
-  };
-  cspNonce: string;
-  csrfToken: string;
-}
+export type BROWSER_ENV = {
+  ROOT_URL: string;
+  T_AND_C_URL: string;
+  CSRF_TOKEN: string;
+};
 
 export const loader = async ({ context }: TypedDataFunctionArgs) => {
   const { cspNonce, graphqlSdk, csrfToken } = context;
   const sdk = await graphqlSdk;
   const data = await sdk.Shared();
   const user = data.currentUser;
+  const ENV: BROWSER_ENV = {
+    ROOT_URL: process.env.ROOT_URL!,
+    T_AND_C_URL: process.env.T_AND_C_URL!,
+    CSRF_TOKEN: csrfToken,
+  };
   return jsonTyped({
     user,
     cspNonce,
     csrfToken,
-    ENV: {
-      ROOT_URL: process.env.ROOT_URL,
-      T_AND_C_URL: process.env.T_AND_C_URL,
-    },
+    ENV,
   });
 };
 
@@ -63,7 +65,33 @@ export function links() {
 }
 
 export default function App() {
-  const { cspNonce, csrfToken } = useLoaderDataTyped<typeof loader>();
+  const [client, setClient] = useState<ApolloClient<any> | undefined>();
+  const { cspNonce, csrfToken, ENV, user } =
+    useLoaderDataTyped<typeof loader>();
+  const [userId, setUserId] = useState<string | undefined>(user?.id);
+
+  const hydrated = useHydrated();
+  let outlet = <Outlet />;
+  if (hydrated) {
+    // Reset websocket connection when current user changes
+    if (user?.id !== userId) {
+      resetWebsocketConnection();
+      setUserId(user?.id);
+    }
+    if (!client) {
+      setClient(initApollo());
+    }
+    if (client) {
+      outlet = (
+        <ApolloProvider client={client}>
+          {user?.id && (
+            <SubscriptionReload query={CurrentUserUpdatedDocument} />
+          )}
+          <Outlet />
+        </ApolloProvider>
+      );
+    }
+  }
   return (
     <html lang="en">
       <head>
@@ -72,8 +100,14 @@ export default function App() {
       </head>
       <body>
         <AuthenticityTokenProvider token={csrfToken}>
-          <Outlet />
+          {outlet}
         </AuthenticityTokenProvider>
+        <script
+          nonce={cspNonce}
+          dangerouslySetInnerHTML={{
+            __html: `window.ENV = ${JSON.stringify(ENV)}`,
+          }}
+        />
         <ScrollRestoration nonce={cspNonce} />
         <Scripts nonce={cspNonce} />
         <LiveReload nonce={cspNonce} />
