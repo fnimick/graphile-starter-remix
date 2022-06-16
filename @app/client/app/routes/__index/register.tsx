@@ -20,7 +20,7 @@ import { redirectTyped } from "~/utils/remix-typed";
 import { isSafe } from "~/utils/uri";
 import { requireNoUser } from "~/utils/users";
 
-export const handle = { hideLogin: true, title: "Login" };
+export const handle = { hideLogin: true, title: "Register" };
 
 export const loader = async ({ context }: TypedDataFunctionArgs) => {
   await requireNoUser(context);
