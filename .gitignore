@@ -1,5 +1,4 @@
 .env
-.next
 node_modules
 dist
 /heroku-setup
@@ -7,10 +6,9 @@ dist
 /@app/e2e/cypress/videos
 /@app/e2e/cypress/screenshots
 /@app/graphql/index.*
-/@app/graphql/remix-types.*
-/@app/graphql/modules.*
 .agignore
 *.tsbuildinfo
 .ethereal
 yarn-error.log
-.DS_Store
+
+**/.DS_Store
