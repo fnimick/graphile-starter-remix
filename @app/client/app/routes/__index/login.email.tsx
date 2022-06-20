@@ -131,11 +131,9 @@ export default function LoginEmail() {
               </Form.Item>
             ) : null}
             <Form.Item>
-              <SubmitButton
-                label="Sign in"
-                type="primary"
-                data-cy="loginpage-button-submit"
-              />
+              <SubmitButton type="primary" data-cy="loginpage-button-submit">
+                Sign in
+              </SubmitButton>
               <Link style={{ marginLeft: 16 }} to="/login">
                 Use a different sign in method
               </Link>

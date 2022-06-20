@@ -125,7 +125,7 @@ export default function Verify() {
                 </Form.Item>
               ) : null}
               <Form.Item>
-                <SubmitButton label="Submit" type="primary" />
+                <SubmitButton type="primary">Submit</SubmitButton>
               </Form.Item>
             </ValidatedForm>
           )}

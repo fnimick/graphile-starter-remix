@@ -97,7 +97,7 @@ export default function ForgotPassword() {
         </Form.Item>
       ) : null}
       <Form.Item>
-        <SubmitButton label="Reset password" type="primary" />
+        <SubmitButton type="primary">Reset password</SubmitButton>
         <Link style={{ marginLeft: 16 }} to="/login">
           Use a different sign in method
         </Link>

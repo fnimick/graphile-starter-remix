@@ -135,7 +135,7 @@ export default function Profile() {
           </Form.Item>
         ) : null}
         <Form.Item {...tailFormItemLayout}>
-          <SubmitButton htmlType="submit" label="Update Profile" />
+          <SubmitButton htmlType="submit">Update Profile</SubmitButton>
         </Form.Item>
       </ValidatedForm>
     </div>

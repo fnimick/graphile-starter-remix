@@ -152,7 +152,7 @@ export default function Passphrase() {
           </Form.Item>
         ) : null}
         <Form.Item {...tailFormItemLayout}>
-          <SubmitButton htmlType="submit" label="Change Passphrase" />
+          <SubmitButton htmlType="submit">Change Passphrase</SubmitButton>
         </Form.Item>
       </ValidatedForm>
     </div>

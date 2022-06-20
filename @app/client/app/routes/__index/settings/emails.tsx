@@ -274,11 +274,9 @@ function AddEmailForm({ onComplete, error, code, message }: AddEmailFormProps) {
         </AntForm.Item>
       ) : null}
       <AntForm.Item {...tailFormItemLayout}>
-        <SubmitButton
-          label="Add email"
-          type="primary"
-          data-cy="settingsemails-button-submit"
-        />
+        <SubmitButton type="primary" data-cy="settingsemails-button-submit">
+          Add email
+        </SubmitButton>
       </AntForm.Item>
     </ValidatedForm>
   );

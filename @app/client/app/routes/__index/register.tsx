@@ -249,7 +249,9 @@ export default function Register() {
           </Form.Item>
         ) : null}
         <Form.Item {...tailFormItemLayout}>
-          <SubmitButton label="Register" data-cy="registerpage-submit-button" />
+          <SubmitButton data-cy="registerpage-submit-button">
+            Register
+          </SubmitButton>
         </Form.Item>
       </ValidatedForm>
     </Row>
