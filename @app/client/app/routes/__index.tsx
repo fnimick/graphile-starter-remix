@@ -91,7 +91,10 @@ export default function RootIndex() {
                   <Avatar>
                     {(currentUser.name && currentUser.name[0]) || "?"}
                   </Avatar>
-                  <Warn okay={currentUser.isVerified}>
+                  <Warn
+                    okay={currentUser.isVerified}
+                    data-cy="header-unverified-warning"
+                  >
                     <span style={{ marginLeft: 8, marginRight: 8 }}>
                       {currentUser.name}
                     </span>
