@@ -166,9 +166,10 @@ There are four tenets to Graphile Starter:
 Graphile Starter is easy to start and everything is pre-configured as much as
 possible.
 
-NOTE: The migration from `graphile/starter`'s NextJS project is not yet
-complete; account management and organization features are missing. The initial
-Next client is mounted at `/next` for cross-referencing.
+NOTE: The migration from `graphile/starter`'s NextJS project is incomplete, but
+this provides a good base for beginning a new Postgraphile/Remix project.
+GraphQL queries, subscriptions, and other core elements all work as expected.
+Some account management and all organization features are missing.
 
 **Speedy development**: hot reloading, easy debugging, Graphile's
 [idempotent migration system](https://github.com/graphile/migrate),
