@@ -1,7 +1,9 @@
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { getCodeFromError } from "@app/lib";
+import type { ActionArgs, LoaderArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Link, useActionData, useSearchParams } from "@remix-run/react";
+import { redirect } from "@remix-run/server-runtime";
 import { withZod } from "@remix-validated-form/with-zod";
 import { Alert, Col, Form, Row } from "antd";
 import { AuthenticityTokenInput } from "remix-utils";
@@ -12,19 +14,17 @@ import { FormInput } from "~/components/forms/FormInput";
 import { SubmitButton } from "~/components/forms/SubmitButton";
 import { validateCsrfToken } from "~/utils/csrf";
 import type { GraphqlQueryErrorResult } from "~/utils/errors";
-import type { TypedDataFunctionArgs } from "~/utils/remix-typed";
-import { redirectTyped } from "~/utils/remix-typed";
 import { isSafe } from "~/utils/uri";
 import { requireNoUser } from "~/utils/users";
 
 export const handle = { hideLogin: true, title: "Login" };
 
-export const loader = async ({ context }: TypedDataFunctionArgs) => {
+export const loader = async ({ context }: LoaderArgs) => {
   await requireNoUser(context);
   return null;
 };
 
-export const action = async ({ request, context }: TypedDataFunctionArgs) => {
+export const action = async ({ request, context }: ActionArgs) => {
   await validateCsrfToken(request, context);
   const sdk = await context.graphqlSdk;
   const fieldValues = await loginFormValidator.validate(
@@ -38,7 +38,7 @@ export const action = async ({ request, context }: TypedDataFunctionArgs) => {
   const { username, password, redirectTo } = fieldValues.data;
   try {
     await sdk.Login({ username, password });
-    return redirectTyped(redirectTo ?? "/");
+    return redirect(redirectTo ?? "/");
   } catch (e) {
     const code = getCodeFromError(e);
     if (code === "CREDS") {
@@ -74,8 +74,7 @@ export default function LoginEmail() {
   const rawNext = searchParams.get("next");
   const next = isSafe(rawNext) ? rawNext : "/";
 
-  const { message, code, error } =
-    useActionData<GraphqlQueryErrorResult>() ?? {};
+  const { message, code, error } = useActionData<typeof action>() ?? {};
 
   return (
     <Row justify="center" style={{ marginTop: 32 }}>
