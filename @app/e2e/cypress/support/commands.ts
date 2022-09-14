@@ -131,6 +131,15 @@ Cypress.Commands.add("getCy", getCy);
 Cypress.Commands.add("serverCommand", serverCommand);
 Cypress.Commands.add("login", login);
 
+// Wait after every visit for DOM to hydrate (necessary for remix 1.7.0+, should
+// be fixed in Cypress 11.x per
+// https://github.com/cypress-io/cypress/issues/7306)
+
+Cypress.Commands.overwrite("visit", (originalFn, url) => {
+  originalFn(url);
+  cy.wait(750);
+});
+
 export {}; // Make this a module so we can `declare global`
 
 declare global {
