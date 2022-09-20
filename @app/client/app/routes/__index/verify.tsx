@@ -16,6 +16,7 @@ import { FormInput } from "~/components/forms/FormInput";
 import { SubmitButton } from "~/components/forms/SubmitButton";
 import { validateCsrfToken } from "~/utils/csrf";
 import type { GraphqlQueryErrorResult } from "~/utils/errors";
+import { extractGraphqlErrorFromFormAction } from "~/utils/errors";
 
 export const handle = { hideLogin: true, title: "Login" };
 
@@ -53,7 +54,7 @@ export const action = async ({ request, context }: ActionArgs) => {
         token: "Incorrect token, please check and try again",
       },
     });
-  } catch (e) {
+  } catch (e: any) {
     const code = getCodeFromError(e);
     return json<GraphqlQueryErrorResult>({
       message: e.message,
@@ -75,8 +76,13 @@ export default function Verify() {
   const id = searchParams.get("id") ?? "";
   const token = searchParams.get("token") ?? "";
 
-  const { success, message, code, error } =
-    useActionData<typeof action>() ?? {};
+  const actionData = useActionData<typeof action>();
+
+  const success =
+    actionData && "success" in actionData ? actionData.success : false;
+
+  const { message, code, error } =
+    extractGraphqlErrorFromFormAction(actionData);
 
   const { success: loaderSuccess } = useLoaderData<typeof loader>();
 

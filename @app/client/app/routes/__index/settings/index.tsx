@@ -52,7 +52,7 @@ export async function action({ request, context }: ActionArgs) {
       id: currentUser.id,
       patch: { name, username },
     });
-  } catch (e) {
+  } catch (e: any) {
     const code = getCodeFromError(e);
     if (code === "NUNIQ") {
       return validationError({

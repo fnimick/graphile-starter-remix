@@ -1,7 +1,11 @@
 import type { EmailsForm_UserEmailFragment } from "@app/graphql";
 import { formItemLayout, getCodeFromError, tailFormItemLayout } from "@app/lib";
 import { Form, useActionData, useLoaderData } from "@remix-run/react";
-import type { ActionArgs, LoaderArgs } from "@remix-run/server-runtime";
+import type {
+  ActionArgs,
+  LoaderArgs,
+  SerializeFrom,
+} from "@remix-run/server-runtime";
 import { json } from "@remix-run/server-runtime";
 import { withZod } from "@remix-validated-form/with-zod";
 import { Alert, Avatar, Button, Form as AntForm, List, PageHeader } from "antd";
@@ -16,7 +20,6 @@ import { SubmitButton } from "~/components/forms/SubmitButton";
 import { validateCsrfToken } from "~/utils/csrf";
 import type { GraphqlQueryErrorResult } from "~/utils/errors";
 import { requireUser } from "~/utils/users";
-
 export const handle = { title: "Settings: Emails" };
 
 export async function loader({ request, context }: LoaderArgs) {
@@ -51,7 +54,7 @@ export async function action({ request, context }: ActionArgs) {
     }
     try {
       await sdk.AddEmail({ email: validationResult.data.email });
-    } catch (e) {
+    } catch (e: any) {
       const code = getCodeFromError(e);
       return json<GraphqlQueryErrorResult>({
         message: e.message,
@@ -81,7 +84,7 @@ function Email({
   email,
   hasOtherEmails,
 }: {
-  email: EmailsForm_UserEmailFragment;
+  email: SerializeFrom<EmailsForm_UserEmailFragment>;
   hasOtherEmails: boolean;
 }) {
   const canDelete = !email.isPrimary && hasOtherEmails;

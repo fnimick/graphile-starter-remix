@@ -44,7 +44,7 @@ export async function action({ request, context }: ActionArgs) {
   const { oldPassword, newPassword } = fieldValues.data;
   try {
     await sdk.ChangePassword({ oldPassword, newPassword });
-  } catch (e) {
+  } catch (e: any) {
     const code = getCodeFromError(e);
     if (code === "LOGIN") {
       throw redirect(

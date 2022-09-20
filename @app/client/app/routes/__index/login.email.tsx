@@ -14,6 +14,7 @@ import { FormInput } from "~/components/forms/FormInput";
 import { SubmitButton } from "~/components/forms/SubmitButton";
 import { validateCsrfToken } from "~/utils/csrf";
 import type { GraphqlQueryErrorResult } from "~/utils/errors";
+import { extractGraphqlErrorFromFormAction } from "~/utils/errors";
 import { isSafe } from "~/utils/uri";
 import { requireNoUser } from "~/utils/users";
 
@@ -39,7 +40,7 @@ export const action = async ({ request, context }: ActionArgs) => {
   try {
     await sdk.Login({ username, password });
     return redirect(redirectTo ?? "/");
-  } catch (e) {
+  } catch (e: any) {
     const code = getCodeFromError(e);
     if (code === "CREDS") {
       return validationError(
@@ -74,7 +75,9 @@ export default function LoginEmail() {
   const rawNext = searchParams.get("next");
   const next = isSafe(rawNext) ? rawNext : "/";
 
-  const { message, code, error } = useActionData<typeof action>() ?? {};
+  const { message, code, error } = extractGraphqlErrorFromFormAction(
+    useActionData<typeof action>()
+  );
 
   return (
     <Row justify="center" style={{ marginTop: 32 }}>

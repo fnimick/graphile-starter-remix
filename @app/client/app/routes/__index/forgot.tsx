@@ -38,7 +38,7 @@ export const action = async ({ request, context }: ActionArgs) => {
   try {
     await sdk.ForgotPassword({ email });
     return redirect(`/forgot/success?email=${encodeURIComponent(email)}`);
-  } catch (e) {
+  } catch (e: any) {
     const code = getCodeFromError(e);
     return json<GraphqlQueryErrorResult>({
       message: e.message,

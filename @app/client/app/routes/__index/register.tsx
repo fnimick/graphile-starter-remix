@@ -42,7 +42,7 @@ export const action = async ({ request, context }: ActionArgs) => {
   try {
     await sdk.Register({ name, username, email, password });
     return redirect(redirectTo ?? "/");
-  } catch (e) {
+  } catch (e: any) {
     const { password, confirm, ...restSubmittedValues } =
       fieldValues.submittedData;
     const code = getCodeFromError(e);
