@@ -45,7 +45,6 @@ export async function action({ request, context }: ActionArgs) {
   await validateCsrfToken(request, context);
   const sdk = await context.graphqlSdk;
   const data = await request.formData();
-  console.log(data);
   const subaction = data.get("subaction");
   if (subaction === "add") {
     const validationResult = await addEmailValidator.validate(data);
@@ -219,7 +218,10 @@ export default function ManageEmails() {
             </div>
           ) : (
             <AddEmailForm
-              onComplete={() => setShowAddEmailForm(false)}
+              // prevent race condition when removing email form from DOM at
+              // same time as form validation - see
+              // https://github.com/airjp73/remix-validated-form/issues/178
+              onComplete={() => setTimeout(() => setShowAddEmailForm(false))}
               message={message}
               code={code}
               error={error}

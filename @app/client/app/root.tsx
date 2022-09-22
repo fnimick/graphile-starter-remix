@@ -67,8 +67,17 @@ export function links() {
 
 export default function App() {
   const [client, setClient] = useState<ApolloClient<any> | undefined>();
-  const { cspNonce, csrfToken, ENV, user } = useLoaderData<typeof loader>();
+  const loaderData = useLoaderData<typeof loader>();
+  let { cspNonce } = loaderData;
+  const { csrfToken, ENV, user } = loaderData;
   const [userId, setUserId] = useState<string | undefined>(user?.id);
+
+  // Don't update nonce when rendering on the client - it is stripped from the
+  // DOM as soon as the page loads per spec. See
+  // https://html.spec.whatwg.org/multipage/urls-and-fetching.html#nonce-attributes
+  if (typeof document !== "undefined") {
+    cspNonce = "";
+  }
 
   const hydrated = useHydrated();
   let outlet = <Outlet />;

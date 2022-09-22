@@ -118,7 +118,7 @@ function login(payload?: {
   verified?: boolean;
   password?: string;
   orgs?: [[string, string] | [string, string, boolean]];
-}): Chainable<Window> {
+}): Chainable<Cypress.AUTWindow> {
   return cy.visit(
     Cypress.env("ROOT_URL") +
       `/cypressServerCommand?command=login&payload=${encodeURIComponent(
@@ -137,7 +137,7 @@ Cypress.Commands.add("login", login);
 
 Cypress.Commands.overwrite("visit", (originalFn, url) => {
   originalFn(url);
-  cy.wait(750);
+  cy.wait(1000);
 });
 
 export {}; // Make this a module so we can `declare global`
