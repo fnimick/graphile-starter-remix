@@ -7,7 +7,10 @@ context("Manage emails", () => {
     // Disable ResizeObserver errors
     Cypress.on(
       "uncaught:exception",
-      (err) => !err.message.includes("ResizeObserver loop limit exceeded")
+      (err: any) =>
+        !err.message.includes("ResizeObserver loop limit exceeded") as
+          | false
+          | void
     );
 
     // Setup
