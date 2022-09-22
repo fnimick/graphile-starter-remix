@@ -137,7 +137,7 @@ Cypress.Commands.add("login", login);
 
 Cypress.Commands.overwrite("visit", (originalFn, url) => {
   originalFn(url);
-  cy.wait(1000);
+  cy.wait(1500);
 });
 
 export {}; // Make this a module so we can `declare global`
