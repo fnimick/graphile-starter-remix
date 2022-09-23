@@ -5,7 +5,7 @@ import { useActionData, useSearchParams } from "@remix-run/react";
 import { redirect } from "@remix-run/server-runtime";
 import { withZod } from "@remix-validated-form/with-zod";
 import { useState } from "react";
-import { HiOutlineQuestionMarkCircle, HiOutlineXCircle } from "react-icons/hi";
+import { HiOutlineQuestionMarkCircle } from "react-icons/hi";
 import { AuthenticityTokenInput } from "remix-utils";
 import { ValidatedForm, validationError } from "remix-validated-form";
 import * as z from "zod";
