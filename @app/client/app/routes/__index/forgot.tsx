@@ -5,13 +5,11 @@ import { json } from "@remix-run/node";
 import { Link, useActionData } from "@remix-run/react";
 import { redirect } from "@remix-run/server-runtime";
 import { withZod } from "@remix-validated-form/with-zod";
-import { Alert, Form } from "antd";
 import { AuthenticityTokenInput } from "remix-utils";
 import { ValidatedForm, validationError } from "remix-validated-form";
 import * as z from "zod";
 
-import { FormInput } from "~/components/forms/FormInput";
-import { SubmitButton } from "~/components/forms/SubmitButton";
+import { ErrorAlert, FormInput, SubmitButton } from "~/components";
 import { validateCsrfToken } from "~/utils/csrf";
 import type { GraphqlQueryErrorResult } from "~/utils/errors";
 import { requireNoUser } from "~/utils/users";
@@ -65,46 +63,33 @@ export default function ForgotPassword() {
     <ValidatedForm
       validator={forgotPasswordFormValidator}
       method="post"
-      style={{ width: "100%" }}
+      className="flex flex-col max-w-lg w-full gap-y-5"
     >
       <AuthenticityTokenInput />
       <FormInput
-        name="email"
+        name="username"
         placeholder="Email"
         required
         type="email"
         autoComplete="email"
-        prefix={<UserOutlined style={{ color: "rgba(0,0,0,.25)" }} />}
+        inputPrefix={<UserOutlined />}
       />
-
       {error ? (
-        <Form.Item>
-          <Alert
-            type="error"
-            message={`Sign in failed`}
-            description={
-              <span>
-                {message}
-                {code ? (
-                  <span>
-                    {" "}
-                    (Error code: <code>ERR_{code}</code>)
-                  </span>
-                ) : null}
-              </span>
-            }
-          />
-        </Form.Item>
+        <ErrorAlert title="Login failed" message={message} code={code} />
       ) : null}
-      <Form.Item>
-        <SubmitButton type="primary">Reset password</SubmitButton>
-        <Link style={{ marginLeft: 16 }} to="/login">
+
+      <div className="flex justify-between align-center">
+        <SubmitButton data-cy="loginpage-button-submit">
+          Reset password
+        </SubmitButton>
+        <Link className="link self-center" to="/login">
           Use a different sign in method
         </Link>
-      </Form.Item>
-      <Form.Item>
-        <Link to="/login/email">Remembered your password? Log in.</Link>
-      </Form.Item>
+      </div>
+
+      <Link className="link" to="/login/email">
+        Remembered your password? Log in.
+      </Link>
     </ValidatedForm>
   );
 }
