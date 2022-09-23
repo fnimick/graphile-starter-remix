@@ -19,7 +19,7 @@ export function SocialLoginOptions({
       className="btn btn-primary"
       to={`/auth/github?next=${encodeURIComponent(next)}`}
     >
-      <span className="mx-1 text-lg tems-center flex">
+      <span className="tems-center mx-1 flex text-lg">
         <FaGithub />
       </span>
       {buttonTextFromService("GitHub")}

@@ -80,7 +80,7 @@ export default function LoginEmail() {
     <ValidatedForm
       validator={loginFormValidator}
       method="post"
-      className="flex flex-col max-w-lg w-full gap-y-5"
+      className="flex w-full max-w-lg flex-col gap-y-5"
     >
       <AuthenticityTokenInput />
       <input type="hidden" name="redirectTo" value={next} />
@@ -109,7 +109,7 @@ export default function LoginEmail() {
         <ErrorAlert title="Login failed" message={message} code={code} />
       ) : null}
 
-      <div className="flex justify-between align-center">
+      <div className="align-center flex justify-between">
         <SubmitButton data-cy="loginpage-button-submit">Sign in</SubmitButton>
         <Link className="link self-center" to="/login">
           Use a different sign in method

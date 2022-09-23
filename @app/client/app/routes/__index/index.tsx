@@ -1,6 +1,6 @@
 export default function RootContent() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-x-2">
+    <div className="grid grid-cols-1 gap-x-2 md:grid-cols-3">
       <div className="col-span-2 space-y-2">
         <h1 className="text-3xl" data-cy="homepage-header">
           Welcome to the PostGraphile starter
@@ -153,7 +153,7 @@ export default function RootContent() {
           you should start a new git repository with the code from the latest
           release:
         </div>
-        <ol className="list-decimal list-inside">
+        <ol className="list-inside list-decimal">
           <li>
             Download and extract a zip of the{" "}
             <a
@@ -165,7 +165,7 @@ export default function RootContent() {
           </li>
           <li>
             In that folder run:
-            <ul className="list-disc list-inside indent-2">
+            <ul className="list-inside list-disc indent-2">
               <li>
                 <code>git init</code>
               </li>

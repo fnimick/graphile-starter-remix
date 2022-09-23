@@ -25,12 +25,12 @@ export default function RootIndex() {
   const currentRouteURL = `${pathname}${search}${hash}`;
 
   return (
-    <div className="min-h-screen flex flex-col items-stretch">
+    <div className="flex min-h-screen flex-col items-stretch">
       <div className="navbar bg-base-100 flex-shrink-0">
         <div className="navbar-start">
           <Link
             to="/"
-            className="btn btn-ghost normal-case text-base md:text-xl"
+            className="btn btn-ghost text-base normal-case md:text-xl"
           >
             {projectName}
           </Link>
@@ -61,7 +61,7 @@ export default function RootIndex() {
                   tabIndex={0}
                   className="btn btn-ghost btn-circle avatar placeholder"
                 >
-                  <div className="w-10 rounded full">
+                  <div className="full w-10 rounded">
                     <span>
                       {currentUser.name
                         ?.split(" ")
@@ -74,7 +74,7 @@ export default function RootIndex() {
               </Warn>
               <ul
                 tabIndex={0}
-                className="menu menu-compact dropdown-content shadow bg-base-100 rounded-b-box w-52"
+                className="menu menu-compact dropdown-content bg-base-100 rounded-b-box w-52 shadow"
               >
                 <li>
                   <Link
@@ -118,14 +118,14 @@ export default function RootIndex() {
       </div>
       <div
         className={classNames([
-          "flex-grow flex flex-col items-center",
-          limitContentWidth ? "max-w-5xl w-full self-center" : undefined,
+          "flex flex-grow flex-col items-center",
+          limitContentWidth ? "w-full max-w-5xl self-center" : undefined,
         ])}
       >
         <Outlet />
       </div>
-      <footer className="footer items-center p-4 bg-neutral text-neutral-content flex-shrink-0">
-        <div className="items-center grid-flow-col">
+      <footer className="footer bg-neutral text-neutral-content flex-shrink-0 items-center p-4">
+        <div className="grid-flow-col items-center">
           <p>
             Copyright &copy; {new Date().getFullYear()} {companyName}. All
             rights reserved.

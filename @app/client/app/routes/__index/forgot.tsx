@@ -63,7 +63,7 @@ export default function ForgotPassword() {
     <ValidatedForm
       validator={forgotPasswordFormValidator}
       method="post"
-      className="flex flex-col max-w-lg w-full gap-y-5"
+      className="flex w-full max-w-lg flex-col gap-y-5"
     >
       <AuthenticityTokenInput />
       <FormInput
@@ -78,7 +78,7 @@ export default function ForgotPassword() {
         <ErrorAlert title="Login failed" message={message} code={code} />
       ) : null}
 
-      <div className="flex justify-between align-center">
+      <div className="align-center flex justify-between">
         <SubmitButton data-cy="loginpage-button-submit">
           Reset password
         </SubmitButton>

@@ -87,7 +87,7 @@ export default function Verify() {
   const { success: loaderSuccess } = useLoaderData<typeof loader>();
 
   return (
-    <div className="max-w-lg w-full">
+    <div className="w-full max-w-lg">
       {success || loaderSuccess ? (
         <SuccessAlert title="Email Verified">
           Thank you for verifying your email address. You may now close this

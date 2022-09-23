@@ -178,9 +178,9 @@ function Email({
           "-"
         )}`}
         key={email.id}
-        className="flex flex-row items-center gap-x-3 border-b py-3 border-base-content/60"
+        className="border-base-content/60 flex flex-row items-center gap-x-3 border-b py-3"
       >
-        <div className="text-2xl flex-shrink-0">
+        <div className="flex-shrink-0 text-2xl">
           <HiOutlineMail />
         </div>
         <div className="flex-grow">
@@ -264,8 +264,8 @@ export default function ManageEmails() {
     useActionData<GraphqlQueryErrorResult>() ?? {};
 
   return (
-    <div className="max-w-3xl w-full flex flex-col gap-y-5">
-      <h1 className="text-2xl text-center mb-4">Email Addresses</h1>
+    <div className="flex w-full max-w-3xl flex-col gap-y-5">
+      <h1 className="mb-4 text-center text-2xl">Email Addresses</h1>
       {user.isVerified ? null : (
         <WarningAlert title="No verified emails">
           You do not have any verified email addresses, this will make account

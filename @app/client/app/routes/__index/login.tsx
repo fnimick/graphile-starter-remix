@@ -19,7 +19,7 @@ export default function Login() {
   const next = isSafe(rawNext) ? rawNext : "/";
 
   return (
-    <div className="flex flex-col max-w-lg gap-y-2">
+    <div className="flex max-w-lg flex-col gap-y-2">
       <Link
         className="btn btn-primary"
         to={`email?next=${encodeURIComponent(next)}`}

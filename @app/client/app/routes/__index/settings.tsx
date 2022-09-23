@@ -28,7 +28,7 @@ export default function Settings() {
   }, []);
 
   return (
-    <div className="drawer drawer-mobile self-stretch flex-1">
+    <div className="drawer drawer-mobile flex-1 self-stretch">
       <input
         id="settings-drawer"
         type="checkbox"
@@ -36,22 +36,22 @@ export default function Settings() {
         ref={checkboxRef}
       />
       {/* relative used to float menu button with absolute position */}
-      <div className="drawer-content h-auto relative">
+      <div className="drawer-content relative h-auto">
         <label
           htmlFor="settings-drawer"
-          className="btn btn-primary btn-circle drawer-button lg:hidden absolute top-5 left-5"
+          className="btn btn-primary btn-circle drawer-button absolute top-5 left-5 lg:hidden"
           data-cy="settingslayout-drawer-toggle"
         >
           <HiMenu />
         </label>
 
-        <div className="flex flex-col items-center m-4">
+        <div className="m-4 flex flex-col items-center">
           <Outlet />
         </div>
       </div>
-      <div className="drawer-side lg:border-r lg:border-r-primary">
+      <div className="drawer-side lg:border-r-primary lg:border-r">
         <label htmlFor="settings-drawer" className="drawer-overlay" />
-        <ul className="menu p-4 overflow-y-auto w-80 bg-base-100 text-base-content">
+        <ul className="menu bg-base-100 text-base-content w-80 overflow-y-auto p-4">
           <li>
             <NavLink
               to="/settings"

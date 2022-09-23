@@ -45,7 +45,7 @@ export const FormInput = ({
       )}
       {inputPrefix ? (
         <div className="relative">
-          <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+          <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
             {inputPrefix}
           </div>
           {inputElement}
@@ -54,7 +54,7 @@ export const FormInput = ({
         inputElement
       )}
       <div className="min-h-6">
-        {error && <p className="mt-1 text-sm text-error">{error}</p>}
+        {error && <p className="text-error mt-1 text-sm">{error}</p>}
       </div>
       {children}
     </div>

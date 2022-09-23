@@ -145,7 +145,7 @@ export default function Register() {
     <ValidatedForm
       validator={registerFormValidator}
       method="post"
-      className="flex flex-col max-w-lg w-full gap-y-1"
+      className="flex w-full max-w-lg flex-col gap-y-1"
       noValidate
     >
       <AuthenticityTokenInput />
@@ -156,7 +156,7 @@ export default function Register() {
           <span data-cy="registerpage-name-label" className="flex">
             Name&nbsp;
             <span
-              className="tooltip flex items-center w-5"
+              className="tooltip flex w-5 items-center"
               data-tip="What is your name?"
             >
               <HiOutlineQuestionMarkCircle />
@@ -174,7 +174,7 @@ export default function Register() {
           <span className="flex">
             Username&nbsp;
             <span
-              className="tooltip flex items-center w-5"
+              className="tooltip flex w-5 items-center"
               data-tip="What do you want others to call you?"
             >
               <HiOutlineQuestionMarkCircle />
@@ -227,7 +227,7 @@ export default function Register() {
       {error ? (
         <ErrorAlert title="Registration failed" message={message} code={code} />
       ) : null}
-      <div className="flex justify-start align-center">
+      <div className="align-center flex justify-start">
         <SubmitButton data-cy="registerpage-submit-button">
           Register
         </SubmitButton>

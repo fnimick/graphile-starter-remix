@@ -88,10 +88,10 @@ export default function Passphrase() {
       method="post"
       resetAfterSubmit
       onReset={() => setPasswordDirty(false)}
-      className="flex flex-col max-w-lg w-full gap-y-5"
+      className="flex w-full max-w-lg flex-col gap-y-5"
     >
       <AuthenticityTokenInput />
-      <h1 className="text-2xl text-center mb-4">Change Passphrase</h1>
+      <h1 className="mb-4 text-center text-2xl">Change Passphrase</h1>
       <FormInput
         name="oldPassword"
         label="Old passphrase"

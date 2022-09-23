@@ -87,10 +87,10 @@ export default function Profile() {
         name: user?.name ?? undefined,
         username: user?.username ?? undefined,
       }}
-      className="flex flex-col max-w-lg w-full gap-y-5"
+      className="flex w-full max-w-lg flex-col gap-y-5"
     >
       <AuthenticityTokenInput />
-      <h1 className="text-2xl text-center mb-4">Edit Profile</h1>
+      <h1 className="mb-4 text-center text-2xl">Edit Profile</h1>
       <FormInput
         name="name"
         label="Name"
