@@ -5,7 +5,7 @@ import { useActionData, useSearchParams } from "@remix-run/react";
 import { redirect } from "@remix-run/server-runtime";
 import { withZod } from "@remix-validated-form/with-zod";
 import { useState } from "react";
-import { HiOutlineQuestionMarkCircle } from "react-icons/hi";
+import { IoHelpCircleOutline } from "react-icons/io5";
 import { AuthenticityTokenInput } from "remix-utils";
 import { ValidatedForm, validationError } from "remix-validated-form";
 import * as z from "zod";
@@ -159,7 +159,7 @@ export default function Register() {
               className="tooltip flex w-5 items-center"
               data-tip="What is your name?"
             >
-              <HiOutlineQuestionMarkCircle />
+              <IoHelpCircleOutline />
             </span>
           </span>
         }
@@ -177,7 +177,7 @@ export default function Register() {
               className="tooltip flex w-5 items-center"
               data-tip="What do you want others to call you?"
             >
-              <HiOutlineQuestionMarkCircle />
+              <IoHelpCircleOutline />
             </span>
           </span>
         }

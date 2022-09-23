@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { HiOutlineInformationCircle } from "react-icons/hi";
+import { IoInformationCircleOutline } from "react-icons/io5";
 
 export interface PasswordStrengthProps {
   passwordStrength: number; // 0-4
@@ -33,9 +33,9 @@ export function PasswordStrength({
         <div className="dropdown dropdown-end dropdown-hover">
           <label
             tabIndex={0}
-            className="btn btn-circle btn-ghost btn-xs text-info text-lg"
+            className="btn btn-circle btn-ghost btn-xs text-info cursor-default text-lg"
           >
-            <HiOutlineInformationCircle />
+            <IoInformationCircleOutline />
           </label>
           <div
             tabIndex={0}

@@ -1,5 +1,5 @@
 import { Link } from "@remix-run/react";
-import { FaGithub } from "react-icons/fa";
+import { IoLogoGithub } from "react-icons/io5";
 
 export interface SocialLoginOptionsProps {
   next: string;
@@ -20,7 +20,7 @@ export function SocialLoginOptions({
       to={`/auth/github?next=${encodeURIComponent(next)}`}
     >
       <span className="tems-center mx-1 flex text-lg">
-        <FaGithub />
+        <IoLogoGithub />
       </span>
       {buttonTextFromService("GitHub")}
     </Link>

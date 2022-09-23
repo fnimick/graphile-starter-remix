@@ -1,10 +1,10 @@
-import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { getCodeFromError } from "@app/lib";
 import type { ActionArgs, LoaderArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Link, useActionData, useSearchParams } from "@remix-run/react";
 import { redirect } from "@remix-run/server-runtime";
 import { withZod } from "@remix-validated-form/with-zod";
+import { IoLockClosedOutline, IoPersonOutline } from "react-icons/io5";
 import { AuthenticityTokenInput } from "remix-utils";
 import { ValidatedForm, validationError } from "remix-validated-form";
 import * as z from "zod";
@@ -90,7 +90,7 @@ export default function LoginEmail() {
         required
         type="text"
         autoComplete="username"
-        inputPrefix={<UserOutlined />}
+        inputPrefix={<IoPersonOutline />}
         data-cy="loginpage-input-username"
       />
       <FormInput
@@ -99,7 +99,7 @@ export default function LoginEmail() {
         required
         type="password"
         autoComplete="current-password"
-        inputPrefix={<LockOutlined />}
+        inputPrefix={<IoLockClosedOutline />}
         data-cy="loginpage-input-password"
       />
       <Link className="link mb-6" to="/forgot">

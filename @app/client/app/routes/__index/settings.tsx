@@ -1,7 +1,7 @@
 import { NavLink, Outlet } from "@remix-run/react";
 import type { LoaderArgs } from "@remix-run/server-runtime";
 import { useCallback, useRef } from "react";
-import { HiMenu } from "react-icons/hi";
+import { IoMenu } from "react-icons/io5";
 
 import { Warn } from "~/components";
 import { useUser } from "~/utils/hooks";
@@ -39,10 +39,10 @@ export default function Settings() {
       <div className="drawer-content relative h-auto">
         <label
           htmlFor="settings-drawer"
-          className="btn btn-primary btn-circle drawer-button absolute top-5 left-5 lg:hidden"
+          className="btn btn-primary btn-circle drawer-button absolute top-5 left-5 text-lg lg:hidden"
           data-cy="settingslayout-drawer-toggle"
         >
-          <HiMenu />
+          <IoMenu />
         </label>
 
         <div className="m-4 flex flex-col items-center">

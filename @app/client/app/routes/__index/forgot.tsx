@@ -1,10 +1,10 @@
-import { UserOutlined } from "@ant-design/icons";
 import { getCodeFromError } from "@app/lib";
 import type { ActionArgs, LoaderArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Link, useActionData } from "@remix-run/react";
 import { redirect } from "@remix-run/server-runtime";
 import { withZod } from "@remix-validated-form/with-zod";
+import { IoPersonOutline } from "react-icons/io5";
 import { AuthenticityTokenInput } from "remix-utils";
 import { ValidatedForm, validationError } from "remix-validated-form";
 import * as z from "zod";
@@ -72,7 +72,7 @@ export default function ForgotPassword() {
         required
         type="email"
         autoComplete="email"
-        inputPrefix={<UserOutlined />}
+        inputPrefix={<IoPersonOutline />}
       />
       {error ? (
         <ErrorAlert title="Login failed" message={message} code={code} />

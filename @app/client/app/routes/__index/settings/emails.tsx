@@ -9,7 +9,7 @@ import type {
 import { json } from "@remix-run/server-runtime";
 import { withZod } from "@remix-validated-form/with-zod";
 import { useState } from "react";
-import { HiOutlineMail } from "react-icons/hi";
+import { IoMailOutline } from "react-icons/io5";
 import { AuthenticityTokenInput } from "remix-utils";
 import { ValidatedForm, validationError } from "remix-validated-form";
 import * as z from "zod";
@@ -181,7 +181,7 @@ function Email({
         className="border-base-content/60 flex flex-row items-center gap-x-3 border-b py-3"
       >
         <div className="flex-shrink-0 text-2xl">
-          <HiOutlineMail />
+          <IoMailOutline />
         </div>
         <div className="flex-grow">
           <p>

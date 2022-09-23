@@ -1,6 +1,6 @@
 import { Link, useSearchParams } from "@remix-run/react";
 import type { LoaderArgs } from "@remix-run/server-runtime";
-import { HiOutlineUser, HiOutlineUserAdd } from "react-icons/hi";
+import { IoLogInOutline, IoPersonAddOutline } from "react-icons/io5";
 
 import { SocialLoginOptions } from "~/components";
 import { isSafe } from "~/utils/uri";
@@ -26,7 +26,7 @@ export default function Login() {
         data-cy="loginpage-button-withusername"
       >
         <span className="mx-1 text-lg">
-          <HiOutlineUser />
+          <IoLogInOutline />
         </span>
         Sign in with E-mail or Username
       </Link>
@@ -37,7 +37,7 @@ export default function Login() {
         data-cy="loginpage-button-register"
       >
         <span className="mx-1 text-lg">
-          <HiOutlineUserAdd />
+          <IoPersonAddOutline />
         </span>
         Create an account
       </Link>

@@ -1,10 +1,10 @@
 import classNames from "classnames";
 import type { IconType } from "react-icons";
 import {
-  HiOutlineCheckCircle,
-  HiOutlineExclamation,
-  HiOutlineXCircle,
-} from "react-icons/hi";
+  IoAlertCircleOutline,
+  IoCheckmarkCircleOutline,
+  IoCloseCircleOutline,
+} from "react-icons/io5";
 
 export interface AlertProps {
   title?: string;
@@ -15,14 +15,18 @@ export interface AlertProps {
 
 export function ErrorAlert(props: AlertProps) {
   return (
-    <GenericAlert icon={HiOutlineXCircle} className="alert-error" {...props} />
+    <GenericAlert
+      icon={IoCloseCircleOutline}
+      className="alert-error"
+      {...props}
+    />
   );
 }
 
 export function WarningAlert(props: AlertProps) {
   return (
     <GenericAlert
-      icon={HiOutlineExclamation}
+      icon={IoAlertCircleOutline}
       className="alert-warning"
       {...props}
     />
@@ -32,7 +36,7 @@ export function WarningAlert(props: AlertProps) {
 export function SuccessAlert(props: AlertProps) {
   return (
     <GenericAlert
-      icon={HiOutlineCheckCircle}
+      icon={IoCheckmarkCircleOutline}
       className="alert-success"
       {...props}
     />
