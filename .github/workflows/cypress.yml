@@ -1,6 +1,6 @@
 name: End-to-end tests
 
-on: [pull_request]
+on: [push, pull_request]
 
 jobs:
   cypress-run:
