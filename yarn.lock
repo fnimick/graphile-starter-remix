@@ -4239,10 +4239,10 @@
   dependencies:
     web-streams-polyfill "^3.1.1"
 
-"@remix-validated-form/with-zod@2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@remix-validated-form/with-zod/-/with-zod-2.0.1.tgz#83093578414b4fbf14841778b22facbd1e981ead"
-  integrity sha512-PerWFOeMFSd8FZRcT2kcqEnYEcmokBzuk87URZ5ij0cRtTlrGNUk7UlxYLG1e7lbPWBj+QfSSsLBrJu8PxhNeg==
+"@remix-validated-form/with-zod@2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@remix-validated-form/with-zod/-/with-zod-2.0.2.tgz#862f15da514628a2adc2d249a4fd55c807baafb2"
+  integrity sha512-0qLm6c5StQgTYleUk3sv46wosAQN+fY5Bxv914z4SlX2Gc0T32o2kB7CFxGnGLpOHgBByTRE0eT1XLEI+YBHlw==
 
 "@rollup/pluginutils@^4.0.0":
   version "4.2.0"
@@ -17002,10 +17002,10 @@ remix-utils@3.0.0:
     type-fest "^2.5.2"
     uuid "^8.3.2"
 
-remix-validated-form@4.5.5:
-  version "4.5.5"
-  resolved "https://registry.yarnpkg.com/remix-validated-form/-/remix-validated-form-4.5.5.tgz#513f3d2143b2960f6852ff00ec2dbcc4b75cec3f"
-  integrity sha512-cox4nDQLYBoqPLr/LGHt2TbCW0Wk8S2B+yPbZzBHgVJn1gYWEjzmqUu1diM9QAMSux6GYW3ZrRBetKxHjm0r1A==
+remix-validated-form@4.5.6:
+  version "4.5.6"
+  resolved "https://registry.yarnpkg.com/remix-validated-form/-/remix-validated-form-4.5.6.tgz#5fec5c0eb0ba8bfbdfbcd36e341b2cf840ad8c71"
+  integrity sha512-/KeaqueufeLQk8q5QUC08JeHU504FpYVwQcYVrCQ2wGTpmf7dU4i75M5idBgbGSE1hCYVXr70FYL7Qc80qlZaw==
   dependencies:
     immer "^9.0.12"
     lodash "^4.17.21"
