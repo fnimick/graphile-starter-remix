@@ -25,6 +25,7 @@ jobs:
       - name: yarn, lint, build and test
         run: |
           $env:PATH += ";C:\Program Files\PostgreSQL\12\bin"
+          $ErrorActionPreference = "Stop"
           cp .env.ci .env
           yarn --frozen-lockfile
           yarn setup
