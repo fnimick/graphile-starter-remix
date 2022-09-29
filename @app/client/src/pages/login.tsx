@@ -45,11 +45,7 @@ const Login: NextPage<LoginProps> = ({ next: rawNext }) => {
   const next: string = isSafe(rawNext) ? rawNext! : "/";
   const query = useSharedQuery();
   return (
-    <SharedLayout
-      title="Sign in"
-      query={query}
-      forbidWhen={AuthRestrict.LOGGED_IN}
-    >
+    <SharedLayout title="Sign in" query={query} forbidWhen={"foobar"}>
       {({ currentUser }: SharedLayoutChildProps) =>
         currentUser ? (
           <Redirect href={next} />
