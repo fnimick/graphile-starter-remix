@@ -19,17 +19,24 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: "16"
-      - name: Install PostgreSQL 14
+      - name: Set up PostgresSQL 14
+        uses: ikalnytskyi/action-setup-postgres@v3
+
+      # These all need to be separate steps on Windows because a failure of a
+      # command doesn't fail the whole job step - see
+      # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell
+
+      - name: yarn
         run: |
-          choco install postgresql14 --force --params '/Password:postgres'
-      - name: yarn, lint, build and test
-        run: |
-          $env:PATH += ";C:\Program Files\PostgreSQL\12\bin"
-          $ErrorActionPreference = "Stop"
           cp .env.ci .env
           yarn --frozen-lockfile
-          yarn setup
-          yarn build
-          yarn lint
-          yarn test --ci
-          yarn depcheck
+      - name: setup
+        run: yarn setup
+      - name: build
+        run: yarn build
+      - name: lint
+        run: yarn lint
+      - name: test
+        run: yarn test --ci
+      - name: depcheck
+        run: yarn depcheck
