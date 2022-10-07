@@ -92,18 +92,18 @@ export default function RootIndex() {
                     Report Template
                   </Link>
                 </li>
-                <li>
-                  <Form
-                    method="post"
-                    action="/logout"
-                    onClick={(e) => e.currentTarget.blur()}
-                  >
-                    <AuthenticityTokenInput />
+                <Form
+                  method="post"
+                  action="/logout"
+                  onClick={(e) => e.currentTarget.blur()}
+                >
+                  <AuthenticityTokenInput />
+                  <li>
                     <button className="button-link" type="submit">
                       Logout
                     </button>
-                  </Form>
-                </li>
+                  </li>
+                </Form>
               </ul>
             </div>
           ) : hideLogin ? null : (
