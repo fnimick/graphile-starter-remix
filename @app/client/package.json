@@ -6,13 +6,12 @@
   "license": "",
   "sideEffects": false,
   "scripts": {
-    "build": "yarn run typecheck && yarn run build:css && remix build",
+    "build": "yarn run build:css && remix build",
     "build:css": "lessc --js app/styles/main.less app/css/main.css",
     "dev": "remix build && run-p dev:*",
     "dev:remix": "remix watch",
     "dev:less": "watch 'yarn run build:css' ./app/styles",
-    "start": "cross-env NODE_ENV=production node ./build/index.js",
-    "typecheck": "tsc -b"
+    "start": "cross-env NODE_ENV=production node ./build/index.js"
   },
   "dependencies": {
     "@ant-design/icons": "^4.6.2",
