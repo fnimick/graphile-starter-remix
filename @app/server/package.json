@@ -11,7 +11,6 @@
     "test": "cross-env NODE_ENV=test NODE_OPTIONS=\"$NODE_OPTIONS -r @app/config/env\" jest"
   },
   "dependencies": {
-    "@app/client": "0.0.0",
     "@app/config": "0.0.0",
     "@graphile-contrib/pg-simplify-inflector": "^6.0.0",
     "@graphile/pg-pubsub": "^4.12.1",
