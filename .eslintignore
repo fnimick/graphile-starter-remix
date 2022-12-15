@@ -1,7 +1,14 @@
+# From SvelteKit starter
+.DS_Store
 node_modules
+/@app/client/build
+/@app/client/.svelte-kit
+/@app/client/package
+.env
+.env.*
+!.env.example
+
 **/dist
 /data/schema.graphql
 /data/schema.sql
 /@app/graphql/index.*
-/@app/client/.next
-.next
