@@ -1,27 +1,29 @@
 <script lang="ts">
-  import classnames from "classnames";
+  export let data;
 
-  const projectName = "foo";
-  const companyName = "foobar";
+  import classnames from "classnames";
+  import { projectName, companyName, termsAndConditionsUrl } from "@app/config";
+  import { page } from "$app/stores";
+
   const limitContentWidth = true;
 </script>
 
 <div class="flex min-h-screen flex-col items-stretch">
-  <div class="navbar bg-base-100 flex-shrink-0">
+  <div class="navbar flex-shrink-0 bg-base-100">
     <div class="navbar-start">
-      <a href="/" class="btn btn-ghost text-base normal-case md:text-xl">
+      <a href="/" class="btn-ghost btn text-base normal-case md:text-xl">
         {projectName}
       </a>
     </div>
     <div class="navbar-center">
       <h3 class="text-base md:text-lg">
-        <!-- {titleHref ? (
-          <Link to={titleHref} data-cy="layout-header-titlelink">
-            {title}
-          </Link>
-        ) : (
-          title
-        )} -->
+        {#if $page.data.titleHref}
+          <a href={$page.data.titleHref} data-cy="layout-header-titlelink">
+            {$page.data.title}
+          </a>
+        {:else}
+          {$page.data.title || ""}
+        {/if}
       </h3>
     </div>
     <div class="navbar-end">
@@ -103,23 +105,23 @@
     <slot />
   </div>
   <footer
-    class="footer bg-neutral text-neutral-content flex-shrink-0 items-center p-4"
+    class="footer flex-shrink-0 items-center bg-neutral p-4 text-neutral-content"
   >
     <div class="grid-flow-col items-center">
       <p>
         Copyright &copy; {new Date().getFullYear()}
         {companyName}. All rights reserved.
-        <!-- {rootData?.ENV.T_AND_C_URL ? (
-          <span>
-            {" "}
-            <a
-              style={{ textDecoration: "underline" }}
-              href={rootData.ENV.T_AND_C_URL}
-            >
-              Terms and conditions
-            </a>
-          </span>
-        ) : null} -->
+        <span>
+          {" "}
+          <a
+            class="underline"
+            href={termsAndConditionsUrl}
+            target="_blank"
+            rel="noreferrer"
+          >
+            Terms and conditions
+          </a>
+        </span>
       </p>
     </div>
     <div class="grid-flow-col gap-4 md:place-self-center md:justify-self-end">
