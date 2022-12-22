@@ -4,7 +4,7 @@ const requestHandler: RequestHandler = async ({
   fetch,
   text = "",
   variables = {},
-  metadata,
+  // metadata,
 }) => {
   const url = "http://localhost:5173/api/graphql";
   const result = await fetch(url, {

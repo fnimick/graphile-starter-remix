@@ -22,4 +22,7 @@ module.exports = {
     es2017: true,
     node: true,
   },
+  rules: {
+    "import/no-unresolved": 0, // Handled by typescript; breaks houdini imports
+  },
 };
