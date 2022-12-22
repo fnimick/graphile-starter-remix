@@ -102,7 +102,7 @@ module.exports = {
           "FieldsOnCorrectTypeRule",
           "FragmentsOnCompositeTypesRule",
           "KnownArgumentNamesRule",
-          "KnownDirectivesRule", // disabled by default in relay
+          // "KnownDirectivesRule", // NOTE: disabled to support Houdini directives
           // "KnownFragmentNamesRule", // disabled by default in all envs
           "KnownTypeNamesRule",
           "LoneAnonymousOperationRule",
@@ -131,6 +131,7 @@ module.exports = {
     "graphql/named-operations": [
       "error",
       {
+        env: "literal",
         schemaString,
       },
     ],

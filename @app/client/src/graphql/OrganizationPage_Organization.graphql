@@ -1,0 +1,7 @@
+fragment OrganizationPage_Organization on Organization {
+  id
+  name
+  slug
+  currentUserIsOwner
+  currentUserIsBillingContact
+}

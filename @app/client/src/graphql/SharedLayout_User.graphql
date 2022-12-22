@@ -1,0 +1,20 @@
+fragment SharedLayout_User on User {
+  id
+  name
+  username
+  avatarUrl
+  isAdmin
+  isVerified
+  organizationMemberships(first: 20) {
+    nodes {
+      id
+      isOwner
+      isBillingContact
+      organization {
+        id
+        name
+        slug
+      }
+    }
+  }
+}
