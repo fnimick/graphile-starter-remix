@@ -101,6 +101,14 @@ exports.updateDotenv = function updateDotenv(add, answers) {
   );
 
   add(
+    "WEB_URL",
+    "http://localhost:5173",
+    `\
+# This is the origin for the web client, served separately from the API/GraphQL backend.
+# IMPORTANT: must NOT end with a slash`
+  );
+
+  add(
     "GITHUB_KEY",
     null,
     `\

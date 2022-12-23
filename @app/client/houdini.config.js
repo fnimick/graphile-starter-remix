@@ -6,6 +6,23 @@ const config = {
   plugins: {
     "houdini-svelte": {},
   },
+  scalars: {
+    Datetime: {
+      // the corresponding typescript type
+      type: "Date",
+      // turn the api's response into that type
+      unmarshal(val) {
+        return new Date(val);
+      },
+      // turn the value into something the API can use
+      marshal(date) {
+        return date.getTime();
+      },
+    },
+    UUID: {
+      type: "string",
+    },
+  },
 };
 
 export default config;

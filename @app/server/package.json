@@ -29,6 +29,7 @@
     "chalk": "^4.1.1",
     "connect-pg-simple": "^6.1.0",
     "connect-redis": "^5.2.0",
+    "cors": "2.8.5",
     "csurf": "^1.11.0",
     "express": "^4.17.1",
     "express-session": "^1.17.2",
@@ -49,6 +50,7 @@
     "tslib": "^2.2.0"
   },
   "devDependencies": {
+    "@types/cors": "2.8.13",
     "@types/node": "^15.6.1",
     "graphql": "^15.4.0",
     "jest": "^27.0.1",

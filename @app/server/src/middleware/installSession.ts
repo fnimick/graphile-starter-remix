@@ -75,7 +75,7 @@ export default (app: Express) => {
    * different authentication method such as bearer tokens.
    */
   const wrappedSessionMiddleware: RequestHandler = (req, res, next) => {
-    if (req.isSameOrigin) {
+    if (req.isSameOrTrustedOrigin) {
       sessionMiddleware(req, res, next);
     } else {
       next();

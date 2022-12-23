@@ -9,14 +9,16 @@ declare module "express-serve-static-core" {
      * there was no 'Origin' header (in which case we must give the benefit of
      * the doubt; for example for normal resource GETs).
      */
-    isSameOrigin?: boolean;
+    isSameOrTrustedOrigin?: boolean;
   }
 }
 
 export default (app: Express) => {
   const middleware: RequestHandler = (req, res, next) => {
-    req.isSameOrigin =
-      !req.headers.origin || req.headers.origin === process.env.ROOT_URL;
+    req.isSameOrTrustedOrigin =
+      !req.headers.origin ||
+      req.headers.origin === process.env.ROOT_URL ||
+      req.headers.origin === process.env.WEB_URL;
     next();
   };
   app.use(middleware);
