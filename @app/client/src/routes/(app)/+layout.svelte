@@ -1,11 +1,42 @@
 <script lang="ts">
-  export let data;
+  import { graphql } from "$houdini";
 
   import classnames from "classnames";
   import { projectName, companyName, termsAndConditionsUrl } from "@app/config";
   import { page } from "$app/stores";
+  import Warn from "$lib/components/Warn.svelte";
 
   const limitContentWidth = true;
+
+  const query = graphql(`
+    query Shared {
+      currentUser {
+        id
+        name
+        username
+        avatarUrl
+        isAdmin
+        isVerified
+        organizationMemberships(first: 20) {
+          nodes {
+            id
+            isOwner
+            isBillingContact
+            organization {
+              id
+              name
+              slug
+            }
+          }
+        }
+      }
+    }
+  `);
+
+  $: currentUser = $query.data?.currentUser;
+
+  $: ({ pathname, search, hash } = $page.url);
+  $: currentRouteURL = `${pathname}${search}${hash}`;
 </script>
 
 <div class="flex min-h-screen flex-col items-stretch">
@@ -27,19 +58,17 @@
       </h3>
     </div>
     <div class="navbar-end">
-      <!-- {currentUser ? (
-        <div
-          class="dropdown dropdown-end"
-          data-cy="layout-dropdown-user"
-        >
+      {#if currentUser != null}
+        <div class="dropdown-end dropdown" data-cy="layout-dropdown-user">
           <Warn
             okay={currentUser.isVerified}
-            class="right-2 top-2"
+            className="right-2 top-2"
             data-cy="header-unverified-warning"
           >
+            <!-- svelte-ignore a11y-label-has-associated-control -->
             <label
               tabIndex={0}
-              class="btn btn-ghost btn-circle avatar placeholder"
+              class="placeholder btn-ghost btn-circle avatar btn"
             >
               <div class="full w-10 rounded">
                 <span>
@@ -54,46 +83,45 @@
           </Warn>
           <ul
             tabIndex={0}
-            class="menu menu-compact dropdown-content bg-base-100 rounded-b-box w-52 shadow"
+            class="dropdown-content menu rounded-b-box menu-compact w-52 bg-base-100 shadow"
           >
             <li>
-              <Link
-                to="/settings"
+              <a
+                href="/settings"
                 data-cy="layout-link-settings"
-                onClick={(e) => e.currentTarget.blur()}
+                on:click={(e) => e.currentTarget.blur()}
               >
                 <Warn okay={currentUser.isVerified}>
                   <span class="mr-2">Profile</span>
                 </Warn>
-              </Link>
+              </a>
             </li>
             <li>
-              <Link to="/report" onClick={(e) => e.currentTarget.blur()}>
+              <a href="/report" on:click={(e) => e.currentTarget.blur()}>
                 Report Template
-              </Link>
+              </a>
             </li>
-            <Form
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
+            <form
               method="post"
               action="/logout"
-              onClick={(e) => e.currentTarget.blur()}
+              on:click={(e) => e.currentTarget.blur()}
             >
-              <AuthenticityTokenInput />
+              <!-- <AuthenticityTokenInput /> -->
               <li>
-                <button class="button-link" type="submit">
-                  Logout
-                </button>
+                <button class="button-link" type="submit">Logout</button>
               </li>
-            </Form>
+            </form>
           </ul>
         </div>
-      ) : hideLogin ? null : (
-        <Link
-          to={`/login?next=${encodeURIComponent(currentRouteURL)}`}
+      {:else if !$page.data.hideLogin}
+        <a
+          href={`/login?next=${encodeURIComponent(currentRouteURL)}`}
           data-cy="header-login-button"
         >
           Sign in
-        </Link>
-      )} -->
+        </a>
+      {/if}
     </div>
   </div>
   <div
