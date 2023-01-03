@@ -11,7 +11,8 @@
     "javascriptreact",
     "typescript",
     "typescriptreact",
-    "graphql"
+    "graphql",
+    "svelte"
   ],
   "editor.codeActionsOnSave": {
     "source.fixAll": true

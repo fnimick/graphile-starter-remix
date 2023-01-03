@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { graphql } from "$houdini";
-
+  import { companyName, projectName, termsAndConditionsUrl } from "@app/config";
   import classnames from "classnames";
-  import { projectName, companyName, termsAndConditionsUrl } from "@app/config";
+
   import { page } from "$app/stores";
+  import { graphql } from "$houdini";
   import Warn from "$lib/components/Warn.svelte";
 
   const limitContentWidth = true;
