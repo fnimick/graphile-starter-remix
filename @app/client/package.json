@@ -15,15 +15,16 @@
   },
   "dependencies": {
     "@app/config": "0.0.0",
-    "classnames": "2.3.2"
+    "classnames": "2.3.2",
+    "zod": "3.20.2"
   },
   "devDependencies": {
     "@iconify-json/ion": "1.1.6",
     "@playwright/test": "^1.28.1",
     "@sveltejs/adapter-auto": "^1.0.0",
     "@sveltejs/kit": "^1.0.0",
-    "@typescript-eslint/eslint-plugin": "^5.45.0",
-    "@typescript-eslint/parser": "^5.45.0",
+    "@typescript-eslint/eslint-plugin": "5.48.0",
+    "@typescript-eslint/parser": "5.48.0",
     "daisyui": "2.45.0",
     "eslint": "^8.28.0",
     "eslint-config-prettier": "^8.5.0",

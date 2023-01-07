@@ -1,3 +1,4 @@
+import { PUBLIC_ROOT_URL } from "$env/static/public";
 import { type RequestHandler, HoudiniClient } from "$houdini";
 
 const requestHandler: RequestHandler = async ({
@@ -6,7 +7,7 @@ const requestHandler: RequestHandler = async ({
   variables = {},
   // metadata,
 }) => {
-  const url = "http://localhost:5678/graphql";
+  const url = `${PUBLIC_ROOT_URL}/graphql`;
   const result = await fetch(url, {
     method: "POST",
     headers: {

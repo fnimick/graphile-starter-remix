@@ -3,37 +3,14 @@
   import classnames from "classnames";
 
   import { page } from "$app/stores";
-  import { graphql } from "$houdini";
   import Warn from "$lib/components/Warn.svelte";
+
+  import type { PageData } from "./$houdini";
 
   const limitContentWidth = true;
 
-  const query = graphql(`
-    query Shared {
-      currentUser {
-        id
-        name
-        username
-        avatarUrl
-        isAdmin
-        isVerified
-        organizationMemberships(first: 20) {
-          nodes {
-            id
-            isOwner
-            isBillingContact
-            organization {
-              id
-              name
-              slug
-            }
-          }
-        }
-      }
-    }
-  `);
-
-  $: currentUser = $query.data?.currentUser;
+  export let data: PageData;
+  $: currentUser = data.currentUser;
 
   $: ({ pathname, search, hash } = $page.url);
   $: currentRouteURL = `${pathname}${search}${hash}`;

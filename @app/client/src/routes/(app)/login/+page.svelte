@@ -12,7 +12,7 @@
 <div class="flex max-w-lg flex-col gap-y-2">
   <a
     class="btn-primary btn"
-    href={`email?next=${encodeURIComponent(next)}`}
+    href={`/login/email?next=${encodeURIComponent(next)}`}
     data-cy="loginpage-button-withusername"
   >
     <span class="mx-1 text-lg">
