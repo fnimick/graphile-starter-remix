@@ -13,6 +13,11 @@ const config: UserConfig = {
     // `@app/config`
     preserveSymlinks: true,
   },
+  ssr: {
+    // Prevent crashes in SSR when Felte forms are used. See
+    // https://github.com/pablo-abc/felte/issues/201#issuecomment-1381641343
+    noExternal: ["felte"],
+  },
 };
 
 export default config;
