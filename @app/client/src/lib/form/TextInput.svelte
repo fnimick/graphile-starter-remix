@@ -1,6 +1,7 @@
 <script lang="ts">
   import classNames from "classnames";
   import type { HTMLInputAttributes } from "svelte/elements";
+  import { fly } from "svelte/transition";
 
   interface $$Props extends HTMLInputAttributes {
     name: string;
@@ -33,7 +34,7 @@
   />
   <div class="min-h-6">
     {#if error}
-      <p class="mt-1 text-sm text-error">{error}</p>
+      <p class="mt-1 text-sm text-error" transition:fly={{ y: 5 }}>{error}</p>
     {/if}
   </div>
 </div>

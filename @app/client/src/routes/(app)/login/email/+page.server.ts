@@ -8,12 +8,12 @@ import { loginSchema } from "./schema";
 export const actions: Actions = {
   default: validate(
     loginSchema,
-    async ({ data: { email, password }, fail, ...event }) => {
+    async ({ data: { username, password }, fail, ...event }) => {
       const loginMutation = new LoginStore();
 
       try {
         const result = await loginMutation.mutate(
-          { username: email, password },
+          { username, password },
           event
         );
       } catch (e: any) {
@@ -24,7 +24,11 @@ export const actions: Actions = {
             fieldErrors: { password: "Incorrect email or passphrase" },
           });
         }
+        return fail({
+          formError: { message: e.message, code: errorCode },
+        });
       }
-    }
+    },
+    { valueExcludeFields: new Set(["password"]) }
   ),
 };

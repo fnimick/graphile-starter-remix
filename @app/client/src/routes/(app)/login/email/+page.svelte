@@ -3,50 +3,63 @@
   import { createForm } from "felte";
   import type { z } from "zod";
 
+  import { browser } from "$app/environment";
   import { applyAction, deserialize } from "$app/forms";
   import { page } from "$app/stores";
+  import Alert from "$lib/components/Alert.svelte";
   import TextInput from "$lib/form/TextInput.svelte";
+  import type { FailResult, FormError } from "$lib/utils/validate";
 
   import { loginSchema } from "./schema";
-  const { form, errors } = createForm<z.infer<typeof loginSchema>>({
+  const { form, errors, setErrors } = createForm<z.infer<typeof loginSchema>>({
     onSuccess: async (event) => {
-      console.log("onSubmit");
       const resp = event as Response;
       const result = deserialize(await resp.text());
       applyAction(result);
-      console.log(result);
     },
     onError: async (error: any) => {
-      console.log("onError called");
-      console.log(error);
       if (error.response) {
-        const response = error.response;
-        console.log(response);
+        const { response } = error;
         const result = deserialize(await response.text());
-        console.log(result);
         applyAction(result);
       } else {
         applyAction({ type: "error", error });
       }
-      console.log(error.response);
     },
     extend: [validator({ schema: loginSchema })],
+  });
+
+  let formError: FormError | undefined = undefined;
+
+  page.subscribe(({ form }) => {
+    if (form?.fieldErrors) {
+      const failResult = form as FailResult<
+        z.infer<typeof loginSchema>,
+        typeof loginSchema
+      >;
+      formError = failResult.formError;
+      if (failResult.fieldErrors) {
+        setErrors(failResult.fieldErrors);
+      }
+    }
   });
 </script>
 
 <form method="POST" use:form class="flex w-full max-w-lg flex-col gap-y-5">
   <TextInput
-    name="email"
-    placeholder="E-mail"
-    autocomplete="email"
-    error={$errors.email}
+    name="username"
+    placeholder="E-mail or Username"
+    autocomplete="username"
+    error={browser ? $errors.username : $page.form?.fieldErrors?.username}
+    value={browser ? undefined : $page.form?.values?.username}
   />
   <TextInput
     name="password"
     placeholder="Passphrase"
     type="password"
     autocomplete="current-password"
-    error={$errors.password}
+    error={browser ? $errors.password : $page.form?.fieldErrors?.password}
+    value={browser ? undefined : $page.form?.values?.password}
   />
   <div class="align-center flex justify-between">
     <button type="submit" class="btn-primary btn">Sign In</button>
@@ -54,9 +67,11 @@
       Use a different sign in method
     </a>
   </div>
-  <pre>
-    {JSON.stringify($errors)}
-    {JSON.stringify($page.form)}
-    {JSON.stringify($page.status)}
-  </pre>
+  {#if formError}
+    <Alert
+      alertType="error"
+      message={formError.message}
+      code={formError.code}
+    />
+  {/if}
 </form>
