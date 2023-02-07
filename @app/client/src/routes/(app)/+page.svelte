@@ -15,7 +15,7 @@
       </span>
     </div>
 
-    <h4 class="text-xl">Remix</h4>
+    <h4 class="text-xl">Sveltekit</h4>
     <div>
       We use Sveltekit to serve the Svelte app. This gives us server-side
       rendering, routing, bundle splitting, hot reloading, and much more.
@@ -280,8 +280,11 @@
       and related projects.
     </div>
     <div>Every contribution helps us to spend more time on open source.</div>
-    <div>
-      <a class="btn-primary btn" href="https://graphile.org/sponsor">
+    <div class="text-center">
+      <a
+        class="btn btn-base variant-filled-primary"
+        href="https://graphile.org/sponsor"
+      >
         Sponsor Graphile Today
       </a>
     </div>

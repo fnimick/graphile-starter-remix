@@ -21,36 +21,34 @@
 
   if (alertType === "error") {
     renderIcon = IonCloseCircleOutline;
-    renderClassname = "alert-error";
+    renderClassname = "variant-ghost-error";
   }
   if (alertType === "warning") {
     renderIcon = IonAlertCircleOutline;
-    renderClassname = "alert-warning";
+    renderClassname = "variant-ghost-warning";
   }
   if (alertType === "success") {
     renderIcon = IonCheckmarkCircleOutline;
-    renderClassname = "alert-success";
+    renderClassname = "variant-ghost-success";
   }
 </script>
 
-<div class={classNames("alert", renderClassname)}>
+<aside class={classNames("alert", renderClassname)}>
+  {#if renderIcon}
+    <span class="text-2xl">
+      <svelte:component this={renderIcon} />
+    </span>
+  {/if}
   <div>
-    {#if renderIcon}
-      <span class="text-2xl">
-        <svelte:component this={renderIcon} />
-      </span>
+    {#if title}
+      <h5 class="font-bold">{title}</h5>
     {/if}
     <div>
-      {#if title}
-        <h1 class="text-xl font-bold">{title}</h1>
+      <slot />
+      {message}
+      {#if code}
+        <span>(Error code: <code>ERR_{code}</code>)</span>
       {/if}
-      <div>
-        <slot />
-        {message}
-        {#if code}
-          <span>(Error code: <code>ERR_{code}</code>)</span>
-        {/if}
-      </div>
     </div>
   </div>
-</div>
+</aside>

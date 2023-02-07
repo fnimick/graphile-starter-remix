@@ -17,7 +17,6 @@ export const actions: Actions = {
           event
         );
       } catch (e: any) {
-        console.log(e);
         const errorCode = getCodeFromError(e);
         if (errorCode === "CREDS") {
           return fail({

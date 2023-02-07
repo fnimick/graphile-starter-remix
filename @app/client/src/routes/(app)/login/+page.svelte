@@ -11,7 +11,7 @@
 
 <div class="flex max-w-lg flex-col gap-y-2">
   <a
-    class="btn-primary btn"
+    class="btn btn-base variant-filled-primary"
     href={`/login/email?next=${encodeURIComponent(next)}`}
     data-cy="loginpage-button-withusername"
   >
@@ -21,7 +21,7 @@
     Sign in with E-mail or Username
   </a>
   <a
-    class="btn-outline btn-ghost btn"
+    class="btn btn-base variant-ghost-surface"
     href={`/register?next=${encodeURIComponent(next)}`}
     data-cy="loginpage-button-register"
   >

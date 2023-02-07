@@ -32,9 +32,11 @@
     aria-describedby={`${name}_err`}
     {...$$restProps}
   />
-  <div class="min-h-6">
+  <div class="mt-1 min-h-[1.5em]">
     {#if error}
-      <p class="mt-1 text-sm text-error" transition:fly={{ y: 5 }}>{error}</p>
+      <p class="text-sm text-error-500" transition:fly|local={{ y: 5 }}>
+        {error}
+      </p>
     {/if}
   </div>
 </div>

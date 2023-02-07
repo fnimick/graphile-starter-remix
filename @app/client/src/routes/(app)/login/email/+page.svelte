@@ -1,5 +1,6 @@
 <script lang="ts">
   import { validator } from "@felte/validator-zod";
+  import { ProgressRadial } from "@skeletonlabs/skeleton";
   import { createForm } from "felte";
   import type { z } from "zod";
 
@@ -11,7 +12,10 @@
   import type { FailResult, FormError } from "$lib/utils/validate";
 
   import { loginSchema } from "./schema";
-  const { form, errors, setErrors } = createForm<z.infer<typeof loginSchema>>({
+
+  const { form, errors, setErrors, isSubmitting } = createForm<
+    z.infer<typeof loginSchema>
+  >({
     onSuccess: async (event) => {
       const resp = event as Response;
       const result = deserialize(await resp.text());
@@ -61,8 +65,19 @@
     error={browser ? $errors.password : $page.form?.fieldErrors?.password}
     value={browser ? undefined : $page.form?.values?.password}
   />
-  <div class="align-center flex justify-between">
-    <button type="submit" class="btn-primary btn">Sign In</button>
+  <div class="flex items-center justify-between">
+    <button
+      type="submit"
+      class="btn variant-filled-primary"
+      disabled={$isSubmitting}
+    >
+      {#if $isSubmitting}
+        <div class="mr-2 h-6 w-6">
+          <ProgressRadial />
+        </div>
+      {/if}Sign In</button
+    >
+
     <a class="link self-center" href="/login">
       Use a different sign in method
     </a>
@@ -70,6 +85,7 @@
   {#if formError}
     <Alert
       alertType="error"
+      title="Login failed"
       message={formError.message}
       code={formError.code}
     />
