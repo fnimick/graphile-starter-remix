@@ -2949,10 +2949,12 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@skeletonlabs/skeleton@0.99.5":
-  version "0.99.5"
-  resolved "https://registry.yarnpkg.com/@skeletonlabs/skeleton/-/skeleton-0.99.5.tgz#1601ad802f5cc16596f0e131766a77a6af7d1f65"
-  integrity sha512-P3YvmAItNk/IzT6ma9q1D3T8leiit+T4BgpVynWuKOZg9FVWakB1M88ncuuEOkk+nAH/cGtjIEtougGB9+ynNw==
+"@skeletonlabs/skeleton@0.124.2":
+  version "0.124.2"
+  resolved "https://registry.yarnpkg.com/@skeletonlabs/skeleton/-/skeleton-0.124.2.tgz#041926b8f24aa67142d799262aea21f0169f5b88"
+  integrity sha512-SQ0tgXXEj/QJ5BSA+UwKdSMADW5Xt+5iNpks1y94YnX2iwAY80MlffEfip+//VXYayeGvzx4xiU4//MpK9+Zgg==
+  dependencies:
+    svelte "^3.55.1"
 
 "@sveltejs/adapter-auto@^1.0.0":
   version "1.0.0"
@@ -15455,7 +15457,7 @@ svelte-preprocess@^5.0.0:
     sorcery "^0.11.0"
     strip-indent "^3.0.0"
 
-svelte@3.55.1:
+svelte@3.55.1, svelte@^3.55.1:
   version "3.55.1"
   resolved "https://registry.yarnpkg.com/svelte/-/svelte-3.55.1.tgz#6f93b153e5248039906ce5fe196efdb9e05dfce8"
   integrity sha512-S+87/P0Ve67HxKkEV23iCdAh/SX1xiSfjF1HOglno/YTbSTW7RniICMCofWGdJJbdjw3S+0PfFb1JtGfTXE0oQ==

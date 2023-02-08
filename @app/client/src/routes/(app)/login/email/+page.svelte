@@ -9,9 +9,13 @@
   import { page } from "$app/stores";
   import Alert from "$lib/components/Alert.svelte";
   import TextInput from "$lib/form/TextInput.svelte";
+  import { isSafe } from "$lib/utils/uri";
   import type { FailResult, FormError } from "$lib/utils/validate";
 
   import { loginSchema } from "./schema";
+
+  $: rawNext = $page.url.searchParams.get("next");
+  $: next = isSafe(rawNext) ? rawNext : "/";
 
   const { form, errors, setErrors, isSubmitting } = createForm<
     z.infer<typeof loginSchema>
@@ -50,6 +54,7 @@
 </script>
 
 <form method="POST" use:form class="flex w-full max-w-lg flex-col gap-y-5">
+  <input type="hidden" name="text" value={next} />
   <TextInput
     name="username"
     placeholder="E-mail or Username"

@@ -11,20 +11,25 @@
 
   import type { PageData } from "./$houdini";
 
-  const limitContentWidth = true;
-
   export let data: PageData;
   $: currentUser = data.currentUser;
 
   $: ({ pathname, search, hash } = $page.url);
   $: currentRouteURL = `${pathname}${search}${hash}`;
+
+  $: limitContentWidth = $page.data.limitContentWidth ?? true;
+  $: pageTitle = $page.data.pageTitle ?? "";
 </script>
 
 <AppShell slotPageContent="flex flex-col">
   <svelte:fragment slot="header">
-    <AppBar slotDefault="text-center">
+    <AppBar
+      gridColumns="grid-cols-3"
+      slotDefault="place-self-center"
+      slotTrail="place-content-end"
+    >
       <a slot="lead" href="/" class="btn">{projectName}</a>
-      <slot name="page-title" />
+      <h3>{pageTitle}</h3>
       <svelte:fragment slot="trail">
         {#if currentUser != null}
           <div class="dropdown-end dropdown" data-cy="layout-dropdown-user">

@@ -1,8 +1,10 @@
 import { requireNoUser } from "$lib/utils/users";
 
-import type { LayoutLoadEvent } from "./$types";
+import type { PageLoadEvent } from "./$types";
 
-export async function load(event: LayoutLoadEvent) {
+export async function load(event: PageLoadEvent) {
   const parentData = await event.parent();
   await requireNoUser(parentData.currentUser);
+
+  return { pageTitle: "Sign In" };
 }

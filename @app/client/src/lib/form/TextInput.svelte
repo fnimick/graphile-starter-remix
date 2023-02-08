@@ -5,20 +5,18 @@
 
   interface $$Props extends HTMLInputAttributes {
     name: string;
-    label?: string | undefined;
     className?: string | undefined;
     error?: string | string[] | null | undefined;
   }
 
   export let name: string;
-  export let label: string | undefined = undefined;
   export let className: string | undefined = undefined;
   export let error: string | string[] | null | undefined = undefined;
 </script>
 
 <div class="form-control">
-  {#if label}
-    <label class="label" for={name}>{label}</label>
+  {#if $$slots.label}
+    <label class="label" for={name}><slot name="label" /></label>
   {/if}
   <input
     class={classNames([

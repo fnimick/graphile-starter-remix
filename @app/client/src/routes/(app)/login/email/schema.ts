@@ -8,4 +8,5 @@ export const loginSchema = zfd.formData({
   password: zfd.text(
     z.string({ required_error: "Please input your passphrase" })
   ),
+  next: zfd.text(z.string().optional()),
 });

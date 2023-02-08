@@ -6,5 +6,5 @@ export async function load(event: PageLoadEvent) {
   const parentData = await event.parent();
   await requireNoUser(parentData.currentUser);
 
-  return { pageTitle: "Create Account" };
+  return { pageTitle: "Sign In" };
 }
