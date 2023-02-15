@@ -2,18 +2,23 @@
   import classNames from "classnames";
 
   export let okay: boolean;
-  export let className: string | undefined = undefined;
+  let className: string | undefined = undefined;
+  export { className as class };
+  export let pulse = false;
+
+  const defaultClassname =
+    "badge-icon variant-filled-error absolute z-10 h-3 w-3";
 </script>
 
-<div class="indicator">
+<div>
   {#if !okay}
-    <span
-      class={classNames(
-        "badge-secondary badge badge-xs indicator-item",
-        className
-      )}
-      {...$$restProps}
-    />
+    {#if pulse}
+      <span
+        class={classNames(defaultClassname, "animate-ping", className)}
+        {...$$restProps}
+      />
+    {/if}
+    <span class={classNames(defaultClassname, className)} {...$$restProps} />
   {/if}
   <slot />
 </div>

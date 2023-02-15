@@ -1,6 +1,6 @@
 <script lang="ts">
   import { companyName, projectName, termsAndConditionsUrl } from "@app/config";
-  import { AppBar, AppShell } from "@skeletonlabs/skeleton";
+  import { AppBar, AppShell, Avatar, menu } from "@skeletonlabs/skeleton";
   import classnames from "classnames";
 
   import IonLogoFacebook from "~icons/ion/logo-facebook";
@@ -32,61 +32,37 @@
       <h3>{pageTitle}</h3>
       <svelte:fragment slot="trail">
         {#if currentUser != null}
-          <div class="dropdown-end dropdown" data-cy="layout-dropdown-user">
-            <Warn
-              okay={currentUser.isVerified}
-              className="right-2 top-2"
-              data-cy="header-unverified-warning"
+          <span class="relative">
+            <Warn okay={currentUser.isVerified}>
+              <span use:menu={{ menu: "profile" }} class="cursor-pointer"
+                ><Avatar
+                  initials={currentUser.name
+                    ?.split(" ")
+                    .map((part) => part.charAt(0).toUpperCase())
+                    .slice(0, 3) // max 3 initials
+                    .join("")}
+                  background="bg-primary-500"
+                /></span
+              ></Warn
             >
-              <!-- svelte-ignore a11y-label-has-associated-control -->
-              <label
-                tabIndex={0}
-                class="btn-ghost btn-circle avatar btn placeholder"
-              >
-                <div class="full w-10 rounded">
-                  <span>
-                    {currentUser.name
-                      ?.split(" ")
-                      .map((part) => part.charAt(0).toUpperCase())
-                      .slice(0, 3) // max 3 initials
-                      .join("")}
-                  </span>
-                </div>
-              </label>
-            </Warn>
-            <ul
-              tabIndex={0}
-              class="dropdown-content menu rounded-b-box menu-compact bg-base-100 w-52 shadow"
-            >
-              <li>
-                <a
-                  href="/settings"
-                  data-cy="layout-link-settings"
-                  on:click={(e) => e.currentTarget.blur()}
-                >
-                  <Warn okay={currentUser.isVerified}>
-                    <span class="mr-2">Profile</span>
-                  </Warn>
-                </a>
-              </li>
-              <li>
-                <a href="/report" on:click={(e) => e.currentTarget.blur()}>
-                  Report Template
-                </a>
-              </li>
-              <!-- svelte-ignore a11y-click-events-have-key-events -->
-              <form
-                method="post"
-                action="/logout"
-                on:click={(e) => e.currentTarget.blur()}
-              >
-                <!-- <AuthenticityTokenInput /> -->
+            <nav class="card list-nav w-60 p-4 shadow-xl" data-menu="profile">
+              <ul>
                 <li>
-                  <button class="button-link" type="submit">Logout</button>
+                  <Warn okay={currentUser.isVerified} pulse>
+                    <a href="/settings" data-cy="layout-link-settings">
+                      <span class="">Profile</span>
+                    </a>
+                  </Warn>
                 </li>
-              </form>
-            </ul>
-          </div>
+                <li>
+                  <form method="post" action="/logout">
+                    <!-- <AuthenticityTokenInput /> -->
+                    <button class="w-full" type="submit">Logout</button>
+                  </form>
+                </li>
+              </ul>
+            </nav>
+          </span>
         {:else if !$page.data.hideLogin}
           <a
             href={`/login?next=${encodeURIComponent(currentRouteURL)}`}
