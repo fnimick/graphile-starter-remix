@@ -1,4 +1,4 @@
-import type { HandleFetch } from "@sveltejs/kit";
+import type { HandleFetch, HandleServerError } from "@sveltejs/kit";
 import setCookie from "set-cookie-parser";
 
 import { PUBLIC_ROOT_URL } from "$env/static/public";
@@ -27,4 +27,9 @@ export const handleFetch: HandleFetch = async ({ event, request, fetch }) => {
     }
   }
   return response;
+};
+
+export const handleError: HandleServerError = async ({ event, error }) => {
+  console.error("handleError server");
+  console.error(error);
 };

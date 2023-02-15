@@ -1,24 +1,16 @@
+import { error } from "@sveltejs/kit";
+
 import { PUBLIC_ROOT_URL } from "$env/static/public";
-import { type RequestHandler, HoudiniClient } from "$houdini";
+import { HoudiniClient } from "$houdini";
 
-const requestHandler: RequestHandler = async ({
-  fetch,
-  text = "",
-  variables = {},
-  // metadata,
-}) => {
-  const url = `${PUBLIC_ROOT_URL}/graphql`;
-  const result = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
+export default new HoudiniClient({
+  url: `${PUBLIC_ROOT_URL}/graphql`,
+  throwOnError: {
+    operations: ["all"],
+    error: (errors) => {
+      // Return the first graphql error unaffected - this is necessary for
+      // getCodeFromError to work.
+      return errors[0];
     },
-    body: JSON.stringify({
-      query: text,
-      variables,
-    }),
-  });
-  return await result.json();
-};
-
-export default new HoudiniClient(requestHandler);
+  },
+});

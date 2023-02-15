@@ -17,9 +17,8 @@ export const actions: Actions = {
       const redirectTarget = isSafe(next) ? next : "/";
 
       try {
-        await loginMutation.mutate({ username, password }, event);
+        await loginMutation.mutate({ username, password }, { event });
       } catch (e: any) {
-        console.log(e);
         const errorCode = getCodeFromError(e);
         if (errorCode === "CREDS") {
           return fail({

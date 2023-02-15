@@ -23,7 +23,7 @@ export const actions: Actions = {
       try {
         await registerMutation.mutate(
           { name, username, email, password },
-          event
+          { event }
         );
       } catch (e: any) {
         const errorCode = getCodeFromError(e);

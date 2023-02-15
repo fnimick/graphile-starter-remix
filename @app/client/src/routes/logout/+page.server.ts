@@ -8,7 +8,7 @@ export const actions: Actions = {
   default: async (event: RequestEvent) => {
     const logoutMutation = new LogoutStore();
 
-    await logoutMutation.mutate(null, event);
+    await logoutMutation.mutate(null, { event });
     throw redirect(302, "/");
   },
 };
