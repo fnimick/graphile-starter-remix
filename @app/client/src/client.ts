@@ -1,16 +1,19 @@
-import { error } from "@sveltejs/kit";
+import { createClient } from "graphql-ws";
 
 import { PUBLIC_ROOT_URL } from "$env/static/public";
-import { HoudiniClient } from "$houdini";
+import { HoudiniClient, subscription } from "$houdini";
+
+const websocketUrl = `${PUBLIC_ROOT_URL.replace(/^http/, "ws")}/graphql`;
 
 export default new HoudiniClient({
   url: `${PUBLIC_ROOT_URL}/graphql`,
   throwOnError: {
     operations: ["all"],
     error: (errors) => {
-      // Return the first graphql error unaffected - this is necessary for
+      // Return the first graphql error unchanged - this is necessary for
       // getCodeFromError to work.
       return errors[0];
     },
   },
+  plugins: [subscription(() => createClient({ url: websocketUrl }))],
 });

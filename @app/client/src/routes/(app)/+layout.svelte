@@ -6,19 +6,29 @@
   import IonLogoFacebook from "~icons/ion/logo-facebook";
   import IonLogoTwitter from "~icons/ion/logo-twitter";
   import IonLogoYoutube from "~icons/ion/logo-youtube";
+  import { browser } from "$app/environment";
   import { page } from "$app/stores";
+  import { CurrentUserUpdatedStore } from "$houdini";
   import Warn from "$lib/components/Warn.svelte";
 
   import type { PageData } from "./$houdini";
 
   export let data: PageData;
-  $: currentUser = data.currentUser;
 
   $: ({ pathname, search, hash } = $page.url);
   $: currentRouteURL = `${pathname}${search}${hash}`;
 
   $: limitContentWidth = $page.data.limitContentWidth ?? true;
   $: pageTitle = $page.data.pageTitle ?? "";
+
+  $: currentUserUpdated =
+    browser && data.currentUser != null
+      ? new CurrentUserUpdatedStore()
+      : undefined;
+  // eslint-disable-next-line no-unused-expressions
+  $: currentUserUpdated && currentUserUpdated.listen();
+  $: currentUser =
+    $currentUserUpdated?.data?.currentUserUpdated?.user ?? data.currentUser;
 </script>
 
 <AppShell slotPageContent="flex flex-col">
