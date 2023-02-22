@@ -1,6 +1,6 @@
 <script lang="ts">
   import { validator } from "@felte/validator-zod";
-  import { ProgressRadial, tooltip } from "@skeletonlabs/skeleton";
+  import { popup, ProgressRadial } from "@skeletonlabs/skeleton";
   import { createForm } from "felte";
   import type { z } from "zod";
 
@@ -68,10 +68,22 @@
       <span data-cy="registerpage-name-label" class="flex items-center">
         Name&nbsp;
         <span
-          use:tooltip={{ content: "What is your name?", position: "bottom" }}
+          use:popup={{
+            event: "hover",
+            target: "nameTooltip",
+            placement: "top",
+          }}
         >
           <IonHelpCircleOutline />
         </span>
+        <div
+          class="card variant-filled-primary z-[999] whitespace-nowrap p-2 text-center text-xs shadow-xl"
+          data-popup="nameTooltip"
+        >
+          What is your name?
+          <!-- Arrow -->
+          <div class="arrow variant-filled-primary" />
+        </div>
       </span>
     </svelte:fragment>
   </TextInput>
@@ -85,13 +97,22 @@
       ><span data-cy="registerpage-name-label" class="flex items-center">
         Username&nbsp;
         <span
-          use:tooltip={{
-            content: "What do you want others to call you?",
-            position: "bottom",
+          use:popup={{
+            event: "hover",
+            target: "usernameTooltip",
+            placement: "top",
           }}
         >
           <IonHelpCircleOutline />
         </span>
+        <div
+          class="card variant-filled-primary whitespace-nowrap p-2 text-center text-xs shadow-xl"
+          data-popup="usernameTooltip"
+        >
+          What do you want others to call you?
+          <!-- Arrow -->
+          <div class="arrow variant-filled-primary" />
+        </div>
       </span></svelte:fragment
     >
   </TextInput>

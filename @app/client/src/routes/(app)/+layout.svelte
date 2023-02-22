@@ -1,6 +1,6 @@
 <script lang="ts">
   import { companyName, projectName, termsAndConditionsUrl } from "@app/config";
-  import { AppBar, AppShell, Avatar, menu } from "@skeletonlabs/skeleton";
+  import { AppBar, AppShell, Avatar, popup } from "@skeletonlabs/skeleton";
   import classnames from "classnames";
 
   import IonLogoFacebook from "~icons/ion/logo-facebook";
@@ -44,7 +44,13 @@
         {#if currentUser != null}
           <span class="relative">
             <Warn okay={currentUser.isVerified}>
-              <span use:menu={{ menu: "profile" }} class="cursor-pointer"
+              <span
+                use:popup={{
+                  target: "profileMenu",
+                  event: "click",
+                  placement: "bottom",
+                }}
+                class="cursor-pointer"
                 ><Avatar
                   initials={currentUser.name
                     ?.split(" ")
@@ -55,7 +61,10 @@
                 /></span
               ></Warn
             >
-            <nav class="card list-nav w-60 p-4 shadow-xl" data-menu="profile">
+            <nav
+              class="card list-nav w-60 p-4 shadow-xl"
+              data-popup="profileMenu"
+            >
               <ul>
                 <li>
                   <Warn okay={currentUser.isVerified} pulse>

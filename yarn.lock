@@ -1380,6 +1380,18 @@
   dependencies:
     "@felte/common" "1.1.4"
 
+"@floating-ui/core@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@floating-ui/core/-/core-1.2.1.tgz#074182a1d277f94569c50a6b456e62585d463c8e"
+  integrity sha512-LSqwPZkK3rYfD7GKoIeExXOyYx6Q1O4iqZWwIehDNuv3Dv425FIAE8PRwtAx1imEolFTHgBEcoFHm9MDnYgPCg==
+
+"@floating-ui/dom@1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@floating-ui/dom/-/dom-1.2.1.tgz#8f93906e1a3b9f606ce78afb058e874344dcbe07"
+  integrity sha512-Rt45SmRiV8eU+xXSB9t0uMYiQ/ZWGE/jumse2o3i5RGlyvcbqOF4q+1qBnzLE2kZ5JGhq0iMkcGXUKbFe7MpTA==
+  dependencies:
+    "@floating-ui/core" "^1.2.1"
+
 "@graphile-contrib/pg-simplify-inflector@^6.0.0":
   version "6.1.0"
   resolved "https://registry.yarnpkg.com/@graphile-contrib/pg-simplify-inflector/-/pg-simplify-inflector-6.1.0.tgz#5ecb842bd43af4d3ffdfcd25b1e7c452374f7440"
@@ -3059,10 +3071,10 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@skeletonlabs/skeleton@0.124.2":
-  version "0.124.2"
-  resolved "https://registry.yarnpkg.com/@skeletonlabs/skeleton/-/skeleton-0.124.2.tgz#041926b8f24aa67142d799262aea21f0169f5b88"
-  integrity sha512-SQ0tgXXEj/QJ5BSA+UwKdSMADW5Xt+5iNpks1y94YnX2iwAY80MlffEfip+//VXYayeGvzx4xiU4//MpK9+Zgg==
+"@skeletonlabs/skeleton@0.132.5":
+  version "0.132.5"
+  resolved "https://registry.yarnpkg.com/@skeletonlabs/skeleton/-/skeleton-0.132.5.tgz#dc53100c4ea2de34c1312428e301bcab1b3abe64"
+  integrity sha512-xbw/2hWw7/BjIYjEw9fDNG/to9/nML6Lc7m/PPSHG7cP6+pQ5CwvNxAXhErCkIGICuAKXiesYglhw2PrZY6M2A==
   dependencies:
     svelte "^3.55.1"
 
@@ -8671,6 +8683,11 @@ graphql-tag@^2.11.0, graphql-tag@^2.12.0:
   integrity sha512-VV1U4O+9x99EkNpNmCUV5RZwq6MnK4+pGbRYWG+lA/m3uo7TSqJF81OkcOP148gFP6fzdl7JWYBrwWVTS9jXww==
   dependencies:
     tslib "^2.1.0"
+
+graphql-ws@5.11.3:
+  version "5.11.3"
+  resolved "https://registry.yarnpkg.com/graphql-ws/-/graphql-ws-5.11.3.tgz#eaf8e6baf669d167975cff13ad86abca4ecfe82f"
+  integrity sha512-fU8zwSgAX2noXAsuFiCZ8BtXeXZOzXyK5u1LloCdacsVth4skdBMPO74EG51lBoWSIZ8beUocdpV8+cQHBODnQ==
 
 graphql-ws@^4.1.1, graphql-ws@^4.4.1, graphql-ws@^4.5.1:
   version "4.5.1"
