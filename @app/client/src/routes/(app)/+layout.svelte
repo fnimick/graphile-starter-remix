@@ -32,7 +32,7 @@
 </script>
 
 <AppShell slotPageContent="flex flex-col">
-  <svelte:fragment slot="header">
+  <svelte:fragment slot="pageHeader">
     <AppBar
       gridColumns="grid-cols-3"
       slotDefault="place-self-center"
@@ -42,6 +42,29 @@
       <h3>{pageTitle}</h3>
       <svelte:fragment slot="trail">
         {#if currentUser != null}
+          <nav
+            class="card list-nav w-60 p-4 shadow-xl"
+            data-popup="profileMenu"
+          >
+            <ul>
+              <li>
+                <Warn okay={currentUser.isVerified} pulse>
+                  <a href="/settings" data-cy="layout-link-settings">
+                    <span class="">Profile</span>
+                  </a>
+                </Warn>
+                <!-- <a href="/settings" data-cy="layout-link-settings">
+                  <span class="">Profile</span>
+                </a> -->
+              </li>
+              <li>
+                <form method="post" action="/logout">
+                  <!-- <AuthenticityTokenInput /> -->
+                  <button class="w-full" type="submit">Logout</button>
+                </form>
+              </li>
+            </ul>
+          </nav>
           <span class="relative">
             <Warn okay={currentUser.isVerified}>
               <span
@@ -61,26 +84,6 @@
                 /></span
               ></Warn
             >
-            <nav
-              class="card list-nav w-60 p-4 shadow-xl"
-              data-popup="profileMenu"
-            >
-              <ul>
-                <li>
-                  <Warn okay={currentUser.isVerified} pulse>
-                    <a href="/settings" data-cy="layout-link-settings">
-                      <span class="">Profile</span>
-                    </a>
-                  </Warn>
-                </li>
-                <li>
-                  <form method="post" action="/logout">
-                    <!-- <AuthenticityTokenInput /> -->
-                    <button class="w-full" type="submit">Logout</button>
-                  </form>
-                </li>
-              </ul>
-            </nav>
           </span>
         {:else if !$page.data.hideLogin}
           <a
