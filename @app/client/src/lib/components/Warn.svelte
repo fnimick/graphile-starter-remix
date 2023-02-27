@@ -10,7 +10,7 @@
     "badge-icon variant-filled-error absolute z-10 h-3 w-3";
 </script>
 
-<div>
+<div class="relative">
   {#if !okay}
     {#if pulse}
       <span

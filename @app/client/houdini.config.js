@@ -23,6 +23,7 @@ const config = {
       type: "string",
     },
   },
+  defaultCachePolicy: "NetworkOnly",
 };
 
 export default config;

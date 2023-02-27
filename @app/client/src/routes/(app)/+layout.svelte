@@ -66,7 +66,10 @@
             </ul>
           </nav>
           <span class="relative">
-            <Warn okay={currentUser.isVerified}>
+            <Warn
+              okay={currentUser.isVerified}
+              data-cy="header-unverified-warning"
+            >
               <span
                 use:popup={{
                   target: "profileMenu",
@@ -99,8 +102,8 @@
 
   <div
     class={classnames([
-      "flex flex-grow flex-col items-center p-2 lg:p-4",
-      limitContentWidth ? "w-full max-w-5xl self-center" : undefined,
+      "flex flex-grow flex-col items-center",
+      limitContentWidth ? "w-full max-w-5xl self-center p-2 lg:p-4" : undefined,
     ])}
   >
     <slot />

@@ -1,0 +1,9 @@
+query SettingsProfileNew {
+  currentUser {
+    id
+    name
+    username
+    avatarUrl
+    isVerified
+  }
+}
