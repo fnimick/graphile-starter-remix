@@ -7,6 +7,9 @@ const websocketUrl = `${PUBLIC_ROOT_URL.replace(/^http/, "ws")}/graphql`;
 
 export default new HoudiniClient({
   url: `${PUBLIC_ROOT_URL}/graphql`,
+  fetchParams: () => ({
+    credentials: "include",
+  }),
   throwOnError: {
     operations: ["all"],
     error: (errors) => {

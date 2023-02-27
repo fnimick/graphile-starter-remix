@@ -10,6 +10,7 @@ const WEB_URL = tmpWebUrl;
 
 const corsOptions: cors.CorsOptions = {
   origin: WEB_URL,
+  credentials: true,
 };
 
 export default function installCors(app: Express) {

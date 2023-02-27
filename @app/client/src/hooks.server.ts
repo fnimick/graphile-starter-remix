@@ -1,6 +1,7 @@
 import type { HandleFetch, HandleServerError } from "@sveltejs/kit";
 import setCookie from "set-cookie-parser";
 
+import { SHARED_DOMAIN } from "$env/static/private";
 import { PUBLIC_ROOT_URL } from "$env/static/public";
 
 export const handleFetch: HandleFetch = async ({ event, request, fetch }) => {
@@ -22,6 +23,7 @@ export const handleFetch: HandleFetch = async ({ event, request, fetch }) => {
           httpOnly: true,
           sameSite: "lax",
           path: "/",
+          domain: SHARED_DOMAIN,
         });
       }
     }
