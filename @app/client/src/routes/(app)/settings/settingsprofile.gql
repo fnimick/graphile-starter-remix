@@ -1,4 +1,4 @@
-query SettingsProfileNew {
+query SettingsProfile {
   currentUser {
     id
     name
