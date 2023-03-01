@@ -54,7 +54,11 @@
   });
 </script>
 
-<form method="POST" use:form class="flex w-full max-w-lg flex-col gap-y-5">
+<form
+  method="POST"
+  use:form
+  class="flex w-full max-w-lg flex-col gap-y-2 p-2 lg:p-4"
+>
   <input type="hidden" name="text" value={next} />
   <TextInput
     name="name"

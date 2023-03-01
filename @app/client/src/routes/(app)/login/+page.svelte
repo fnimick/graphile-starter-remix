@@ -9,9 +9,9 @@
   $: next = isSafe(rawNext) ? rawNext : "/";
 </script>
 
-<div class="flex max-w-lg flex-col gap-y-2">
+<div class="flex max-w-lg flex-col gap-y-2 p-2 lg:p-4">
   <a
-    class="btn btn-base variant-filled-primary"
+    class="btn-base btn variant-filled-primary"
     href={`/login/email?next=${encodeURIComponent(next)}`}
     data-cy="loginpage-button-withusername"
   >
@@ -21,7 +21,7 @@
     Sign in with E-mail or Username
   </a>
   <a
-    class="btn btn-base variant-ghost-surface"
+    class="btn-base btn variant-ghost-surface"
     href={`/register?next=${encodeURIComponent(next)}`}
     data-cy="loginpage-button-register"
   >

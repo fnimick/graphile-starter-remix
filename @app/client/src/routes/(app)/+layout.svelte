@@ -18,7 +18,6 @@
   $: ({ pathname, search, hash } = $page.url);
   $: currentRouteURL = `${pathname}${search}${hash}`;
 
-  $: limitContentWidth = $page.data.limitContentWidth ?? true;
   $: pageTitle = $page.data.pageTitle ?? "";
 
   $: currentUserUpdated =
@@ -100,12 +99,7 @@
     </AppBar>
   </svelte:fragment>
 
-  <div
-    class={classnames([
-      "flex flex-grow flex-col items-center",
-      limitContentWidth ? "w-full max-w-5xl self-center p-2 lg:p-4" : undefined,
-    ])}
-  >
+  <div class={classnames(["flex flex-grow flex-col items-center"])}>
     <slot />
   </div>
 

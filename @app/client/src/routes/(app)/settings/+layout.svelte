@@ -1,7 +1,7 @@
 <script lang="ts">
   import { AppShell } from "@skeletonlabs/skeleton";
 
-  import Navigation from "$lib/Navigation/Navigation.svelte";
+  import Navigation from "$lib/layout/Navigation.svelte";
 
   import type { PageData } from "./$houdini";
 
