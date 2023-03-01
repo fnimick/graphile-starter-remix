@@ -1,15 +1,13 @@
-import { Task } from "graphile-worker";
-import { template as lodashTemplate } from "lodash";
-// @ts-ignore
-import mjml2html = require("mjml");
 import {
   emailLegalText as legalText,
   fromEmail,
   projectName,
 } from "@app/config";
-import chalk from "chalk";
 import { promises as fsp } from "fs";
+import { Task } from "graphile-worker";
 import { htmlToText } from "html-to-text";
+import { template as lodashTemplate } from "lodash";
+import mjml2html from "mjml";
 import * as nodemailer from "nodemailer";
 
 import getTransport from "../transport";
@@ -60,14 +58,20 @@ const task: Task = async (inPayload) => {
   } else if (isDev) {
     const url = nodemailer.getTestMessageUrl(info);
     if (url) {
-      console.log(`Development email preview: ${chalk.blue.underline(url)}`);
+      // Hex codes here equivalent to chalk.blue.underline
+      console.log(
+        `Development email preview: \x1B[34m\x1B[4m${url}\x1B[24m\x1B[39m`
+      );
     }
   }
 };
 
 export default task;
 
-const templatePromises = {};
+const templatePromises: Record<
+  string,
+  Promise<(variables: Record<string, any>) => string>
+> = {};
 function loadTemplate(template: string) {
   if (isDev || !templatePromises[template]) {
     templatePromises[template] = (async () => {

@@ -38,6 +38,11 @@ const CSP_DIRECTIVES = (cspNonce: string) => ({
  */
 const REFERRER_POLICY = { policy: "strict-origin-when-cross-origin" };
 
+// Enables prettier script and SVG icon in GraphiQL
+const CROSS_ORIGIN_EMBEDDER_POLICY = !(
+  isDevOrTest || !!process.env.ENABLE_GRAPHIQL
+);
+
 export default function installHelmet(app: Express) {
   // Add a cryptographic nonce for remix support
   app.use((req, res, next) => {
@@ -55,6 +60,7 @@ export default function installHelmet(app: Express) {
               },
             },
             referrerPolicy: REFERRER_POLICY,
+            crossOriginEmbedderPolicy: CROSS_ORIGIN_EMBEDDER_POLICY,
           }
         : {
             contentSecurityPolicy: {
@@ -63,6 +69,7 @@ export default function installHelmet(app: Express) {
               },
             },
             referrerPolicy: REFERRER_POLICY,
+            crossOriginEmbedderPolicy: CROSS_ORIGIN_EMBEDDER_POLICY,
           }
     );
     helmetMiddleware(req, res, next);
