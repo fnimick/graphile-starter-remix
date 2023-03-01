@@ -36,7 +36,7 @@ const CSP_DIRECTIVES = (cspNonce: string) => ({
  * enabling the request to be detected as same-origin via `installSameOrigin`
  * middleware.
  */
-const REFERRER_POLICY = { policy: "strict-origin-when-cross-origin" };
+const REFERRER_POLICY = { policy: "strict-origin-when-cross-origin" } as const;
 
 // Enables prettier script and SVG icon in GraphiQL
 const CROSS_ORIGIN_EMBEDDER_POLICY = !(
