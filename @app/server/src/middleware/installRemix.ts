@@ -4,7 +4,7 @@ import { createRequestHandler } from "@remix-run/express";
 import Tokens from "csrf";
 import { Express, static as staticMiddleware } from "express";
 import { DocumentNode, execute, GraphQLError } from "graphql";
-import { HeadersInit } from "node-fetch";
+import type { HeadersInit } from "node-fetch" assert { "resolution-mode": "import" };
 import postgraphile from "postgraphile";
 
 import handleErrors from "../utils/handleErrors";
