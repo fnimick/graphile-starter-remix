@@ -18,6 +18,7 @@ const config: UserConfig = {
     // https://github.com/pablo-abc/felte/issues/201#issuecomment-1381641343
     noExternal: ["felte"],
   },
+  envDir: "../../",
 };
 
 export default config;

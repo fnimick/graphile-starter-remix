@@ -1,4 +1,4 @@
-import { ApolloError } from "@apollo/client";
+import type { ApolloError } from "@apollo/client/errors" assert { "resolution-mode": "import" };
 import { GraphQLError } from "graphql";
 
 export function extractError(error: null): null;
