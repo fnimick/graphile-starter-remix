@@ -26,7 +26,7 @@
     "@remix-validated-form/with-zod": "2.0.2",
     "@types/react": "^17.0.24",
     "@types/react-dom": "^17.0.9",
-    "antd": "4.23.1",
+    "antd": "4.24.8",
     "compression": "^1.7.4",
     "cross-env": "^7.0.3",
     "express": "^4.17.1",
