@@ -24,7 +24,7 @@ afterAll(() => {
         const pool = pools[key];
         delete pools[key];
         await pool.end();
-      } catch (e) {
+      } catch (e: any) {
         console.error("Failed to release connection!");
         console.error(e);
       }
@@ -75,7 +75,7 @@ export const asRoot = async <T>(
   } finally {
     try {
       await client.query("select set_config('role', $1, true)", [role]);
-    } catch (e) {
+    } catch (e: any) {
       // Transaction was probably aborted, don't clobber the error
     }
   }
@@ -95,7 +95,7 @@ export const createUsers = async function createUsers(
   count: number = 1,
   verified: boolean = true
 ) {
-  const users = [];
+  const users: User[] = [];
   if (userCreationCounter > 25) {
     throw new Error("Too many users created!");
   }
@@ -104,8 +104,8 @@ export const createUsers = async function createUsers(
     userCreationCounter++;
     const password = userLetter.repeat(12);
     const email = `${userLetter}${i || ""}@b.c`;
-    const user: User = (
-      await client.query(
+    const user = (
+      await client.query<User>(
         `SELECT * FROM app_private.really_create_user(
         username := $1,
         email := $2,

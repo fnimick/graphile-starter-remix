@@ -1,6 +1,5 @@
 import { awsRegion } from "@app/config";
 import * as aws from "aws-sdk";
-import chalk from "chalk";
 import { promises as fsp } from "fs";
 import * as nodemailer from "nodemailer";
 
@@ -26,7 +25,7 @@ export default function getTransport(): Promise<nodemailer.Transporter> {
         try {
           const testAccountJson = await readFile(etherealFilename, "utf8");
           account = JSON.parse(testAccountJson);
-        } catch (e) {
+        } catch (e: any) {
           account = await nodemailer.createTestAccount();
           await writeFile(etherealFilename, JSON.stringify(account));
         }
@@ -35,9 +34,10 @@ export default function getTransport(): Promise<nodemailer.Transporter> {
           console.log();
           console.log();
           console.log(
-            chalk.bold(
-              " ✉️ Emails in development are sent via ethereal.email; your credentials follow:"
-            )
+            // Escapes equivalent to chalk.bold
+            "\x1B[1m" +
+              " ✉️ Emails in development are sent via ethereal.email; your credentials follow:" +
+              "\x1B[22m"
           );
           console.log("  Site:     https://ethereal.email/login");
           console.log(`  Username: ${account.user}`);

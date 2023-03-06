@@ -1,4 +1,27 @@
-# Graphile Starter
+# Graphile Starter with Remix
+
+This is a fork of the original graphile starter, with Next replaced with
+[Remix](https://remix.run). This provides the same SSR and rapid development
+abilities while also embracing the new layout route model.
+
+GraphQL queries and mutations are performed via Remix loaders and actions to
+allow Remix optimizations and the form model to work to their fullest.
+Subscriptions are still handled in the client via an Apollo websocket link, but
+simply retrigger the remix loaders on a new data event to keep the display logic
+clean. This means that this is **not suitable for high-throughput subscription
+use cases**.
+
+NOTE: The migration from `graphile/starter`'s NextJS project is incomplete, but
+this provides a good base for beginning a new Postgraphile/Remix project.
+GraphQL queries, subscriptions, and other core elements all work as expected.
+Some account management and all organization features are missing.
+
+NOTE #2: A frontend migration to Tailwind + DaisyUI can be found under branch
+`tailwind`.
+
+---
+
+# Original Readme
 
 ## Take it for a spin!
 
@@ -105,13 +128,11 @@ And please give some love to our featured sponsors 🤩:
 <td align="center"><a href="https://surge.io/"><img src="https://graphile.org/images/sponsors/surge.png" width="90" height="90" alt="Surge" /><br />Surge</a> *</td>
 <td align="center"><a href="https://www.netflix.com/"><img src="https://graphile.org/images/sponsors/Netflix.png" width="90" height="90" alt="Netflix" /><br />Netflix</a> *</td>
 <td align="center"><a href="https://www.the-guild.dev/"><img src="https://graphile.org/images/sponsors/theguild.png" width="90" height="90" alt="The Guild" /><br />The Guild</a> *</td>
-<td align="center"><a href="http://chads.website"><img src="https://graphile.org/images/sponsors/chadf.png" width="90" height="90" alt="Chad Furman" /><br />Chad Furman</a> *</td>
-</tr><tr>
 <td align="center"><a href="https://qwick.com/"><img src="https://graphile.org/images/sponsors/qwick.png" width="90" height="90" alt="Qwick" /><br />Qwick</a> *</td>
-<td align="center"><a href="https://www.fanatics.com/"><img src="https://graphile.org/images/sponsors/fanatics.png" width="90" height="90" alt="Fanatics" /><br />Fanatics</a> *</td>
+</tr><tr>
+<td align="center"><a href="http://chads.website"><img src="https://graphile.org/images/sponsors/chadf.png" width="90" height="90" alt="Chad Furman" /><br />Chad Furman</a> *</td>
 <td align="center"><a href="https://dovetailapp.com/"><img src="https://graphile.org/images/sponsors/dovetail.png" width="90" height="90" alt="Dovetail" /><br />Dovetail</a> *</td>
 <td align="center"><a href="https://www.enzuzo.com/"><img src="https://graphile.org/images/sponsors/enzuzo.png" width="90" height="90" alt="Enzuzo" /><br />Enzuzo</a> *</td>
-</tr><tr>
 <td align="center"><a href="https://stellate.co/"><img src="https://graphile.org/images/sponsors/Stellate.png" width="90" height="90" alt="Stellate" /><br />Stellate</a> *</td>
 </tr></table>
 
@@ -121,7 +142,8 @@ And please give some love to our featured sponsors 🤩:
 
 ## Table of contents
 
-- [Graphile Starter](#graphile-starter)
+- [Graphile Starter with Remix](#graphile-starter-with-remix)
+- [Original Readme](#original-readme)
   - [Take it for a spin!](#take-it-for-a-spin)
   - [NOT FOR BEGINNERS](#not-for-beginners)
   - [Purpose](#purpose)
@@ -148,7 +170,7 @@ And please give some love to our featured sponsors 🤩:
 
 Graphile Starter is a full-stack [GraphQL](https://graphql.org/learn/) and
 [React](https://reactjs.org/) project, with server-side rendering (SSR) and
-routing thanks to [Next.js](https://nextjs.org/). The backend is a beautiful
+routing thanks to [Remix](https://remix.run/). The backend is a beautiful
 pairing of Node.js and PostgreSQL running on Express.js, enabled by
 [PostGraphile](https://www.graphile.org/postgraphile/) in library mode. The
 frontend uses the [AntD](https://ant.design/) design framework to accelerate
@@ -237,7 +259,7 @@ containers.
 
 Requires:
 
-- Node.js v14+ must be installed
+- Node.js v16+ must be installed
 - PostgreSQL v10+ server must be available
 - `pg_dump` command must be available (or you can remove this functionality)
 - VSCode is recommended, but any editor will do
@@ -270,7 +292,7 @@ This project is designed to work with `yarn`. If you don't have `yarn`
 installed, you can install it with `npm install -g yarn`. The Docker setup
 already has `yarn` & `npm` installed and configured.
 
-To get started, please run:
+To get started, please run `yarn`, followed by:
 
 | Local mode   | OR  | Docker mode                     |
 | ------------ | :-: | ------------------------------- |
@@ -517,8 +539,9 @@ drop role dbname;
 
 ## Custom packages
 
-When running `yarn setup`, this command will also invoke `lerna run setup`. This
-allows you to add custom setup hooks necessary for your individual packages.
+When running `yarn setup`, this command will also invoke
+`yarn workspaces foreach run setup`. This allows you to add custom setup hooks
+necessary for your individual packages.
 
 Add a line like the following to your `scripts` section in your `package.json`:
 

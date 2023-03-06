@@ -7,16 +7,17 @@ ARG TARGET="server"
 ################################################################################
 # Build stage 1 - `yarn build`
 
-FROM node:16 as builder
+FROM node:16-alpine as builder
 # Import our shared args
 ARG NODE_ENV
 ARG ROOT_URL
 
 # Cache node_modules for as long as possible
-COPY lerna.json package.json yarn.lock /app/
+COPY package.json yarn.lock .yarnrc.yml /app/
+COPY .yarn/ /app/.yarn/
 COPY @app/ /app/@app/
 WORKDIR /app/
-RUN yarn install --frozen-lockfile --production=false --no-progress
+RUN yarn workspaces focus --all
 
 COPY tsconfig.json /app/
 # Folders must be copied separately, files can be copied all at once
@@ -29,23 +30,22 @@ RUN yarn run build
 ################################################################################
 # Build stage 2 - COPY the relevant things (multiple steps)
 
-FROM node:16 as clean
+FROM node:16-alpine as clean
 # Import our shared args
 ARG NODE_ENV
 ARG ROOT_URL
 
 # Copy over selectively just the tings we need, try and avoid the rest
-COPY --from=builder /app/lerna.json /app/package.json /app/yarn.lock /app/
+COPY --from=builder /app/package.json /app/yarn.lock /app/.yarnrc.yml /app/
+COPY --from=builder /app/.yarn/ /app/.yarn/
 COPY --from=builder /app/@app/config/ /app/@app/config/
 COPY --from=builder /app/@app/db/ /app/@app/db/
 COPY --from=builder /app/@app/graphql/ /app/@app/graphql/
 COPY --from=builder /app/@app/lib/ /app/@app/lib/
-COPY --from=builder /app/@app/components/package.json /app/@app/components/
-COPY --from=builder /app/@app/components/dist/ /app/@app/components/dist/
-COPY --from=builder /app/@app/client/package.json /app/@app/client/package.json
-COPY --from=builder /app/@app/client/assets/ /app/@app/client/assets/
-COPY --from=builder /app/@app/client/src/next.config.js /app/@app/client/src/next.config.js
-COPY --from=builder /app/@app/client/.next /app/@app/client/.next
+COPY --from=builder /app/@app/client/package.json /app/@app/-client/package.json
+COPY --from=builder /app/@app/client/public/ /app/@app/client/public/
+COPY --from=builder /app/@app/client/remix.config.js /app/@app/client/remix.config.js
+COPY --from=builder /app/@app/client/build /app/@app/client/build
 COPY --from=builder /app/@app/server/package.json /app/@app/server/
 COPY --from=builder /app/@app/server/postgraphile.tags.jsonc /app/@app/server/
 COPY --from=builder /app/@app/server/dist/ /app/@app/server/dist/
@@ -66,7 +66,7 @@ RUN rm -Rf /app/node_modules /app/@app/*/node_modules
 ################################################################################
 # Build stage FINAL - COPY everything, once, and then do a clean `yarn install`
 
-FROM node:16
+FROM node:16-alpine
 
 EXPOSE $PORT
 WORKDIR /app/
@@ -74,7 +74,7 @@ WORKDIR /app/
 COPY --from=clean /app/ /app/
 
 # Install yarn ASAP because it's the slowest
-RUN yarn install --frozen-lockfile --production=true --no-progress
+RUN yarn workspaces focus --all --production
 
 # Import our shared args
 ARG PORT

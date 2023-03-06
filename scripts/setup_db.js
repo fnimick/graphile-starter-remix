@@ -7,7 +7,6 @@ const {
   runSync,
   projectName,
 } = require("./_setup_utils");
-const inquirer = require("inquirer");
 const dotenv = require("dotenv");
 const pg = require("pg");
 
@@ -16,6 +15,10 @@ const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 runMain(async () => {
   await checkGit();
 
+  // Run graphql codegen (necessary for server build)
+  runSync(yarnCmd, ["graphql", "codegen"]);
+  // Build @app/lib
+  runSync(yarnCmd, ["lib", "build"]);
   // Ensure server build has been run
   runSync(yarnCmd, ["server", "build"]);
 
@@ -34,6 +37,7 @@ runMain(async () => {
   } = process.env;
 
   if (!CONFIRM_DROP) {
+    const { default: inquirer } = await import("inquirer");
     const confirm = await inquirer.prompt([
       {
         type: "confirm",

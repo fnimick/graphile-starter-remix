@@ -138,9 +138,9 @@ export default (
             ]
           );
           if (!user || !user.id) {
-            const e = new Error("Registration failed");
-            e["code"] = "FFFFF";
-            throw e;
+            throw Object.assign(new Error("Registration failed"), {
+              code: "FFFFF",
+            });
           }
           if (!session) {
             ({
@@ -151,12 +151,12 @@ export default (
             ));
           }
           if (!session) {
-            const e = new Error("Failed to create session");
-            e["code"] = "FFFFF";
-            throw e;
+            throw Object.assign(new Error("Failed to create session"), {
+              code: "FFFFF",
+            });
           }
           done(null, { session_id: session.uuid });
-        } catch (e) {
+        } catch (e: any) {
           done(e);
         }
       }
@@ -166,7 +166,7 @@ export default (
   app.get(`/auth/${service}`, setReturnTo, async (req, res, next) => {
     try {
       await preRequest(req);
-    } catch (e) {
+    } catch (e: any) {
       next(e);
       return;
     }
@@ -186,7 +186,7 @@ export default (
   app.get(`/auth/${service}/callback`, async (req, res, next) => {
     try {
       await postRequest(req);
-    } catch (e) {
+    } catch (e: any) {
       next(e);
       return;
     }
