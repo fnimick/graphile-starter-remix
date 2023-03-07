@@ -12,6 +12,9 @@ const config = {
     alias: {
       $houdini: "./$houdini",
     },
+    env: {
+      dir: "../../",
+    },
   },
 };
 
