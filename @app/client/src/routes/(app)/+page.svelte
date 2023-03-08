@@ -1,5 +1,6 @@
 <script lang="ts">
   import StandardWidth from "$lib/layout/StandardWidth.svelte";
+  import { PUBLIC_ROOT_URL } from "$env/static/public";
 </script>
 
 <StandardWidth>
@@ -23,7 +24,11 @@
       <h4 class="text-xl">Sveltekit</h4>
       <div>
         We use Sveltekit to serve the Svelte app. This gives us server-side
-        rendering, routing, bundle splitting, hot reloading, and much more.
+        rendering, routing, bundle splitting, hot reloading, and much more. <br
+        />
+        Please note that unlike the standard Graphile Starter or the Remix
+        variant, Sveltekit is <b>not</b> served by the main NodeJS backend. This
+        allows you to deploy it separately via optimized hosting.
       </div>
 
       <h4 class="text-xl">Page hangs: development only</h4>
@@ -47,14 +52,14 @@
       </div>
 
       <h4 class="text-xl">
-        <a class="link-accent link" href="/graphiql">
+        <a class="link-accent link" href={`${PUBLIC_ROOT_URL}/graphiql`}>
           Graph<em>i</em>QL
         </a>
       </h4>
       <div>
         You can browse the GraphQL API and even issue GraphQL queries using the
         built in Graph<em>i</em>QL interface located at{" "}
-        <a class="link-accent link" href="/graphiql">
+        <a class="link-accent link" href={`${PUBLIC_ROOT_URL}/graphiql`}>
           <code>/graphiql</code>
         </a>
         .
@@ -133,8 +138,10 @@
       <div>
         When you're happy, you can add database changes to{" "}
         <code>current.sql</code> and see them reflected in the GraphiQL
-        interface a{" "}
-        <a class="link-accent link" href="/graphiql"> /graphiql </a>
+        interface at{" "}
+        <a class="link-accent link" href={`${PUBLIC_ROOT_URL}/graphiql`}>
+          /graphiql
+        </a>
         .
       </div>
 
@@ -215,7 +222,7 @@
       <h4 class="text-xl">Realtime</h4>
       <div>
         We've configured PostGraphile with <code>@graphile/pg-pubsub</code> to enable
-        realtime events from the DB; and Apollo is configured to consume them. For
+        realtime events from the DB; and Houdini is configured to consume them. For
         example, if you register with email/password you may notice the red dot at
         the top right indicating that you need to verify your email. If you verify
         your email in another tab (or even another browser) you should notice that
@@ -249,13 +256,11 @@
 
       <h4 class="text-xl">Validation</h4>
       <div>
-        We use{" "}
-        <a class="link-accent link" href="https://ant.design/components/form/">
-          AntD's forms
-        </a>
-        , so validation is provided via these. We've shown how to connect server-side
-        errors into the form validation, for example try registering a new account
-        using the email address of an account{" "}
+        We use Zod for client-side and server-side form validation, with client
+        error checking provided via <a href="https://felte.dev/">Felte</a>.
+        We've shown how to connect server-side errors into the form validation,
+        for example try registering a new account using the email address of an
+        account{" "}
         <strong>that has already been verified</strong>.
       </div>
 

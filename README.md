@@ -310,16 +310,18 @@ non-optimal. We recommend adding `export UID` to your `~/.profile` or
 
 ## Running
 
-You can bring up the stack with:
+You can bring up the backend stack with:
 
 | Local mode   | OR  | Docker mode                     |
 | ------------ | :-: | ------------------------------- |
 | `yarn start` | or  | `export UID; yarn docker start` |
 
-After a short period you should be able to load the application at
-http://localhost:5678
+You can then launch the frontend with: `yarn client dev`
 
-This main command runs a number of tasks:
+After a short period you should be able to load the application at
+http://localhost:5173
+
+The main backend command runs a number of tasks:
 
 - uses [`graphile-migrate`](https://github.com/graphile/migrate) to watch
   the`migrations/current.sql` file for changes, and automatically runs it
