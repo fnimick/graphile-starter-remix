@@ -28,7 +28,6 @@ module.exports = {
     },
     {
       files: ["@app/client/**", "@app/components/**"],
-      extends: ["next"],
     },
   ],
   parserOptions: {
@@ -59,9 +58,6 @@ module.exports = {
           alwaysTryTypes: true,
         },
       },
-    },
-    next: {
-      rootDir: "@app/client/",
     },
   },
   env: {

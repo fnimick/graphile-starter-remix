@@ -26,6 +26,10 @@ export default async function installHelmet(app: Express) {
             // an https:// page, so we have to translate explicitly for
             // it.
             ROOT_URL.replace(/^http/, "ws"),
+            // Remix serves websockets on port 8002 for hot reloading
+            ...(isDevOrTest
+              ? [ROOT_URL.replace(/^http/, "ws").replace("5678", "8002")]
+              : []),
           ],
           "script-src": ["'self'", `'nonce-${res.locals.cspNonce}'`],
         },
