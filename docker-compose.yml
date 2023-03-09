@@ -41,8 +41,7 @@ services:
       - "8002:8002"
     depends_on:
       - db
-    #* Overrides default command so things don't shut down after the process ends.
-    command: sh -c "yarn && yarn start"
+    command: sh -c "./docker/scripts/lsfix.sh && yarn && yarn start"
 
   # extends server, is made for live developing
   dev:
@@ -110,7 +109,7 @@ services:
     depends_on:
       - db
     # Overrides default command so things don't shut down after the process ends.
-    command: sleep infinity
+    command: sh -c "./docker/scripts/lsfix.sh && sleep infinity"
 
   # This runs the database that everything else connects to
   db:
