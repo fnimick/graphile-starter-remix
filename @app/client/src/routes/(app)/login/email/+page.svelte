@@ -1,13 +1,12 @@
 <script lang="ts">
-  import { validator } from "@felte/validator-zod";
   import { ProgressRadial } from "@skeletonlabs/skeleton";
-  import { createForm } from "felte";
+  import { onDestroy } from "svelte";
   import type { z } from "zod";
 
   import { browser } from "$app/environment";
-  import { applyAction, deserialize } from "$app/forms";
   import { page } from "$app/stores";
   import Alert from "$lib/components/Alert.svelte";
+  import { createValidatedForm } from "$lib/form/createValidatedForm";
   import TextInput from "$lib/form/TextInput.svelte";
   import { isSafe } from "$lib/utils/uri";
   import type { FailResult, FormError } from "$lib/utils/validate";
@@ -17,40 +16,25 @@
   $: rawNext = $page.url.searchParams.get("next");
   $: next = isSafe(rawNext) ? rawNext : "/";
 
-  const { form, errors, setErrors, isSubmitting } = createForm<
-    z.infer<typeof loginSchema>
-  >({
-    onSuccess: async (event) => {
-      const resp = event as Response;
-      const result = deserialize(await resp.text());
-      applyAction(result);
-    },
-    onError: async (error: any) => {
-      if (error.response) {
-        const { response } = error;
-        const result = deserialize(await response.text());
-        applyAction(result);
-      } else {
-        applyAction({ type: "error", error });
-      }
-    },
-    extend: [validator({ schema: loginSchema })],
-  });
+  const { form, errors, setErrors, isSubmitting } =
+    createValidatedForm<typeof loginSchema>(loginSchema);
 
   let formError: FormError | undefined = undefined;
 
-  page.subscribe(({ form }) => {
-    if (form?.fieldErrors) {
-      const failResult = form as FailResult<
-        z.infer<typeof loginSchema>,
-        typeof loginSchema
-      >;
-      formError = failResult.formError;
-      if (failResult.fieldErrors) {
-        setErrors(failResult.fieldErrors);
+  onDestroy(
+    page.subscribe(({ form }) => {
+      if (form?.fieldErrors) {
+        const failResult = form as FailResult<
+          z.infer<typeof loginSchema>,
+          typeof loginSchema
+        >;
+        formError = failResult.formError;
+        if (failResult.fieldErrors) {
+          setErrors(failResult.fieldErrors);
+        }
       }
-    }
-  });
+    })
+  );
 </script>
 
 <form
