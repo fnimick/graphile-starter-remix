@@ -13,7 +13,7 @@
   export let className: string | undefined = undefined;
   export let icon: typeof IonCloseCircleOutline | undefined = undefined;
   export let title: string | undefined = undefined;
-  export let message: string;
+  export let message: string | undefined = undefined;
   export let code: string | undefined | null = undefined;
 
   let renderIcon: typeof IonCloseCircleOutline | undefined = icon;
@@ -45,7 +45,9 @@
     {/if}
     <div>
       <slot />
-      {message}
+      {#if message}
+        {message}
+      {/if}
       {#if code}
         <span>(Error code: <code>ERR_{code}</code>)</span>
       {/if}

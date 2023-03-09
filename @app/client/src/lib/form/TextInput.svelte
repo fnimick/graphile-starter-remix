@@ -29,6 +29,8 @@
     type="text"
     aria-describedby={`${name}_err`}
     {...$$restProps}
+    on:change
+    on:input
   />
   <div class="mt-1 min-h-[1.5em]">
     {#if error}
