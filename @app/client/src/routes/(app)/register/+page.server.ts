@@ -43,6 +43,22 @@ export const actions: Actions = {
             },
           });
         }
+        if (errorCode === "NUNIQ") {
+          return fail({
+            fieldErrors: {
+              username:
+                "An account with this username has already been registered, please try a different username.",
+            },
+          });
+        }
+        if (errorCode === "23514") {
+          return fail({
+            fieldErrors: {
+              username:
+                "This username is not allowed; usernames must be between 2 and 24 characters long (inclusive), must start with a letter, and must contain only alphanumeric characters and underscores.",
+            },
+          });
+        }
         return fail({
           formError: { message: e.message, code: errorCode },
         });

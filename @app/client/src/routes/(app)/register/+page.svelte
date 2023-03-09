@@ -41,7 +41,7 @@
   let formError: FormError | undefined = undefined;
 
   page.subscribe(({ form }) => {
-    if (form?.fieldErrors) {
+    if (form?.fieldErrors != null || form?.formError != null) {
       const failResult = form as FailResult<
         z.infer<typeof registerSchema>,
         typeof registerSchema
@@ -156,7 +156,7 @@
         <div class="mr-2 h-6 w-6">
           <ProgressRadial />
         </div>
-      {/if}Sign In</button
+      {/if}Create Account</button
     >
 
     <a class="link self-center" href="/login">
@@ -166,7 +166,7 @@
   {#if formError}
     <Alert
       alertType="error"
-      title="Login failed"
+      title="Account creation failed"
       message={formError.message}
       code={formError.code}
     />
