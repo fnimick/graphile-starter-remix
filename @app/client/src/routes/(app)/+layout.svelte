@@ -107,20 +107,22 @@
     <footer
       class="page-footer grid grid-flow-row-dense grid-cols-1 text-xs bg-surface-100-800-token md:p-10 md:text-base lg:grid-cols-3"
     >
-      <div class="col-span-2 flex items-center justify-center lg:justify-start">
+      <div
+        class="col-span-2 flex items-center justify-center text-center lg:justify-start"
+      >
         <p>
           Copyright &copy; {new Date().getFullYear()}
           {companyName}. All rights reserved.
           <span>
             {" "}
             <a href={termsAndConditionsUrl} target="_blank" rel="noreferrer">
-              Terms and conditions
+              Terms and conditions.
             </a>
           </span>
         </p>
       </div>
       <div
-        class="flex flex-row items-center justify-center gap-2 lg:justify-end"
+        class="flex flex-row items-center justify-center gap-2 text-center lg:justify-end"
       >
         <p>
           Powered by{" "}
