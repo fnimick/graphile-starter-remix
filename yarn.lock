@@ -73,7 +73,7 @@ __metadata:
     "@floating-ui/dom": 1.2.1
     "@iconify-json/ion": 1.1.6
     "@playwright/test": ^1.28.1
-    "@skeletonlabs/skeleton": 0.132.5
+    "@skeletonlabs/skeleton": 1.0.0
     "@sveltejs/adapter-auto": ^2.0.0
     "@sveltejs/kit": 1.11.0
     "@tailwindcss/forms": 0.5.3
@@ -3591,12 +3591,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@skeletonlabs/skeleton@npm:0.132.5":
-  version: 0.132.5
-  resolution: "@skeletonlabs/skeleton@npm:0.132.5"
+"@skeletonlabs/skeleton@npm:1.0.0":
+  version: 1.0.0
+  resolution: "@skeletonlabs/skeleton@npm:1.0.0"
   dependencies:
     svelte: ^3.55.1
-  checksum: b42caf19b99e52d6d47061bb12c86a7a3e9622fa7cbaed55a505d569c45c6bb391feaceb1ac327a6df3271909799a501afd9a18b540f99b9bf29ba43c82eee21
+  checksum: 8d8d04a27048c98d6c5a99c5d0fd86be7bde32de2e62be86fb95d33953fe039c009c5c591d68b3e924cc9467ac28314240da8183babf14e71e3fea6ebacec759
   languageName: node
   linkType: hard
 
