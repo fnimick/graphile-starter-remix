@@ -1,3 +1,7 @@
+<script lang="ts" context="module">
+  export const ZXCVBN_SCORE_REQUIREMENT = 2;
+</script>
+
 <script lang="ts">
   import { popup, ProgressBar } from "@skeletonlabs/skeleton";
   import zxcvbn from "zxcvbn";
@@ -29,7 +33,9 @@
       label="Password Strength"
       value={score + 1}
       max={5}
-      meter={score < 2 ? "bg-error-500" : "bg-success-500"}
+      meter={score < ZXCVBN_SCORE_REQUIREMENT
+        ? "bg-error-500"
+        : "bg-success-500"}
       class={isDirty && passwordText !== "" ? "visible" : "invisible"}
     />
   </div>
@@ -38,7 +44,7 @@
     data-popup="passwordSuggestionTooltip"
   >
     <div class="card-body">
-      <h2 class="card-title">Password Suggestions</h2>
+      <h2 class="card-title">Passphrase Suggestions</h2>
       <ul class="list-inside list-disc">
         {#each messages as message}
           <li>{message}</li>

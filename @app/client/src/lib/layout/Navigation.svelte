@@ -42,7 +42,7 @@
           href="/settings/accounts"
           data-cy="settingslayout-link-accounts"
           on:click={drawerClose}
-          class={classesActive("/settings/security")}
+          class={classesActive("/settings/accounts")}
         >
           Linked Accounts
         </a>
@@ -52,7 +52,7 @@
           href="/settings/emails"
           data-cy="settingslayout-link-emails"
           on:click={drawerClose}
-          class={classesActive("/settings/security")}
+          class={classesActive("/settings/emails")}
         >
           <Warn
             okay={!currentUser || currentUser.isVerified}
@@ -68,7 +68,7 @@
           href="/settings/delete"
           data-cy="settingslayout-link-delete"
           on:click={drawerClose}
-          class={classesActive("/settings/security")}
+          class={classesActive("/settings/delete")}
         >
           Delete Account
         </a>

@@ -1,13 +1,18 @@
 import { z } from "zod";
 import { zfd } from "zod-form-data";
+import zxcvbn from "zxcvbn";
+
+import { ZXCVBN_SCORE_REQUIREMENT } from "$lib/components/PasswordStrength.svelte";
 
 export const passwordsSchema = z
   .object({
-    password: zfd.text(
-      z.string({ required_error: "Please input your passphrase." })
-    ),
+    password: zfd
+      .text(z.string({ required_error: "Please input your passphrase." }))
+      .refine((val) => zxcvbn(val).score >= ZXCVBN_SCORE_REQUIREMENT, {
+        message: "Please choose a stronger passphrase.",
+      }),
     confirm: zfd.text(
-      z.string({ required_error: "Please input your passphrase." })
+      z.string({ required_error: "Please confirm your passphrase." })
     ),
   })
   .refine(({ password, confirm }) => password === confirm, {

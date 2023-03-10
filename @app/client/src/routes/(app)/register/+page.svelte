@@ -126,7 +126,6 @@
     type="password"
     autocomplete="new-password"
     error={browser ? $errors.password : $page.form?.fieldErrors?.password}
-    value={browser ? undefined : $page.form?.values?.password}
     on:input={onPasswordChange}
   >
     <svelte:fragment slot="label">Passphrase</svelte:fragment>
@@ -139,7 +138,6 @@
     type="password"
     autocomplete="new-password"
     error={browser ? $errors.confirm : $page.form?.fieldErrors?.confirm}
-    value={browser ? undefined : $page.form?.values?.confirm}
   >
     <svelte:fragment slot="label">Confirm Passphrase</svelte:fragment>
   </TextInput>
