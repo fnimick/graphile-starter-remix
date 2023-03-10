@@ -41,29 +41,6 @@
       <h3>{pageTitle}</h3>
       <svelte:fragment slot="trail">
         {#if currentUser != null}
-          <nav
-            class="card list-nav w-60 p-4 shadow-xl"
-            data-popup="profileMenu"
-          >
-            <ul>
-              <li>
-                <Warn okay={currentUser.isVerified} pulse>
-                  <a href="/settings" data-cy="layout-link-settings">
-                    <span class="">Profile</span>
-                  </a>
-                </Warn>
-                <!-- <a href="/settings" data-cy="layout-link-settings">
-                  <span class="">Profile</span>
-                </a> -->
-              </li>
-              <li>
-                <form method="post" action="/logout">
-                  <!-- <AuthenticityTokenInput /> -->
-                  <button class="w-full" type="submit">Logout</button>
-                </form>
-              </li>
-            </ul>
-          </nav>
           <span class="relative">
             <Warn
               okay={currentUser.isVerified}
@@ -76,16 +53,40 @@
                   placement: "bottom",
                 }}
                 class="cursor-pointer"
-                ><Avatar
+              >
+                <Avatar
                   initials={currentUser.name
                     ?.split(" ")
                     .map((part) => part.charAt(0).toUpperCase())
                     .slice(0, 3) // max 3 initials
                     .join("")}
                   background="bg-primary-500"
-                /></span
-              ></Warn
-            >
+                />
+              </span>
+              <nav
+                class="card list-nav w-60 p-4 shadow-xl"
+                data-popup="profileMenu"
+              >
+                <ul>
+                  <li>
+                    <Warn okay={currentUser.isVerified} pulse>
+                      <a href="/settings" data-cy="layout-link-settings">
+                        <span class="">Profile</span>
+                      </a>
+                    </Warn>
+                    <!-- <a href="/settings" data-cy="layout-link-settings">
+                  <span class="">Profile</span>
+                </a> -->
+                  </li>
+                  <li>
+                    <form method="post" action="/logout">
+                      <!-- <AuthenticityTokenInput /> -->
+                      <button class="w-full" type="submit">Logout</button>
+                    </form>
+                  </li>
+                </ul>
+              </nav>
+            </Warn>
           </span>
         {:else if !$page.data.hideLogin}
           <a

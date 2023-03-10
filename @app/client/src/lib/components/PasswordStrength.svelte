@@ -39,21 +39,6 @@
       class={isDirty && passwordText !== "" ? "visible" : "invisible"}
     />
   </div>
-  <div
-    class="card variant-filled-warning z-[999] whitespace-nowrap p-2"
-    data-popup="passwordSuggestionTooltip"
-  >
-    <div class="card-body">
-      <h2 class="card-title">Passphrase Suggestions</h2>
-      <ul class="list-inside list-disc">
-        {#each messages as message}
-          <li>{message}</li>
-        {/each}
-      </ul>
-    </div>
-    <!-- Arrow -->
-    <div class="arrow variant-filled-warning" />
-  </div>
   <span
     use:popup={{
       event: "hover",
@@ -66,4 +51,19 @@
   >
     <IonInformationCircleOutline />
   </span>
+  <div
+    class="card variant-filled-secondary z-[999] whitespace-nowrap p-2"
+    data-popup="passwordSuggestionTooltip"
+  >
+    <div class="card-body">
+      <h2 class="card-title">Passphrase Suggestions</h2>
+      <ul class="list-inside list-disc">
+        {#each messages as message}
+          <li>{message}</li>
+        {/each}
+      </ul>
+    </div>
+    <!-- Arrow -->
+    <div class="arrow variant-filled-secondary" />
+  </div>
 </div>
