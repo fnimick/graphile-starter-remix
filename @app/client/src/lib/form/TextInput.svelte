@@ -39,4 +39,5 @@
       </p>
     {/if}
   </div>
+  <slot name="content" />
 </div>

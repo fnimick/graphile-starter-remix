@@ -7,6 +7,7 @@
   import { browser } from "$app/environment";
   import { page } from "$app/stores";
   import Alert from "$lib/components/Alert.svelte";
+  import PasswordStrength from "$lib/components/PasswordStrength.svelte";
   import { createValidatedForm } from "$lib/form/createValidatedForm";
   import TextInput from "$lib/form/TextInput.svelte";
   import { isSafe } from "$lib/utils/uri";
@@ -21,6 +22,14 @@
     createValidatedForm<typeof registerSchema>(registerSchema);
 
   let formError: FormError | undefined = undefined;
+
+  let passwordText = "";
+  let passwordDirty = false;
+  function onPasswordChange(event: Event) {
+    const target = event.target as HTMLInputElement;
+    passwordText = target.value;
+    passwordDirty = true;
+  }
 
   onDestroy(
     page.subscribe(({ form }) => {
@@ -118,8 +127,12 @@
     autocomplete="new-password"
     error={browser ? $errors.password : $page.form?.fieldErrors?.password}
     value={browser ? undefined : $page.form?.values?.password}
+    on:input={onPasswordChange}
   >
     <svelte:fragment slot="label">Passphrase</svelte:fragment>
+    <svelte:fragment slot="content">
+      <PasswordStrength {passwordText} isDirty={passwordDirty} />
+    </svelte:fragment>
   </TextInput>
   <TextInput
     name="confirm"
