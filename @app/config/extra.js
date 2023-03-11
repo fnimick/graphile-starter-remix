@@ -32,3 +32,4 @@ process.env.TEST_DATABASE_URL = `postgres://${process.env.DATABASE_OWNER}:${proc
 
 // https://docs.cypress.io/guides/guides/environment-variables.html#Option-3-CYPRESS
 process.env.CYPRESS_ROOT_URL = process.env.ROOT_URL;
+process.env.CYPRESS_WEB_URL = process.env.WEB_URL;

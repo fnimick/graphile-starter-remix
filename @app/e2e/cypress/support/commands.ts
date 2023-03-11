@@ -120,7 +120,7 @@ function login(payload?: {
   orgs?: [[string, string] | [string, string, boolean]];
 }): Chainable<Cypress.AUTWindow> {
   return cy.visit(
-    Cypress.env("ROOT_URL") +
+    Cypress.env("WEB_URL") +
       `/cypressServerCommand?command=login&payload=${encodeURIComponent(
         JSON.stringify(payload)
       )}`

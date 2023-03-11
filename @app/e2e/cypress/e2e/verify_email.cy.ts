@@ -11,7 +11,7 @@ context("Verify email", () => {
     // Action
     cy.get("@createUserResult").then(
       ({ userEmailId, verificationToken }: any) => {
-        const url = `${Cypress.env("ROOT_URL")}/verify?id=${encodeURIComponent(
+        const url = `${Cypress.env("WEB_URL")}/verify?id=${encodeURIComponent(
           String(userEmailId)
         )}&token=${encodeURIComponent(verificationToken)}`;
         cy.visit(url);
