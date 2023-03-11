@@ -9,13 +9,9 @@
   import PasswordStrength from "$lib/components/PasswordStrength.svelte";
   import { createValidatedForm } from "$lib/form/createValidatedForm";
   import TextInput from "$lib/form/TextInput.svelte";
-  import { isSafe } from "$lib/utils/uri";
   import type { FailResult, FormError } from "$lib/utils/validate";
 
   import { securitySchema } from "./schema";
-
-  $: rawNext = $page.url.searchParams.get("next");
-  $: next = isSafe(rawNext) ? rawNext : "/";
 
   const { form, errors, setErrors, isSubmitting } =
     createValidatedForm<typeof securitySchema>(securitySchema);
@@ -60,7 +56,6 @@
   bind:this={formReference}
   class="flex w-full max-w-lg flex-col gap-y-2 p-2 lg:p-4"
 >
-  <input type="hidden" name="text" value={next} />
   <TextInput
     name="oldPassword"
     type="password"

@@ -9,7 +9,6 @@
   import Alert from "$lib/components/Alert.svelte";
   import { createValidatedForm } from "$lib/form/createValidatedForm";
   import TextInput from "$lib/form/TextInput.svelte";
-  import { isSafe } from "$lib/utils/uri";
   import type { FailResult, FormError } from "$lib/utils/validate";
 
   import type { PageData } from "./$types";
@@ -17,9 +16,6 @@
 
   export let data: PageData;
   const { SettingsProfile } = data;
-
-  $: rawNext = $page.url.searchParams.get("next");
-  $: next = isSafe(rawNext) ? rawNext : "/";
 
   const { form, errors, setErrors, isSubmitting } = createValidatedForm<
     typeof profileSchema
@@ -57,7 +53,6 @@
   use:form
   class="flex w-full max-w-lg flex-col gap-y-2 p-2 lg:p-4"
 >
-  <input type="hidden" name="text" value={next} />
   <TextInput
     name="name"
     required
