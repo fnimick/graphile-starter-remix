@@ -40,7 +40,6 @@ COPY --from=builder /app/package.json /app/yarn.lock /app/.yarnrc.yml /app/
 COPY --from=builder /app/.yarn/ /app/.yarn/
 COPY --from=builder /app/@app/config/ /app/@app/config/
 COPY --from=builder /app/@app/db/ /app/@app/db/
-COPY --from=builder /app/@app/graphql/ /app/@app/graphql/
 COPY --from=builder /app/@app/lib/ /app/@app/lib/
 COPY --from=builder /app/@app/client/package.json /app/@app/-client/package.json
 COPY --from=builder /app/@app/client/public/ /app/@app/client/public/

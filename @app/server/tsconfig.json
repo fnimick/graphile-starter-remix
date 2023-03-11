@@ -11,11 +11,7 @@
     "module": "commonjs"
   },
   "include": ["src"],
-  "references": [
-    { "path": "../config" },
-    { "path": "../graphql" },
-    { "path": "../lib" }
-  ],
+  "references": [{ "path": "../config" }, { "path": "../lib" }],
   "ts-node": {
     "compilerOptions": {
       "rootDir": null

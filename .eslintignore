@@ -11,6 +11,5 @@ node_modules
 **/dist
 /data/schema.graphql
 /data/schema.sql
-/@app/graphql/index.*
 
 $houdini/
