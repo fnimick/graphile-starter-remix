@@ -1,10 +1,17 @@
 #import "./EmailsForm_User.graphql"
 
 query SettingsEmails {
-  ...SharedLayout_Query
   currentUser {
     id
     isVerified
-    ...EmailsForm_User
+    userEmails(first: 50) {
+      nodes @list(name: "User_Emails") {
+        id
+        email
+        isVerified
+        isPrimary
+        createdAt
+      }
+    }
   }
 }

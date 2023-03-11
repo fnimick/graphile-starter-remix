@@ -4,7 +4,7 @@ fragment EmailsForm_User on User {
   id
   userEmails(first: 50) {
     nodes {
-      ...EmailsForm_UserEmail
+      ...EmailsForm_UserEmail @mask_disable
       id
       email
       isVerified

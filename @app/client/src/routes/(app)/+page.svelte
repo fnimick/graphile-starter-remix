@@ -26,9 +26,9 @@
         We use Sveltekit to serve the Svelte app. This gives us server-side
         rendering, routing, bundle splitting, hot reloading, and much more. <br
         />
-        Please note that unlike the standard Graphile Starter or the Remix
-        variant, Sveltekit is <b>not</b> served by the main NodeJS backend. This
-        allows you to deploy it separately via optimized hosting.
+        Please note that unlike the standard Graphile Starter or the Remix variant,
+        Sveltekit is <b>not</b> served by the main NodeJS backend. This allows you
+        to deploy it separately via optimized hosting.
       </div>
 
       <h4 class="text-xl">Page hangs: development only</h4>
@@ -44,22 +44,20 @@
           In development we don't send any emails to real email addresses
         </strong>
         , instead all emails are sent to{" "}
-        <a class="link-accent link" href="http://ethereal.email">
-          ethereal.email
-        </a>{" "}
+        <a href="http://ethereal.email"> ethereal.email </a>{" "}
         where you can browse them. Keep an eye on the terminal; when an email is
         triggered the server will log a URL to view the email.
       </div>
 
       <h4 class="text-xl">
-        <a class="link-accent link" href={`${PUBLIC_ROOT_URL}/graphiql`}>
+        <a href={`${PUBLIC_ROOT_URL}/graphiql`}>
           Graph<em>i</em>QL
         </a>
       </h4>
       <div>
         You can browse the GraphQL API and even issue GraphQL queries using the
         built in Graph<em>i</em>QL interface located at{" "}
-        <a class="link-accent link" href={`${PUBLIC_ROOT_URL}/graphiql`}>
+        <a href={`${PUBLIC_ROOT_URL}/graphiql`}>
           <code>/graphiql</code>
         </a>
         .
@@ -68,7 +66,6 @@
       <h4 class="text-xl">
         This page:{" "}
         <a
-          class="link-accent link"
           href="https://github.com/fnimick/starter/blob/sveltekit/@app/client/src/routes/(app)/+page.svelte"
         >
           <code>@app/client/src/routes/(app)/+page.svelte</code>
@@ -82,7 +79,6 @@
       <h4 class="text-xl">
         The server:{" "}
         <a
-          class="link-accent link"
           href="https://github.com/graphile/starter/blob/main/@app/server/src/index.ts"
         >
           <code>@app/server/src/index.ts</code>
@@ -108,10 +104,7 @@
         way is to run <code>yarn db uncommit</code> which will undo this initial
         migration and move its content back to current.sql for you to modify.
         Please see{" "}
-        <a
-          class="link-accent link"
-          href="https://github.com/graphile/migrate/blob/main/README.md"
-        >
+        <a href="https://github.com/graphile/migrate/blob/main/README.md">
           the graphile-migrate documentation
         </a>
         .
@@ -139,9 +132,7 @@
         When you're happy, you can add database changes to{" "}
         <code>current.sql</code> and see them reflected in the GraphiQL
         interface at{" "}
-        <a class="link-accent link" href={`${PUBLIC_ROOT_URL}/graphiql`}>
-          /graphiql
-        </a>
+        <a href={`${PUBLIC_ROOT_URL}/graphiql`}> /graphiql </a>
         .
       </div>
 
@@ -163,10 +154,7 @@
       <ol class="list-inside list-decimal">
         <li>
           Download and extract a zip of the{" "}
-          <a
-            class="link-accent link"
-            href="https://github.com/graphile/starter/releases"
-          >
+          <a href="https://github.com/graphile/starter/releases">
             latest release from GitHub
           </a>
         </li>
@@ -202,17 +190,11 @@
       <div>
         Remember that disabling GraphiQL does not prevent people from issuing
         arbitrary GraphQL queries against your API. Before you ship, be sure to{" "}
-        <a
-          class="link-accent link"
-          href="https://www.graphile.org/postgraphile/production/"
-        >
+        <a href="https://www.graphile.org/postgraphile/production/">
           read the Production Considerations
         </a>{" "}
         in the PostGraphile docs. You may consider{" "}
-        <a
-          class="link-accent link"
-          href="https://www.graphile.org/postgraphile/pricing/"
-        >
+        <a href="https://www.graphile.org/postgraphile/pricing/">
           going Pro
         </a>{" "}
         as one option for protecting your PostGraphile API; another is to use "stored
@@ -285,7 +267,7 @@
         Without support from the community Jem and I could not keep building and
         advancing these open source projects under the hugely flexible MIT
         license. Please{" "}
-        <a class="link-accent link" href="https://graphile.org/sponsor">
+        <a href="https://graphile.org/sponsor">
           join these amazing people in sponsoring PostGraphile
         </a>{" "}
         and related projects.
