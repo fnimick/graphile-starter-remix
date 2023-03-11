@@ -18,7 +18,7 @@ const task: Task = async (inPayload, { addJob }) => {
     },
     template: "password_reset_unregistered.mjml",
     variables: {
-      url: process.env.ROOT_URL,
+      url: process.env.WEB_URL,
     },
   };
   await addJob("send_email", sendEmailPayload);

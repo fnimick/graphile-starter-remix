@@ -58,7 +58,7 @@ const task: Task = async (inPayload, { addJob, withPgClient }) => {
     template: "verify_email.mjml",
     variables: {
       token: verification_token,
-      verifyLink: `${process.env.ROOT_URL}/verify?id=${encodeURIComponent(
+      verifyLink: `${process.env.WEB_URL}/verify?id=${encodeURIComponent(
         String(userEmailId)
       )}&token=${encodeURIComponent(verification_token)}`,
       username,

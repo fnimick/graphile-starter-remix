@@ -46,7 +46,7 @@ const task: Task = async (inPayload, { addJob, withPgClient }) => {
     template: "password_reset.mjml",
     variables: {
       token,
-      verifyLink: `${process.env.ROOT_URL}/reset?user_id=${encodeURIComponent(
+      verifyLink: `${process.env.WEB_URL}/reset?user_id=${encodeURIComponent(
         user.id
       )}&token=${encodeURIComponent(token)}`,
     },

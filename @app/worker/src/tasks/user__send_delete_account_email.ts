@@ -26,7 +26,7 @@ const task: Task = async (inPayload, { addJob }) => {
     variables: {
       token,
       deleteAccountLink: `${
-        process.env.ROOT_URL
+        process.env.WEB_URL
       }/settings/delete?token=${encodeURIComponent(token)}`,
     },
   };
