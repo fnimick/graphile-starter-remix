@@ -42,7 +42,7 @@
   use:form
   class="flex w-full max-w-lg flex-col gap-y-5 p-2 lg:p-4"
 >
-  <input type="hidden" name="text" value={next} />
+  <input type="hidden" name="next" value={next} />
   <TextInput
     name="username"
     placeholder="E-mail or Username"

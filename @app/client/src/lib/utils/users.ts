@@ -22,7 +22,7 @@ import type { Shared$result } from "$houdini";
 //   }
 // }
 
-export async function requireUser(
+export function requireUser(
   currentUser: Shared$result["currentUser"] | null | undefined,
   event: LoadEvent
 ) {
@@ -33,7 +33,7 @@ export async function requireUser(
   }
 }
 
-export async function requireNoUser(
+export function requireNoUser(
   currentUser: Shared$result["currentUser"] | null | undefined
 ) {
   if (currentUser != null) {

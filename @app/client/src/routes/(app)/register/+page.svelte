@@ -52,7 +52,7 @@
   use:form
   class="flex w-full max-w-lg flex-col gap-y-2 p-2 lg:p-4"
 >
-  <input type="hidden" name="text" value={next} />
+  <input type="hidden" name="next" value={next} />
   <TextInput
     name="name"
     required

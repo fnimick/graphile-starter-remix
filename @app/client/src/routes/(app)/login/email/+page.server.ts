@@ -13,7 +13,6 @@ export const actions: Actions = {
     loginSchema,
     async ({ data: { username, password, next }, fail, ...event }) => {
       const loginMutation = new LoginStore();
-
       const redirectTarget = isSafe(next) ? next : "/";
 
       try {
