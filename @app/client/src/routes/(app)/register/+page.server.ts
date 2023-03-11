@@ -1,7 +1,7 @@
 import { redirect } from "@sveltejs/kit";
 
 import { RegisterStore } from "$houdini";
-import { getCodeFromError } from "$lib/utils/errors";
+import { getCodeFromError, isPostgraphileError } from "$lib/utils/errors";
 import { isSafe } from "$lib/utils/uri";
 import { validate } from "$lib/utils/validate";
 
@@ -25,7 +25,10 @@ export const actions: Actions = {
           { name, username, email, password },
           { event }
         );
-      } catch (e: any) {
+      } catch (e: unknown) {
+        if (!isPostgraphileError(e)) {
+          throw e;
+        }
         const errorCode = getCodeFromError(e);
         if (errorCode === "WEAKP") {
           return fail({

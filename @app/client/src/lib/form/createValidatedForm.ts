@@ -1,6 +1,6 @@
 import type { FormConfigWithoutTransformFn } from "@felte/core";
 import { validator } from "@felte/validator-zod";
-import { createForm } from "felte";
+import { createForm, FelteSubmitError } from "felte";
 import type { z, ZodSchema } from "zod";
 
 import { applyAction, deserialize } from "$app/forms";
@@ -18,13 +18,15 @@ export function createValidatedForm<T extends ZodSchema>(
       const result = deserialize(await resp.text());
       applyAction(result);
     },
-    onError: async (error: any) => {
-      if (error.response) {
-        const { response } = error;
-        const result = deserialize(await response.text());
-        applyAction(result);
-      } else {
-        applyAction({ type: "error", error });
+    onError: async (error: unknown) => {
+      if (error instanceof FelteSubmitError) {
+        if (error.response) {
+          const { response } = error;
+          const result = deserialize(await response.text());
+          applyAction(result);
+        } else {
+          applyAction({ type: "error", error });
+        }
       }
     },
     extend: [validator({ schema })],

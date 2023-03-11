@@ -1,5 +1,5 @@
 import { SettingsProfileStore, UpdateUserStore } from "$houdini";
-import { getCodeFromError } from "$lib/utils/errors";
+import { getCodeFromError, isPostgraphileError } from "$lib/utils/errors";
 import { validate } from "$lib/utils/validate";
 
 import type { Actions } from "./$types";
@@ -25,7 +25,10 @@ export const actions: Actions = {
 
       try {
         await userMutation.mutate({ id, patch: { name, username } }, { event });
-      } catch (e: any) {
+      } catch (e: unknown) {
+        if (!isPostgraphileError(e)) {
+          throw e;
+        }
         const errorCode = getCodeFromError(e);
         if (errorCode === "NUNIQ") {
           return fail({

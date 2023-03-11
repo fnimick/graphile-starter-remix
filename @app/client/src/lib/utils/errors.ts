@@ -1,26 +1,27 @@
-import type { GraphQLError } from "graphql";
+import z from "zod";
 
-export interface GraphqlQueryErrorResult {
-  message?: string | null;
-  code?: string | null;
-  error: true;
+const errorSchema = z.object({
+  message: z.string(),
+  locations: z.array(z.object({ line: z.number(), column: z.number() })),
+  path: z.array(z.string()),
+  extensions: z.object({
+    exception: z.object({
+      code: z.string(),
+    }),
+  }),
+});
+
+type PostgraphileErrorResponse = z.infer<typeof errorSchema>;
+
+export function isPostgraphileError(
+  error: unknown
+): error is PostgraphileErrorResponse {
+  return errorSchema.safeParse(error).success;
 }
 
-export function getExceptionFromError(
-  error: null | Error | GraphQLError
-): Error | null {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  const exception = error.extensions && error.extensions.exception;
-  return exception || error;
-}
-
-export function getCodeFromError(
-  error: null | Error | GraphQLError | Array<Error | GraphQLError>
-): null | string {
-  const err = Array.isArray(error) ? error[0] : error;
-  if (err == null) return null;
-  const exception = getExceptionFromError(err);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return (exception && (exception as any)["code"]) || null;
+export function getCodeFromError(error: PostgraphileErrorResponse): string {
+  if (error.extensions?.exception?.code) {
+    return error.extensions.exception.code;
+  }
+  return "UNKNOWN";
 }

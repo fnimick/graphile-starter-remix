@@ -31,7 +31,7 @@ export const handleFetch: HandleFetch = async ({ event, request, fetch }) => {
   return response;
 };
 
-export const handleError: HandleServerError = async ({ event, error }) => {
+export const handleError: HandleServerError = async ({ error }) => {
   console.error("handleError server");
   console.error(error);
 };

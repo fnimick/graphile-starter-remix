@@ -4,6 +4,7 @@
   import type { z } from "zod";
 
   import { browser } from "$app/environment";
+  import { invalidateAll } from "$app/navigation";
   import { page } from "$app/stores";
   import Alert from "$lib/components/Alert.svelte";
   import { createValidatedForm } from "$lib/form/createValidatedForm";
@@ -11,7 +12,6 @@
   import type { FailResult, FormError } from "$lib/utils/validate";
 
   import { addEmailSchema } from "./schema";
-  import { invalidateAll } from "$app/navigation";
 
   const { form, errors, setErrors, isSubmitting } =
     createValidatedForm<typeof addEmailSchema>(addEmailSchema);

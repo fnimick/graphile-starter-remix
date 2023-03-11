@@ -7,11 +7,6 @@ export default (app: Express) => {
     cookie: false,
   });
 
-  const insecureCsrfProtection = csrf({
-    cookie: false,
-    ignoreMethods: ["GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS"],
-  });
-
   app.use((req, res, next) => {
     if (
       req.method === "POST" &&

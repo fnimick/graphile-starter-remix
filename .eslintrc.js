@@ -140,14 +140,6 @@ module.exports = {
         schemaString,
       },
     ],
-    "graphql/required-fields": [
-      "error",
-      {
-        env: "literal",
-        schemaString,
-        requiredFields: ["nodeId", "id"],
-      },
-    ],
 
     "arrow-body-style": 0,
     "no-nested-ternary": 0,

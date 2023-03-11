@@ -1,6 +1,6 @@
 <script lang="ts">
-  import StandardWidth from "$lib/layout/StandardWidth.svelte";
   import { PUBLIC_ROOT_URL } from "$env/static/public";
+  import StandardWidth from "$lib/layout/StandardWidth.svelte";
 </script>
 
 <StandardWidth>

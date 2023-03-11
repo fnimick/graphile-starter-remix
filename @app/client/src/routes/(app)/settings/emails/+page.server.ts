@@ -4,7 +4,7 @@ import {
   MakeEmailPrimaryStore,
   ResendEmailVerificationStore,
 } from "$houdini";
-import { getCodeFromError } from "$lib/utils/errors";
+import { getCodeFromError, isPostgraphileError } from "$lib/utils/errors";
 import { validate } from "$lib/utils/validate";
 
 import type { Actions } from "./$types";
@@ -18,7 +18,10 @@ export const actions: Actions = {
 
       try {
         await addEmailMutation.mutate({ email }, { event });
-      } catch (e: any) {
+      } catch (e: unknown) {
+        if (!isPostgraphileError(e)) {
+          throw e;
+        }
         const errorCode = getCodeFromError(e);
         return fail({
           formError: { message: e.message, code: errorCode },
