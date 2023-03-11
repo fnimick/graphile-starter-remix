@@ -7,6 +7,8 @@ export async function load(event: LayoutLoadEvent) {
   const parentData = await event.parent();
   requireUser(parentData.currentUser, event);
   return {
-    ...(await load_SettingsProfile({ event })),
+    // blocking is necessary here to ensure that prefilled forms such as profile
+    // are correctly initialized on first render
+    ...(await load_SettingsProfile({ event, blocking: true })),
   };
 }

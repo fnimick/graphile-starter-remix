@@ -1,10 +1,10 @@
-import { applyAction, deserialize } from "$app/forms";
-import { validator } from "@felte/validator-zod";
 import type { FormConfigWithoutTransformFn } from "@felte/core";
+import { validator } from "@felte/validator-zod";
 import { createForm } from "felte";
-import type { ZodSchema, z } from "zod";
+import type { z, ZodSchema } from "zod";
 
-type Obj = Record<string, any>;
+import { applyAction, deserialize } from "$app/forms";
+
 export function createValidatedForm<T extends ZodSchema>(
   schema: ZodSchema,
   config?: Exclude<
