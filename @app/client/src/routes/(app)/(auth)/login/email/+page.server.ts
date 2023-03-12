@@ -24,7 +24,7 @@ export const actions: Actions = {
         const errorCode = getCodeFromError(e);
         if (errorCode === "CREDS") {
           return fail({
-            fieldErrors: { password: "Incorrect email or passphrase" },
+            fieldErrors: { password: "Incorrect username or passphrase" },
           });
         }
         if (errorCode === "LOCKD") {

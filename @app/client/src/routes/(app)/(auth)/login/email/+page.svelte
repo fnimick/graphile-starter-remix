@@ -49,6 +49,7 @@
     autocomplete="username"
     error={browser ? $errors.username : $page.form?.fieldErrors?.username}
     value={browser ? undefined : $page.form?.values?.username}
+    data-cy="loginpage-input-username"
   />
   <TextInput
     name="password"
@@ -57,12 +58,14 @@
     autocomplete="current-password"
     error={browser ? $errors.password : $page.form?.fieldErrors?.password}
     value={browser ? undefined : $page.form?.values?.password}
+    data-cy="loginpage-input-password"
   />
   <div class="flex items-center justify-between">
     <button
       type="submit"
       class="btn variant-filled-primary"
       disabled={$isSubmitting}
+      data-cy="loginpage-button-submit"
     >
       {#if $isSubmitting}
         <div class="mr-2 h-6 w-6">

@@ -7,6 +7,7 @@
     name: string;
     className?: string | undefined;
     error?: string | string[] | null | undefined;
+    "data-cy"?: string;
   }
 
   export let name: string;
