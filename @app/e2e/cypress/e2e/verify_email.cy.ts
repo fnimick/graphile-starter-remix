@@ -1,7 +1,14 @@
 /// <reference types="Cypress" />
 
 context("Verify email", () => {
-  beforeEach(() => cy.serverCommand("clearTestUsers"));
+  beforeEach(() => {
+    // Wait 100ms for previous page loads to finish. Otherwise, the attachment
+    // of a subscription controller on login can occur right as a test user is
+    // being cleared, causing a client error.
+    cy.wait(100);
+    cy.serverCommand("clearTestUsers");
+  });
+
   it("can open verification link", () => {
     // Setup
     cy.serverCommand("createUser", {

@@ -1,7 +1,13 @@
 /// <reference types="Cypress" />
 
 context("Manage emails", () => {
-  beforeEach(() => cy.serverCommand("clearTestUsers"));
+  beforeEach(() => {
+    // Wait 100ms for previous page loads to finish. Otherwise, the attachment
+    // of a subscription controller on login can occur right as a test user is
+    // being cleared, causing a client error.
+    cy.wait(100);
+    cy.serverCommand("clearTestUsers");
+  });
 
   it("can navigate to manage emails page", () => {
     // Disable ResizeObserver errors
@@ -12,15 +18,36 @@ context("Manage emails", () => {
           | false
           | void
     );
+  });
 
+  it("can navigate to manage emails page on desktop", () => {
+    cy.viewport("macbook-13");
     // Setup
     cy.login({ next: "/", verified: true });
 
     // Action
-    cy.getCy("layout-dropdown-user").trigger("mouseover");
+    cy.getCy("layout-dropdown-user").click();
     cy.getCy("layout-link-settings").click();
     cy.url().should("equal", Cypress.env("WEB_URL") + "/settings");
     cy.getCy("settingslayout-link-emails").click();
+
+    // Assertion
+    cy.url().should("equal", Cypress.env("WEB_URL") + "/settings/emails");
+  });
+
+  it("can navigate to manage emails page on mobile/tablet", () => {
+    // Setup
+    cy.login({ next: "/", verified: true });
+
+    // Action
+    cy.getCy("layout-dropdown-user").click();
+    cy.getCy("layout-link-settings").click();
+    cy.url().should("equal", Cypress.env("WEB_URL") + "/settings");
+
+    // Toggle drawer
+    cy.getCy("settingslayout-drawer-toggle").click();
+
+    cy.getCy("settingslayout-link-emails").filter(":visible").click();
 
     // Assertion
     cy.url().should("equal", Cypress.env("WEB_URL") + "/settings/emails");

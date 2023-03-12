@@ -67,7 +67,7 @@
     }}
   >
     <svelte:fragment slot="label">
-      <span data-cy="registerpage-name-label" class="flex items-center">
+      <span data-cy="settingsprofile-name-label" class="flex items-center">
         Name&nbsp;
         <span
           use:popup={{
@@ -102,7 +102,7 @@
     }}
   >
     <svelte:fragment slot="label"
-      ><span data-cy="registerpage-name-label" class="flex items-center">
+      ><span data-cy="settingsprofile-name-label" class="flex items-center">
         Username&nbsp;
         <span
           use:popup={{

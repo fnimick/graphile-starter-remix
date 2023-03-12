@@ -5,7 +5,13 @@ export {};
 const PASSWORD = "MyPassword1";
 
 context("Subscriptions", () => {
-  beforeEach(() => cy.serverCommand("clearTestUsers"));
+  beforeEach(() => {
+    // Wait 100ms for previous page loads to finish. Otherwise, the attachment
+    // of a subscription controller on login can occur right as a test user is
+    // being cleared, causing a client error.
+    cy.wait(100);
+    cy.serverCommand("clearTestUsers");
+  });
 
   it("can log in; current user subscription works", () => {
     // Setup
@@ -27,11 +33,11 @@ context("Subscriptions", () => {
     // Assertion
     cy.url().should("equal", Cypress.env("WEB_URL") + "/"); // Should be on homepage
     cy.getCy("header-login-button").should("not.exist"); // Should be logged in
-    cy.getCy("layout-dropdown-user").should("contain", "Test User"); // Should be logged in
+    cy.getCy("layout-dropdown-user").should("contain", "TU"); // Should be logged in
 
     // Subscription
     cy.getCy("header-unverified-warning").should("exist");
-    cy.wait(1000); // allow the websocket to reconnect
+    cy.wait(2000); // allow the websocket to reconnect
     cy.serverCommand("verifyUser");
     cy.getCy("header-unverified-warning").should("not.exist");
   });
@@ -42,7 +48,7 @@ context("Subscriptions", () => {
 
     // Subscription
     cy.getCy("header-unverified-warning").should("exist");
-    cy.wait(1000); // allow the websocket to reconnect
+    cy.wait(2000); // allow the websocket to reconnect
     cy.serverCommand("verifyUser");
     cy.getCy("header-unverified-warning").should("not.exist");
   });
@@ -63,11 +69,11 @@ context("Subscriptions", () => {
     // Assertions
     cy.url().should("equal", Cypress.env("WEB_URL") + "/"); // Should be on homepage
     cy.getCy("header-login-button").should("not.exist");
-    cy.getCy("layout-dropdown-user").should("contain", "Test User"); // Should be logged in
+    cy.getCy("layout-dropdown-user").should("contain", "TU"); // Should be logged in
 
     // Subscription
     cy.getCy("header-unverified-warning").should("exist");
-    cy.wait(1000); // allow the websocket to reconnect
+    cy.wait(2000); // allow the websocket to reconnect
     cy.serverCommand("verifyUser");
     cy.getCy("header-unverified-warning").should("not.exist");
   });

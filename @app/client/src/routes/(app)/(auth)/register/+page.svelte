@@ -60,6 +60,7 @@
     autocomplete="name"
     error={browser ? $errors.name : $page.form?.fieldErrors?.name}
     value={browser ? undefined : $page.form?.values?.name}
+    data-cy="registerpage-input-name"
   >
     <svelte:fragment slot="label">
       <span data-cy="registerpage-name-label" class="flex items-center">
@@ -89,9 +90,10 @@
     autocomplete="username"
     error={browser ? $errors.username : $page.form?.fieldErrors?.username}
     value={browser ? undefined : $page.form?.values?.username}
+    data-cy="registerpage-input-username"
   >
     <svelte:fragment slot="label"
-      ><span data-cy="registerpage-name-label" class="flex items-center">
+      ><span data-cy="registerpage-username-label" class="flex items-center">
         Username&nbsp;
         <span
           use:popup={{
@@ -118,6 +120,7 @@
     autocomplete="email"
     error={browser ? $errors.email : $page.form?.fieldErrors?.email}
     value={browser ? undefined : $page.form?.values?.email}
+    data-cy="registerpage-input-email"
   >
     <svelte:fragment slot="label">E-mail</svelte:fragment>
   </TextInput>
@@ -127,6 +130,7 @@
     autocomplete="new-password"
     error={browser ? $errors.password : $page.form?.fieldErrors?.password}
     on:input={onPasswordChange}
+    data-cy="registerpage-input-password"
   >
     <svelte:fragment slot="label">Passphrase</svelte:fragment>
     <svelte:fragment slot="content">
@@ -138,6 +142,7 @@
     type="password"
     autocomplete="new-password"
     error={browser ? $errors.confirm : $page.form?.fieldErrors?.confirm}
+    data-cy="registerpage-input-password2"
   >
     <svelte:fragment slot="label">Confirm Passphrase</svelte:fragment>
   </TextInput>
@@ -146,6 +151,7 @@
       type="submit"
       class="btn variant-filled-primary"
       disabled={$isSubmitting}
+      data-cy="registerpage-submit-button"
     >
       {#if $isSubmitting}
         <div class="mr-2 h-6 w-6">

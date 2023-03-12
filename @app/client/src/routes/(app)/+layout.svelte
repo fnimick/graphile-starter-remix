@@ -49,10 +49,11 @@
               <span
                 use:popup={{
                   target: "profileMenu",
-                  event: "click",
+                  event: "hover-click",
                   placement: "bottom",
                 }}
                 class="cursor-pointer"
+                data-cy="layout-dropdown-user"
               >
                 <Avatar
                   initials={currentUser.name

@@ -48,6 +48,7 @@
     type="email"
     autocomplete="email"
     error={browser ? $errors.email : $page.form?.fieldErrors?.email}
+    data-cy="settingsemails-input-email"
   >
     <svelte:fragment slot="label">E-mail</svelte:fragment>
   </TextInput>
@@ -57,16 +58,18 @@
       type="submit"
       class="btn variant-filled-primary"
       disabled={$isSubmitting}
+      data-cy="settingsemails-button-submit"
     >
       {#if $isSubmitting}
         <div class="mr-2 h-6 w-6">
           <ProgressRadial />
         </div>
-      {/if}Add Email</button
-    >
-    <button class="btn" type="button" on:click={() => dispatch("complete")}
-      >Cancel</button
-    >
+      {/if}
+      Add Email
+    </button>
+    <button class="btn" type="button" on:click={() => dispatch("complete")}>
+      Cancel
+    </button>
   </div>
   {#if formError}
     <Alert

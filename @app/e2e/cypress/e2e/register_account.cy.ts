@@ -1,7 +1,13 @@
 /// <reference types="Cypress" />
 
 context("RegisterAccount", () => {
-  beforeEach(() => cy.serverCommand("clearTestUsers"));
+  beforeEach(() => {
+    // Wait 100ms for previous page loads to finish. Otherwise, the attachment
+    // of a subscription controller on login can occur right as a test user is
+    // being cleared, causing a client error.
+    cy.wait(100);
+    cy.serverCommand("clearTestUsers");
+  });
 
   it("can navigate to registration page", () => {
     // Setup
@@ -20,6 +26,10 @@ context("RegisterAccount", () => {
     // Setup
     cy.visit(Cypress.env("WEB_URL") + "/register");
 
+    // Wait an extra 2000ms for the page to hydrate to guarantee that the form
+    // handlers are attached.
+    // cy.wait(2000);
+
     // Action
     cy.getCy("registerpage-submit-button").click();
 
@@ -30,8 +40,6 @@ context("RegisterAccount", () => {
   });
 
   context("Account creation", () => {
-    beforeEach(() => cy.serverCommand("clearTestUsers"));
-
     it("enables account creation", () => {
       // Setup
       cy.visit(Cypress.env("WEB_URL") + "/register");
@@ -48,7 +56,7 @@ context("RegisterAccount", () => {
       // Assertions
       cy.url().should("equal", Cypress.env("WEB_URL") + "/"); // Should be on homepage
       cy.getCy("header-login-button").should("not.exist");
-      cy.getCy("layout-dropdown-user").should("contain", "Test User"); // Should be logged in
+      cy.getCy("layout-dropdown-user").should("contain", "TU"); // Should be logged in
     });
 
     it("prevents creation if username is in use", () => {

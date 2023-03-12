@@ -217,7 +217,7 @@ async function runCommand(
     req.login({ session_id: session.uuid }, () => {
       setTimeout(() => {
         // This 1000ms delay is required to keep GitHub actions happy. 200ms wasn't enough.
-        res.redirect(next || "/");
+        res.redirect(`${process.env.WEB_URL}${next || "/"}`);
       }, 1000);
     });
     return null;
