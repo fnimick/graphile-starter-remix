@@ -15,8 +15,6 @@ const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 runMain(async () => {
   await checkGit();
 
-  // Run graphql codegen (necessary for server build)
-  runSync(yarnCmd, ["graphql", "codegen"]);
   // Build @app/lib
   runSync(yarnCmd, ["lib", "build"]);
   // Ensure server build has been run
