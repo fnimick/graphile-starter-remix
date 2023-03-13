@@ -1,3 +1,8 @@
+# Looking for Sveltekit?
+
+Check branch `sveltekit` for a version of this starter with Sveltekit, Tailwind,
+and Skeleton UI.
+
 # Graphile Starter with Remix
 
 This is a fork of the original graphile starter, with Next replaced with
@@ -142,6 +147,7 @@ And please give some love to our featured sponsors 🤩:
 
 ## Table of contents
 
+- [Looking for Sveltekit?](#looking-for-sveltekit)
 - [Graphile Starter with Remix](#graphile-starter-with-remix)
 - [Original Readme](#original-readme)
   - [Take it for a spin!](#take-it-for-a-spin)
