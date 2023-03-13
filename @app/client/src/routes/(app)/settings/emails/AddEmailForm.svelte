@@ -4,7 +4,6 @@
   import type { z } from "zod";
 
   import { browser } from "$app/environment";
-  import { invalidateAll } from "$app/navigation";
   import { page } from "$app/stores";
   import Alert from "$lib/components/Alert.svelte";
   import { createValidatedForm } from "$lib/form/createValidatedForm";
@@ -33,9 +32,6 @@
         }
       }
       if (form?.success) {
-        // TODO: remove when houdini cache handling works properly: see
-        // https://github.com/HoudiniGraphql/houdini/discussions/981
-        invalidateAll();
         dispatch("complete");
       }
     })

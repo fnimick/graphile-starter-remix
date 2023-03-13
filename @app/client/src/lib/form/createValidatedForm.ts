@@ -4,6 +4,7 @@ import { createForm, FelteSubmitError } from "felte";
 import type { z, ZodSchema } from "zod";
 
 import { applyAction, deserialize } from "$app/forms";
+import { invalidateAll } from "$app/navigation";
 
 export function createValidatedForm<T extends ZodSchema>(
   schema: ZodSchema,
@@ -16,6 +17,10 @@ export function createValidatedForm<T extends ZodSchema>(
     onSuccess: async (event: unknown) => {
       const resp = event as Response;
       const result = deserialize(await resp.text());
+      // Match the behavior of `use:enhance`, invalidate all on success
+      if (result.type === "success") {
+        await invalidateAll();
+      }
       applyAction(result);
     },
     onError: async (error: unknown) => {
