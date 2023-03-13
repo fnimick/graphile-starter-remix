@@ -1,7 +1,7 @@
 <script lang="ts">
   import IonMailOutline from "~icons/ion/mail-outline";
   import { enhance } from "$app/forms";
-  import { fragment, graphql, type EmailsForm_UserEmail } from "$houdini";
+  import { type EmailsForm_UserEmail, fragment, graphql } from "$houdini";
 
   export let email: EmailsForm_UserEmail;
   export let hasOtherEmails: boolean;
@@ -19,7 +19,7 @@
     `)
   );
 
-  $: canDelete = $frag?.isPrimary && hasOtherEmails;
+  $: canDelete = !$frag?.isPrimary && hasOtherEmails;
 </script>
 
 <div
@@ -88,7 +88,7 @@
       </button>
     </form>
   {/if}
-  {#if $frag?.isVerified && $frag?.isPrimary}
+  {#if $frag?.isVerified && !$frag?.isPrimary}
     <form class="inline" method="post" action="?/make_primary" use:enhance>
       <input type="hidden" name="emailId" value={$frag?.id} />
       <button
