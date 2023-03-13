@@ -147,7 +147,6 @@ async function runCommand(
       name = username,
       avatarUrl = null,
       password = "TestUserPassword",
-      next = "/",
       orgs = [],
     } = payload;
     const user = await reallyCreateUser(rootPgPool, {
@@ -217,7 +216,7 @@ async function runCommand(
     req.login({ session_id: session.uuid }, () => {
       setTimeout(() => {
         // This 1000ms delay is required to keep GitHub actions happy. 200ms wasn't enough.
-        res.redirect(`${process.env.WEB_URL}${next || "/"}`);
+        res.sendStatus(204);
       }, 1000);
     });
     return null;

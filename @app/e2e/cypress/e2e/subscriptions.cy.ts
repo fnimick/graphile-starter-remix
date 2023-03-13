@@ -6,11 +6,7 @@ const PASSWORD = "MyPassword1";
 
 context("Subscriptions", () => {
   beforeEach(() => {
-    // Wait 500ms for previous page loads to finish. Otherwise, the attachment
-    // of a subscription controller on login can occur right as a test user is
-    // being cleared, causing a client error.
-    cy.wait(500);
-    cy.serverCommand("clearTestUsers");
+    cy.clearTestUsers();
   });
 
   it("can log in; current user subscription works", () => {

@@ -14,7 +14,13 @@
   } from "@floating-ui/dom";
   import { storePopup } from "@skeletonlabs/skeleton";
 
+  import { browser } from "$app/environment";
+
   storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 </script>
+
+{#if browser}
+  <div hidden id="sveltekit-hydrated" />
+{/if}
 
 <slot />

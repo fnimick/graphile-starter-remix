@@ -119,25 +119,39 @@ function login(payload?: {
   password?: string;
   orgs?: [[string, string] | [string, string, boolean]];
 }): Chainable<Cypress.AUTWindow> {
-  return cy.visit(
+  const { next = "/", ...rest } = payload ?? {};
+  cy.request(
     Cypress.env("ROOT_URL") +
       `/cypressServerCommand?command=login&payload=${encodeURIComponent(
-        JSON.stringify(payload)
+        JSON.stringify(rest)
       )}`
   );
+  return cy.visit(Cypress.env("WEB_URL") + next);
+}
+
+function clearTestUsers() {
+  // Wait 500ms for previous page loads to finish. Otherwise, the attachment
+  // of a subscription controller on login can occur right as a test user is
+  // being cleared, causing a client error.
+  cy.wait(500);
+  return serverCommand("clearTestUsers");
 }
 
 Cypress.Commands.add("getCy", getCy);
 Cypress.Commands.add("serverCommand", serverCommand);
+Cypress.Commands.add("clearTestUsers", clearTestUsers);
 Cypress.Commands.add("login", login);
-
-// Wait after every visit for DOM to hydrate. This resolves issues where rapid
-// interaction doesn't have event handlers properly attached yet in the test
-// environment.
 
 Cypress.Commands.overwrite("visit", (originalFn, url) => {
   originalFn(url);
-  cy.wait(Cypress.config("isInteractive") ? 3000 : 5000);
+  // Wait for the navigation to start, so that the subsequent `get` call doesn't
+  // find the element on the page we are navigating *away* from. This appears to
+  // be a race condition.
+  cy.wait(Cypress.config("isInteractive") ? 500 : 1000);
+  // Wait for the `sveltekit-hydrated` element to be added to the page after every
+  // visit. This ensures that we don't interact with the client until it is fully
+  // hydrated.
+  cy.get("#sveltekit-hydrated", { timeout: 10000 });
 });
 
 export {}; // Make this a module so we can `declare global`
@@ -148,6 +162,7 @@ declare global {
       getCy: typeof getCy;
       serverCommand: typeof serverCommand;
       login: typeof login;
+      clearTestUsers: typeof clearTestUsers;
     }
   }
 }
