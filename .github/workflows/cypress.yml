@@ -52,10 +52,12 @@ jobs:
         run: yarn server start &
       - name: Start worker in background
         run: yarn worker start &
+      - name: Start client in background
+        run: yarn client dev &
       - name: Cypress run
         uses: cypress-io/github-action@v5
         with:
-          wait-on: http://localhost:5678
+          wait-on: http://localhost:5173
           working-directory: "@app/e2e"
       - uses: actions/upload-artifact@v1
         if: failure()
