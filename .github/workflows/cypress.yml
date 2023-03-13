@@ -8,6 +8,7 @@ jobs:
 
     env:
       CYPRESS_ROOT_URL: http://localhost:5678
+      CYPRESS_WEB_URL: http://localhost:5173
       CI: true
       CONFIRM_DROP: 1
       NODE_ENV: test
