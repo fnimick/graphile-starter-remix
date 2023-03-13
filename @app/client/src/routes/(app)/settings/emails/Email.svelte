@@ -1,7 +1,8 @@
 <script lang="ts">
   import IonMailOutline from "~icons/ion/mail-outline";
   import { enhance } from "$app/forms";
-  import { type EmailsForm_UserEmail, fragment, graphql } from "$houdini";
+  import type { EmailsForm_UserEmail } from "$houdini";
+  import { fragment, graphql } from "$houdini";
 
   export let email: EmailsForm_UserEmail;
   export let hasOtherEmails: boolean;
