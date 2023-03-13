@@ -22,7 +22,7 @@ export default async function installPostGraphile(app: Express) {
         .catch((err: unknown) => err),
     ]);
 
-  app.get("/health", async (_req, res) => {
+  app.get("/healthz", async (_req, res) => {
     const healthy = await healthCheck();
     if (healthy === true) {
       res.status(200).send({

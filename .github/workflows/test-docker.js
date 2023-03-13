@@ -14,7 +14,7 @@ async function main() {
       }, 3000);
       try {
         const { default: fetch } = await import("node-fetch");
-        response = await fetch("http://localhost:5678", {
+        response = await fetch("http://localhost:5678/healthz", {
           signal: controller.signal,
         });
       } finally {
