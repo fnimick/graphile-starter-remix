@@ -1,6 +1,5 @@
 import {
-  AddEmailStore,
-  DeleteEmailStore,
+  graphql,
   MakeEmailPrimaryStore,
   ResendEmailVerificationStore,
 } from "$houdini";
@@ -10,12 +9,30 @@ import { validate } from "$lib/utils/validate";
 import type { Actions } from "./$types";
 import { addEmailSchema, emaildIdSchema } from "./schema";
 
+const addEmailMutation = graphql(`
+  mutation AddEmail($email: String!) {
+    createUserEmail(input: { userEmail: { email: $email } }) {
+      userEmail {
+        ...User_Emails_insert
+      }
+    }
+  }
+`);
+
+const deleteEmailMutation = graphql(`
+  mutation DeleteEmail($emailId: UUID!) {
+    deleteUserEmail(input: { id: $emailId }) {
+      userEmail {
+        id @UserEmail_delete
+      }
+    }
+  }
+`);
+
 export const actions: Actions = {
   addEmail: validate(
     addEmailSchema,
     async ({ data: { email }, fail, ...event }) => {
-      const addEmailMutation = new AddEmailStore();
-
       try {
         await addEmailMutation.mutate({ email }, { event });
       } catch (e: unknown) {
@@ -33,8 +50,7 @@ export const actions: Actions = {
   delete: validate(
     emaildIdSchema,
     async ({ data: { emailId }, fail, ...event }) => {
-      const deleteMutation = new DeleteEmailStore();
-      await deleteMutation.mutate({ emailId }, { event });
+      await deleteEmailMutation.mutate({ emailId }, { event });
     }
   ),
   resend_verification: validate(

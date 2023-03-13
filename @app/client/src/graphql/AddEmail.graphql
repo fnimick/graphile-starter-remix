@@ -1,9 +1,0 @@
-#import "./EmailsForm_UserEmail.graphql"
-
-mutation AddEmail($email: String!) {
-  createUserEmail(input: { userEmail: { email: $email } }) {
-    userEmail {
-      ...User_Emails_insert
-    }
-  }
-}
