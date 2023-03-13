@@ -2,10 +2,10 @@
 
 context("Manage emails", () => {
   beforeEach(() => {
-    // Wait 100ms for previous page loads to finish. Otherwise, the attachment
+    // Wait 500ms for previous page loads to finish. Otherwise, the attachment
     // of a subscription controller on login can occur right as a test user is
     // being cleared, causing a client error.
-    cy.wait(100);
+    cy.wait(500);
     cy.serverCommand("clearTestUsers");
   });
 
@@ -57,6 +57,8 @@ context("Manage emails", () => {
     const email = "newemail@example.com";
     // Setup
     cy.login({ next: "/settings/emails", verified: true });
+    // Wait for page to hydrate
+    cy.wait(2000);
     cy.contains("testuser@example.com").should("exist");
     cy.contains("(unverified)").should("not.exist");
 
