@@ -7,10 +7,7 @@ query SettingsEmails {
     userEmails(first: 50) {
       nodes @list(name: "User_Emails") {
         id
-        email
-        isVerified
-        isPrimary
-        createdAt
+        ...EmailsForm_UserEmail
       }
     }
   }
