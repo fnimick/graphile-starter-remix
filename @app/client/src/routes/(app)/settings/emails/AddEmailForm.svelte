@@ -22,7 +22,7 @@
 
   onDestroy(
     page.subscribe(({ form }) => {
-      if (form?.fieldErrors) {
+      if (form?.fieldErrors || form?.formError) {
         const failResult = form as FailResult<
           z.infer<typeof addEmailSchema>,
           typeof addEmailSchema

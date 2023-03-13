@@ -23,7 +23,7 @@
 
   onDestroy(
     page.subscribe(({ form }) => {
-      if (form?.fieldErrors) {
+      if (form?.fieldErrors || form?.formError) {
         const failResult = form as FailResult<
           z.infer<typeof loginSchema>,
           typeof loginSchema
@@ -60,6 +60,15 @@
     value={browser ? undefined : $page.form?.values?.password}
     data-cy="loginpage-input-password"
   />
+  <a class="mb-6" href="/forgot"> Forgotten passphrase?</a>
+  {#if formError}
+    <Alert
+      alertType="error"
+      title="Login failed"
+      message={formError.message}
+      code={formError.code}
+    />
+  {/if}
   <div class="flex items-center justify-between">
     <button
       type="submit"
@@ -73,17 +82,8 @@
         </div>
       {/if}Sign In</button
     >
-
     <a class="link self-center" href="/login">
       Use a different sign in method
     </a>
   </div>
-  {#if formError}
-    <Alert
-      alertType="error"
-      title="Login failed"
-      message={formError.message}
-      code={formError.code}
-    />
-  {/if}
 </form>

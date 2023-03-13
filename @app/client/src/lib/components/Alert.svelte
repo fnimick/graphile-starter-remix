@@ -10,14 +10,16 @@
   import IonCloseCircleOutline from "~icons/ion/close-circle-outline";
 
   export let alertType: AlertType | undefined = undefined;
-  export let className: string | undefined = undefined;
   export let icon: typeof IonCloseCircleOutline | undefined = undefined;
   export let title: string | undefined = undefined;
   export let message: string | undefined = undefined;
   export let code: string | undefined | null = undefined;
 
+  let className: string | undefined = undefined;
+  export { className as class };
+
   let renderIcon: typeof IonCloseCircleOutline | undefined = icon;
-  let renderClassname: string | undefined = className;
+  let renderClassname: string | undefined = undefined;
 
   if (alertType === "error") {
     renderIcon = IonCloseCircleOutline;
@@ -33,7 +35,7 @@
   }
 </script>
 
-<aside class={classNames("alert", renderClassname)}>
+<aside class={classNames("alert", renderClassname, className)}>
   {#if renderIcon}
     <span class="text-2xl">
       <svelte:component this={renderIcon} />
