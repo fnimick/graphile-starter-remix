@@ -57,8 +57,8 @@ context("Manage emails", () => {
     const email = "newemail@example.com";
     // Setup
     cy.login({ next: "/settings/emails", verified: true });
-    // Wait for page to hydrate
-    cy.wait(2000);
+    // Wait for page to hydrate (this takes a while on CI)
+    cy.wait(4000);
     cy.contains("testuser@example.com").should("exist");
     cy.contains("(unverified)").should("not.exist");
 
