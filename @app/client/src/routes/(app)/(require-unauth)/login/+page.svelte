@@ -1,7 +1,6 @@
 <script lang="ts">
-  import IoLogInOutline from "virtual:icons/ion/log-in-outline";
-  import IoPersonAddOutline from "virtual:icons/ion/person-add-outline";
-
+  import IoLogInOutline from "~icons/ion/log-in-outline";
+  import IoPersonAddOutline from "~icons/ion/person-add-outline";
   import { page } from "$app/stores";
   import { isSafe } from "$lib/utils/uri";
 

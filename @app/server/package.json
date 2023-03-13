@@ -12,7 +12,6 @@
   },
   "dependencies": {
     "@app/config": "0.0.0",
-    "@app/lib": "0.0.0",
     "@graphile-contrib/pg-simplify-inflector": "^6.1.0",
     "@graphile/pg-pubsub": "^4.13.0",
     "@graphile/pro": "^1.0.4",
