@@ -19,7 +19,7 @@
     `)
   );
 
-  $: canDelete = !$frag?.isPrimary && hasOtherEmails;
+  $: canDelete = $frag?.isPrimary && hasOtherEmails;
 </script>
 
 <div
@@ -36,7 +36,7 @@
     <p>
       {$frag?.email}{" "}
       <span
-        title={!$frag?.isVerified
+        title={$frag?.isVerified
           ? "Verified"
           : "Pending verification (please check your inbox / spam folder"}
       >
@@ -52,7 +52,7 @@
       Added {$frag?.createdAt.toLocaleString()}
     </p>
   </div>
-  {#if !$frag?.isPrimary}
+  {#if $frag?.isPrimary}
     <span
       data-cy="settingsemails-indicator-primary"
       class="text-base-content/70"
@@ -72,7 +72,7 @@
       </button>
     </form>
   {/if}
-  {#if !!$frag?.isVerified}
+  {#if $frag?.isVerified}
     <form
       class="inline"
       method="post"
@@ -88,7 +88,7 @@
       </button>
     </form>
   {/if}
-  {#if !$frag?.isVerified && !!$frag?.isPrimary}
+  {#if $frag?.isVerified && $frag?.isPrimary}
     <form class="inline" method="post" action="?/make_primary" use:enhance>
       <input type="hidden" name="emailId" value={$frag?.id} />
       <button
