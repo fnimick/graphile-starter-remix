@@ -145,5 +145,7 @@ export async function makeApp({
    */
   await middleware.installErrorHandler(app);
 
+  await middleware.installHealthCheck(app);
+
   return app;
 }

@@ -63,7 +63,12 @@ function getErrorPage({ message }: ParsedError) {
 }
 
 export default function (app: Express) {
-  const errorRequestHandler: ErrorRequestHandler = (error, _req, res, next) => {
+  const errorRequestHandler: ErrorRequestHandler = (error, req, res, next) => {
+    if (req.path === "/health") {
+      next();
+      return;
+    }
+
     try {
       const parsedError = parseError(error);
       const errorMessageString = `ERROR: ${parsedError.message}`;

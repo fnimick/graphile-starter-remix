@@ -39,7 +39,7 @@ async function main() {
   const text = await response.text();
 
   // Check for known text on homepage
-  if (!text.includes("https://graphile.org/postgraphile")) {
+  if (!text.includes("Ok")) {
     throw new Error("Failed to confirm server works.");
   }
 
