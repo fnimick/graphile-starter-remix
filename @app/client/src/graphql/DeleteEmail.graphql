@@ -3,7 +3,7 @@
 mutation DeleteEmail($emailId: UUID!) {
   deleteUserEmail(input: { id: $emailId }) {
     userEmail {
-      ...User_Emails_remove
+      id @UserEmail_delete
     }
   }
 }
