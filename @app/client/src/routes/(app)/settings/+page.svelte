@@ -69,6 +69,7 @@
     on:input={() => {
       success = false;
     }}
+    data-cy="settingsprofile-input-name"
   >
     <svelte:fragment slot="label">
       <span data-cy="settingsprofile-name-label" class="flex items-center">
@@ -101,6 +102,7 @@
     on:input={() => {
       success = false;
     }}
+    data-cy="settingsprofile-input-username"
   >
     <svelte:fragment slot="label"
       ><span data-cy="settingsprofile-name-label" class="flex items-center">
@@ -130,6 +132,7 @@
       type="submit"
       class="btn variant-filled-primary"
       disabled={$isSubmitting}
+      data-cy="settingsprofile-button-submit"
     >
       {#if $isSubmitting}
         <div class="mr-2 h-6 w-6">

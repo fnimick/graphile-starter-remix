@@ -19,7 +19,7 @@ context("Subscriptions", () => {
     });
     cy.visit(Cypress.env("WEB_URL") + "/login");
     cy.getCy("loginpage-button-withusername").click();
-    cy.getCy("header-login-button").should("not.exist"); // No login button on login page
+    cy.getCy("layout-link-login").should("not.exist"); // No login button on login page
 
     // Action
     cy.getCy("loginpage-input-username").type("testuser");
@@ -28,7 +28,7 @@ context("Subscriptions", () => {
 
     // Assertion
     cy.url().should("equal", Cypress.env("WEB_URL") + "/"); // Should be on homepage
-    cy.getCy("header-login-button").should("not.exist"); // Should be logged in
+    cy.getCy("layout-link-login").should("not.exist"); // Should be logged in
     cy.getCy("layout-dropdown-user").should("contain", "TU"); // Should be logged in
 
     // Subscription
@@ -52,7 +52,7 @@ context("Subscriptions", () => {
   it("can register; current user subscription works", () => {
     // Setup
     cy.visit(Cypress.env("WEB_URL") + "/register");
-    cy.getCy("header-login-button").should("not.exist"); // No login button on register page
+    cy.getCy("layout-link-login").should("not.exist"); // No login button on register page
 
     // Action
     cy.getCy("registerpage-input-name").type("Test User");
@@ -64,7 +64,7 @@ context("Subscriptions", () => {
 
     // Assertions
     cy.url().should("equal", Cypress.env("WEB_URL") + "/"); // Should be on homepage
-    cy.getCy("header-login-button").should("not.exist");
+    cy.getCy("layout-link-login").should("not.exist");
     cy.getCy("layout-dropdown-user").should("contain", "TU"); // Should be logged in
 
     // Subscription

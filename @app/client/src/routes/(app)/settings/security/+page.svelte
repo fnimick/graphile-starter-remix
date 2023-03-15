@@ -34,6 +34,7 @@
     type="password"
     autocomplete="current-password"
     error={browser ? $errors.oldPassword : $page.form?.fieldErrors?.oldPassword}
+    data-cy="securitypage-input-oldpassword"
   >
     <svelte:fragment slot="label">Current Passphrase</svelte:fragment>
   </TextInput>
@@ -43,6 +44,7 @@
     autocomplete="new-password"
     error={browser ? $errors.newPassword : $page.form?.fieldErrors?.newPassword}
     on:input={onPasswordChange}
+    data-cy="securitypage-input-password1"
   >
     <svelte:fragment slot="label">New Passphrase</svelte:fragment>
     <svelte:fragment slot="content">
@@ -54,6 +56,7 @@
     type="password"
     autocomplete="new-password"
     error={browser ? $errors.confirm : $page.form?.fieldErrors?.confirm}
+    data-cy="securitypage-input-password2"
   >
     <svelte:fragment slot="label">Confirm New Passphrase</svelte:fragment>
   </TextInput>
@@ -63,6 +66,7 @@
       type="submit"
       class="btn variant-filled-primary"
       disabled={$isSubmitting}
+      data-cy="securitypage-button-submit"
     >
       {#if $isSubmitting}
         <div class="mr-2 h-6 w-6">

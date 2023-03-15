@@ -10,7 +10,7 @@ context("RegisterAccount", () => {
     cy.visit(Cypress.env("WEB_URL"));
 
     // Action
-    cy.getCy("header-login-button").click();
+    cy.getCy("layout-link-login").click();
     cy.getCy("loginpage-button-register").click();
 
     // Assertions
@@ -39,7 +39,7 @@ context("RegisterAccount", () => {
     it("enables account creation", () => {
       // Setup
       cy.visit(Cypress.env("WEB_URL") + "/register");
-      cy.getCy("header-login-button").should("not.exist"); // No login button on register page
+      cy.getCy("layout-link-login").should("not.exist"); // No login button on register page
 
       // Action
       cy.getCy("registerpage-input-name").type("Test User");
@@ -51,7 +51,7 @@ context("RegisterAccount", () => {
 
       // Assertions
       cy.url().should("equal", Cypress.env("WEB_URL") + "/"); // Should be on homepage
-      cy.getCy("header-login-button").should("not.exist");
+      cy.getCy("layout-link-login").should("not.exist");
       cy.getCy("layout-dropdown-user").should("contain", "TU"); // Should be logged in
     });
 
@@ -70,7 +70,7 @@ context("RegisterAccount", () => {
 
       // Assertions
       cy.contains("account with this username").should("exist");
-      cy.getCy("header-login-button").should("not.exist"); // No login button on register page
+      cy.getCy("layout-link-login").should("not.exist"); // No login button on register page
     });
   });
 });

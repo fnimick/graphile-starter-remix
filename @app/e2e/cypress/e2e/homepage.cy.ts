@@ -9,7 +9,7 @@ context("HomePage", () => {
 
     // Assertions
     cy.url().should("equal", Cypress.env("WEB_URL") + "/");
-    cy.getCy("header-login-button").should("exist");
+    cy.getCy("layout-link-login").should("exist");
     cy.getCy("homepage-header").should("exist");
   });
 });

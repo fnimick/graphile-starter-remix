@@ -49,7 +49,7 @@
               <span
                 use:popup={{
                   target: "profileMenu",
-                  event: "hover-click",
+                  event: "click",
                   placement: "bottom",
                 }}
                 class="cursor-pointer"
@@ -82,7 +82,11 @@
                   <li>
                     <form method="post" action="/logout">
                       <!-- <AuthenticityTokenInput /> -->
-                      <button class="w-full" type="submit">Logout</button>
+                      <button
+                        class="w-full"
+                        type="submit"
+                        data-cy="layout-button-logout">Logout</button
+                      >
                     </form>
                   </li>
                 </ul>
@@ -92,7 +96,7 @@
         {:else if !$page.data.hideLogin}
           <a
             href={`/login?next=${encodeURIComponent(currentRouteURL)}`}
-            data-cy="header-login-button"
+            data-cy="layout-link-login"
           >
             Sign in
           </a>

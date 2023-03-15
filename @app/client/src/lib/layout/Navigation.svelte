@@ -30,7 +30,7 @@
       <li>
         <a
           href="/settings/security"
-          data-cy="settingslayout-link-password"
+          data-cy="settingslayout-link-passphrase"
           on:click={drawerClose}
           class={classesActive("/settings/security")}
         >
