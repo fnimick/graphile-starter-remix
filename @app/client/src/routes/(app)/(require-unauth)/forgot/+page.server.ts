@@ -1,16 +1,17 @@
-import { redirect } from "@sveltejs/kit";
+import { fail, redirect } from "@sveltejs/kit";
+import { validatedAction } from "felte-sveltekit/server";
 
 import { ForgotPasswordStore } from "$houdini";
 import { getCodeFromError, isPostgraphileError } from "$lib/utils/errors";
-import { validate } from "$lib/utils/validate";
 
 import type { Actions } from "./$types";
 import { forgotSchema } from "./schema";
 
 export const actions: Actions = {
-  default: validate(
+  default: validatedAction(
+    "forgot",
     forgotSchema,
-    async ({ data: { email }, fail, ...event }) => {
+    async ({ data: { email }, wrapResult }, event) => {
       const forgotMutation = new ForgotPasswordStore();
 
       try {
@@ -20,9 +21,12 @@ export const actions: Actions = {
           throw e;
         }
         const errorCode = getCodeFromError(e);
-        return fail({
-          formError: { message: e.message, code: errorCode },
-        });
+        return fail(
+          400,
+          wrapResult({
+            formMessage: { message: e.message, code: errorCode, type: "error" },
+          })
+        );
       }
       throw redirect(302, `/forgot/success?email=${encodeURIComponent(email)}`);
     }

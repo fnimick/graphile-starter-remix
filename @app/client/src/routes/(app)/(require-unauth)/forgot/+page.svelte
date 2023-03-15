@@ -1,35 +1,15 @@
 <script lang="ts">
   import { ProgressRadial } from "@skeletonlabs/skeleton";
-  import { onDestroy } from "svelte";
-  import type { z } from "zod";
+  import { createValidatedForm } from "felte-sveltekit/client";
 
-  import { browser } from "$app/environment";
-  import { page } from "$app/stores";
   import Alert from "$lib/components/Alert.svelte";
-  import { createValidatedForm } from "$lib/form/createValidatedForm";
   import TextInput from "$lib/form/TextInput.svelte";
-  import type { FailResult, FormError } from "$lib/utils/validate";
 
   import { forgotSchema } from "./schema";
 
-  const { form, errors, setErrors, isSubmitting } =
-    createValidatedForm<typeof forgotSchema>(forgotSchema);
-
-  let formError: FormError | undefined = undefined;
-
-  onDestroy(
-    page.subscribe(({ form }) => {
-      if (form?.fieldErrors || form?.formError) {
-        const failResult = form as FailResult<
-          z.infer<typeof forgotSchema>,
-          typeof forgotSchema
-        >;
-        formError = failResult.formError;
-        if (failResult.fieldErrors) {
-          setErrors(failResult.fieldErrors);
-        }
-      }
-    })
+  const { form, data, errors, message, isSubmitting } = createValidatedForm(
+    "forgot",
+    forgotSchema
   );
 </script>
 
@@ -43,17 +23,12 @@
     placeholder="E-mail"
     type="email"
     autocomplete="email"
-    error={browser ? $errors.email : $page.form?.fieldErrors?.email}
-    value={browser ? undefined : $page.form?.values?.email}
+    error={$errors.email}
+    value={$data?.email}
     data-cy="forgotpage-input-email"
   />
-  {#if formError}
-    <Alert
-      alertType="error"
-      title="Forgot password failed"
-      message={formError.message}
-      code={formError.code}
-    />
+  {#if $message}
+    <Alert title="Forgot password failed" {...$message} />
   {/if}
   <button
     type="submit"

@@ -1,3 +1,6 @@
+import { fail } from "@sveltejs/kit";
+import { validatedAction } from "felte-sveltekit/server";
+
 import {
   AddEmailStore,
   DeleteEmailStore,
@@ -5,15 +8,15 @@ import {
   ResendEmailVerificationStore,
 } from "$houdini";
 import { getCodeFromError, isPostgraphileError } from "$lib/utils/errors";
-import { validate } from "$lib/utils/validate";
 
 import type { Actions } from "./$types";
 import { addEmailSchema, emaildIdSchema } from "./schema";
 
 export const actions: Actions = {
-  addEmail: validate(
+  add_email: validatedAction(
+    "add_email",
     addEmailSchema,
-    async ({ data: { email }, fail, ...event }) => {
+    async ({ data: { email }, wrapResult }, event) => {
       const addEmailMutation = new AddEmailStore();
 
       try {
@@ -23,30 +26,36 @@ export const actions: Actions = {
           throw e;
         }
         const errorCode = getCodeFromError(e);
-        return fail({
-          formError: { message: e.message, code: errorCode },
-        });
+        return fail(
+          400,
+          wrapResult({
+            formMessage: { message: e.message, code: errorCode, type: "error" },
+          })
+        );
       }
-      return { success: true };
+      return wrapResult({ result: { success: true } });
     }
   ),
-  delete: validate(
+  delete: validatedAction(
+    "delete",
     emaildIdSchema,
-    async ({ data: { emailId }, fail, ...event }) => {
+    async ({ data: { emailId } }, event) => {
       const deleteMutation = new DeleteEmailStore();
       await deleteMutation.mutate({ emailId }, { event });
     }
   ),
-  resend_verification: validate(
+  resend_verification: validatedAction(
+    "resend_verification",
     emaildIdSchema,
-    async ({ data: { emailId }, fail, ...event }) => {
+    async ({ data: { emailId } }, event) => {
       const resendVerificationMutation = new ResendEmailVerificationStore();
       await resendVerificationMutation.mutate({ emailId }, { event });
     }
   ),
-  make_primary: validate(
+  make_primary: validatedAction(
+    "make_primary",
     emaildIdSchema,
-    async ({ data: { emailId }, fail, ...event }) => {
+    async ({ data: { emailId } }, event) => {
       const makePrimaryMutation = new MakeEmailPrimaryStore();
       await makePrimaryMutation.mutate({ emailId }, { event });
     }

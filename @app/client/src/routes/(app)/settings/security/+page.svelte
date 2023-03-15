@@ -1,23 +1,19 @@
 <script lang="ts">
   import { ProgressRadial } from "@skeletonlabs/skeleton";
-  import { onDestroy } from "svelte";
-  import type { z } from "zod";
+  import { createValidatedForm } from "felte-sveltekit/client";
 
   import { browser } from "$app/environment";
   import { page } from "$app/stores";
   import Alert from "$lib/components/Alert.svelte";
   import PasswordStrength from "$lib/components/PasswordStrength.svelte";
-  import { createValidatedForm } from "$lib/form/createValidatedForm";
   import TextInput from "$lib/form/TextInput.svelte";
-  import type { FailResult, FormError } from "$lib/utils/validate";
 
   import { securitySchema } from "./schema";
 
-  const { form, errors, setErrors, isSubmitting } =
-    createValidatedForm<typeof securitySchema>(securitySchema);
-
-  let formError: FormError | undefined = undefined;
-  let success = false;
+  const { form, errors, message, isSubmitting } = createValidatedForm(
+    "security",
+    securitySchema
+  );
 
   let passwordText = "";
   let passwordDirty = false;
@@ -26,34 +22,11 @@
     passwordText = target.value;
     passwordDirty = true;
   }
-
-  let formReference: HTMLFormElement;
-
-  onDestroy(
-    page.subscribe(({ form }) => {
-      if (form?.fieldErrors || form?.formError) {
-        const failResult = form as FailResult<
-          z.infer<typeof securitySchema>,
-          typeof securitySchema
-        >;
-        formError = failResult.formError;
-        if (failResult.fieldErrors) {
-          setErrors(failResult.fieldErrors);
-        }
-      }
-      if (form?.success) {
-        success = true;
-        passwordDirty = false;
-        formReference.reset();
-      }
-    })
-  );
 </script>
 
 <form
   method="POST"
   use:form
-  bind:this={formReference}
   class="flex w-full max-w-lg flex-col gap-y-2 p-2 lg:p-4"
 >
   <TextInput
@@ -98,15 +71,7 @@
       {/if}Change Passphrase</button
     >
   </div>
-  {#if formError}
-    <Alert
-      alertType="error"
-      title="Error updating profile"
-      message={formError.message}
-      code={formError.code}
-    />
-  {/if}
-  {#if success}
-    <Alert alertType="success" title="Passphrase changed" />
+  {#if $message}
+    <Alert {...$message} />
   {/if}
 </form>

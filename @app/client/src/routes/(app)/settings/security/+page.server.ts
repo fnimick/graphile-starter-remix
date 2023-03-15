@@ -1,16 +1,17 @@
-import { redirect } from "@sveltejs/kit";
+import { fail, redirect } from "@sveltejs/kit";
+import { validatedAction } from "felte-sveltekit/server";
 
 import { ChangePasswordStore } from "$houdini";
 import { getCodeFromError, isPostgraphileError } from "$lib/utils/errors";
-import { validate } from "$lib/utils/validate";
 
 import type { Actions } from "./$types";
 import { securitySchema } from "./schema";
 
 export const actions: Actions = {
-  default: validate(
+  default: validatedAction(
+    "security",
     securitySchema,
-    async ({ data: { oldPassword, newPassword }, fail, ...event }) => {
+    async ({ data: { oldPassword, newPassword }, wrapResult }, event) => {
       const securityMutation = new ChangePasswordStore();
 
       try {
@@ -29,25 +30,36 @@ export const actions: Actions = {
           );
         }
         if (errorCode === "CREDS") {
-          return fail({
-            fieldErrors: {
-              oldPassword: "Incorrect old passphrase.",
-            },
-          });
+          return fail(
+            400,
+            wrapResult({
+              fieldErrors: {
+                oldPassword: "Incorrect old passphrase.",
+              },
+            })
+          );
         }
         if (errorCode === "WEAKP") {
-          return fail({
-            fieldErrors: {
-              newPassword:
-                "The server believes this passphrase is too weak, please make it stronger.",
-            },
-          });
+          return fail(
+            400,
+            wrapResult({
+              fieldErrors: {
+                newPassword:
+                  "The server believes this passphrase is too weak, please make it stronger.",
+              },
+            })
+          );
         }
-        return fail({
-          formError: { message: e.message, code: errorCode },
-        });
+        return fail(
+          400,
+          wrapResult({
+            formMessage: { message: e.message, code: errorCode, type: "error" },
+          })
+        );
       }
-      return { success: true };
+      return wrapResult({
+        formMessage: { title: "Passphrase changed", type: "success" },
+      });
     },
     { valueExcludeFields: new Set(["oldPassword", "newPassword", "confirm"]) }
   ),

@@ -9,7 +9,7 @@
   import IonCheckmarkCircleOutline from "~icons/ion/checkmark-circle-outline";
   import IonCloseCircleOutline from "~icons/ion/close-circle-outline";
 
-  export let alertType: AlertType | undefined = undefined;
+  export let type: AlertType | undefined = undefined;
   export let icon: typeof IonCloseCircleOutline | undefined = undefined;
   export let title: string | undefined = undefined;
   export let message: string | undefined = undefined;
@@ -19,17 +19,17 @@
   export { className as class };
 
   let renderIcon: typeof IonCloseCircleOutline | undefined = icon;
-  let renderClassname: string | undefined = undefined;
+  let renderClassname: string | undefined = "variant-ghost";
 
-  if (alertType === "error") {
+  if (type === "error") {
     renderIcon = IonCloseCircleOutline;
     renderClassname = "variant-ghost-error";
   }
-  if (alertType === "warning") {
+  if (type === "warning") {
     renderIcon = IonAlertCircleOutline;
     renderClassname = "variant-ghost-warning";
   }
-  if (alertType === "success") {
+  if (type === "success") {
     renderIcon = IonCheckmarkCircleOutline;
     renderClassname = "variant-ghost-success";
   }

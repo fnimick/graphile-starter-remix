@@ -1,15 +1,11 @@
 <script lang="ts">
   import { popup, ProgressRadial } from "@skeletonlabs/skeleton";
+  import { createValidatedForm } from "felte-sveltekit/client";
   import { onDestroy } from "svelte";
-  import type { z } from "zod";
 
   import IonHelpCircleOutline from "~icons/ion/help-circle-outline";
-  import { browser } from "$app/environment";
-  import { page } from "$app/stores";
   import Alert from "$lib/components/Alert.svelte";
-  import { createValidatedForm } from "$lib/form/createValidatedForm";
   import TextInput from "$lib/form/TextInput.svelte";
-  import type { FailResult, FormError } from "$lib/utils/validate";
 
   import type { PageData } from "./$types";
   import { profileSchema } from "./schema";
@@ -17,31 +13,41 @@
   export let data: PageData;
   const { SettingsProfile } = data;
 
-  const { form, errors, setErrors, isSubmitting } = createValidatedForm<
-    typeof profileSchema
-  >(profileSchema, {
-    initialValues: {
-      name: $SettingsProfile.data?.currentUser?.name ?? undefined,
-      username: $SettingsProfile.data?.currentUser?.username ?? undefined,
+  const {
+    form,
+    data: formData,
+    errors,
+    message,
+    result,
+    isSubmitting,
+  } = createValidatedForm(
+    "profile",
+    profileSchema,
+    {
+      initialValues: {
+        name: $SettingsProfile.data?.currentUser?.name ?? undefined,
+        username: $SettingsProfile.data?.currentUser?.username ?? undefined,
+      },
     },
-  });
+    {
+      // Don't reset form after successful submission
+      submit:
+        () =>
+        ({ update }) =>
+          update({ reset: false }),
+    }
+  );
 
-  let formError: FormError | undefined = undefined;
   let success = false;
 
   onDestroy(
-    page.subscribe(({ form }) => {
-      if (form?.fieldErrors || form?.formError) {
-        const failResult = form as FailResult<
-          z.infer<typeof profileSchema>,
-          typeof profileSchema
-        >;
-        formError = failResult.formError;
-        if (failResult.fieldErrors) {
-          setErrors(failResult.fieldErrors);
-        }
-      }
-      if (form?.success) {
+    result.subscribe((val) => {
+      if (
+        typeof val === "object" &&
+        val != null &&
+        "success" in val &&
+        val.success === true
+      ) {
         success = true;
       }
     })
@@ -58,10 +64,8 @@
     required
     type="text"
     autocomplete="name"
-    error={browser ? $errors.name : $page.form?.fieldErrors?.name}
-    value={browser
-      ? undefined
-      : $page.form?.values?.name || $SettingsProfile.data?.currentUser?.name}
+    error={$errors.name}
+    value={$formData.name}
     on:input={() => {
       success = false;
     }}
@@ -92,11 +96,8 @@
   <TextInput
     name="username"
     autocomplete="username"
-    error={browser ? $errors.username : $page.form?.fieldErrors?.username}
-    value={browser
-      ? undefined
-      : $page.form?.values?.username ||
-        $SettingsProfile.data?.currentUser?.username}
+    error={$errors.username}
+    value={$formData.username}
     on:input={() => {
       success = false;
     }}
@@ -137,15 +138,10 @@
       {/if}Update Profile</button
     >
   </div>
-  {#if formError}
-    <Alert
-      alertType="error"
-      title="Error updating profile"
-      message={formError.message}
-      code={formError.code}
-    />
+  {#if $message}
+    <Alert title="Error updating profile" {...$message} />
   {/if}
   {#if success}
-    <Alert alertType="success" title="Profile successfully updated" />
+    <Alert type="success" title="Profile successfully updated" />
   {/if}
 </form>

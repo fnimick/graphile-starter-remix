@@ -1,49 +1,40 @@
 <script lang="ts">
   import { ProgressRadial } from "@skeletonlabs/skeleton";
+  import { createValidatedForm } from "felte-sveltekit/client";
   import { createEventDispatcher, onDestroy } from "svelte";
-  import type { z } from "zod";
 
-  import { browser } from "$app/environment";
-  import { page } from "$app/stores";
   import Alert from "$lib/components/Alert.svelte";
-  import { createValidatedForm } from "$lib/form/createValidatedForm";
   import TextInput from "$lib/form/TextInput.svelte";
-  import type { FailResult, FormError } from "$lib/utils/validate";
 
   import { addEmailSchema } from "./schema";
 
-  const { form, errors, setErrors, isSubmitting } =
-    createValidatedForm<typeof addEmailSchema>(addEmailSchema);
-
-  let formError: FormError | undefined = undefined;
+  const { form, errors, message, result, isSubmitting } = createValidatedForm(
+    "add_email",
+    addEmailSchema
+  );
 
   const dispatch = createEventDispatcher<{ complete: undefined }>();
 
   onDestroy(
-    page.subscribe(({ form }) => {
-      if (form?.fieldErrors || form?.formError) {
-        const failResult = form as FailResult<
-          z.infer<typeof addEmailSchema>,
-          typeof addEmailSchema
-        >;
-        formError = failResult.formError;
-        if (failResult.fieldErrors) {
-          setErrors(failResult.fieldErrors);
-        }
-      }
-      if (form?.success) {
+    result.subscribe((val) => {
+      if (
+        typeof val === "object" &&
+        val != null &&
+        "success" in val &&
+        val.success === true
+      ) {
         dispatch("complete");
       }
     })
   );
 </script>
 
-<form method="POST" use:form action="?/addEmail">
+<form method="POST" use:form action="?/add_email">
   <TextInput
     name="email"
     type="email"
     autocomplete="email"
-    error={browser ? $errors.email : $page.form?.fieldErrors?.email}
+    error={$errors.email}
     data-cy="settingsemails-input-email"
   >
     <svelte:fragment slot="label">E-mail</svelte:fragment>
@@ -67,12 +58,7 @@
       Cancel
     </button>
   </div>
-  {#if formError}
-    <Alert
-      alertType="error"
-      title="Error updating profile"
-      message={formError.message}
-      code={formError.code}
-    />
+  {#if $message}
+    <Alert title="Error adding email" {...$message} />
   {/if}
 </form>

@@ -55,12 +55,13 @@ __metadata:
     eslint-config-prettier: ^8.5.0
     eslint-plugin-svelte3: ^4.0.0
     felte: 1.2.7
+    felte-sveltekit: 0.0.3
     graphql: ^15.8.0
     graphql-ws: 5.11.3
     houdini: 1.0.11
     houdini-svelte: 1.0.11
     set-cookie-parser: 2.5.1
-    svelte: 3.55.1
+    svelte: ^3.56.0
     svelte-check: 3.1.0
     tailwindcss: 3.2.7
     tslib: ^2.4.1
@@ -7156,6 +7157,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"felte-sveltekit@npm:0.0.3":
+  version: 0.0.3
+  resolution: "felte-sveltekit@npm:0.0.3"
+  peerDependencies:
+    "@felte/core": ^1.3.7
+    "@felte/validator-zod": ^1.0.13
+    "@sveltejs/kit": ^1.11.0
+    felte: ^1.2.7
+    svelte: ^3.56.0
+    zod: ^3.21.4
+    zod-form-data: ^2.0.0
+  checksum: e03af3ca80f4d7f78261afd614c62361cdf564785bea42bfe61e7ed17b27cec49a5bf6ac1a7eccb799d69599979d062e5a1a4c128aca91a079a0441cb2ca438e
+  languageName: node
+  linkType: hard
+
 "felte@npm:1.2.7":
   version: 1.2.7
   resolution: "felte@npm:1.2.7"
@@ -13131,10 +13147,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"svelte@npm:3.55.1, svelte@npm:^3.55.1":
+"svelte@npm:^3.55.1":
   version: 3.55.1
   resolution: "svelte@npm:3.55.1"
   checksum: ce66391bae68b2055a0a63ee0477e73f036247d4dd5abd5240372d5f4971a452ad29c4ef2c630ab089697429edd61756ef7b764e7597ad7e897ce9f8a9457fec
+  languageName: node
+  linkType: hard
+
+"svelte@npm:^3.56.0":
+  version: 3.56.0
+  resolution: "svelte@npm:3.56.0"
+  checksum: d691364416632265dd0bbba23021f5766c5c4f905389978dc73c9c1261141479a7aed9f0bce5e0bde87d7f566e89f18476d95d2299bcac57f165dc7dab3a6095
   languageName: node
   linkType: hard
 

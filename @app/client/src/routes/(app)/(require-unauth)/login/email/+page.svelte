@@ -1,39 +1,20 @@
 <script lang="ts">
   import { ProgressRadial } from "@skeletonlabs/skeleton";
-  import { onDestroy } from "svelte";
-  import type { z } from "zod";
+  import { createValidatedForm } from "felte-sveltekit/client";
 
-  import { browser } from "$app/environment";
   import { page } from "$app/stores";
   import Alert from "$lib/components/Alert.svelte";
-  import { createValidatedForm } from "$lib/form/createValidatedForm";
   import TextInput from "$lib/form/TextInput.svelte";
   import { isSafe } from "$lib/utils/uri";
-  import type { FailResult, FormError } from "$lib/utils/validate";
 
   import { loginSchema } from "./schema";
 
   $: rawNext = $page.url.searchParams.get("next");
   $: next = isSafe(rawNext) ? rawNext : "/";
 
-  const { form, errors, setErrors, isSubmitting } =
-    createValidatedForm<typeof loginSchema>(loginSchema);
-
-  let formError: FormError | undefined = undefined;
-
-  onDestroy(
-    page.subscribe(({ form }) => {
-      if (form?.fieldErrors || form?.formError) {
-        const failResult = form as FailResult<
-          z.infer<typeof loginSchema>,
-          typeof loginSchema
-        >;
-        formError = failResult.formError;
-        if (failResult.fieldErrors) {
-          setErrors(failResult.fieldErrors);
-        }
-      }
-    })
+  const { form, data, errors, message, isSubmitting } = createValidatedForm(
+    "login",
+    loginSchema
   );
 </script>
 
@@ -47,8 +28,8 @@
     name="username"
     placeholder="E-mail or Username"
     autocomplete="username"
-    error={browser ? $errors.username : $page.form?.fieldErrors?.username}
-    value={browser ? undefined : $page.form?.values?.username}
+    error={$errors.username}
+    value={$data?.username}
     data-cy="loginpage-input-username"
   />
   <TextInput
@@ -56,18 +37,13 @@
     placeholder="Passphrase"
     type="password"
     autocomplete="current-password"
-    error={browser ? $errors.password : $page.form?.fieldErrors?.password}
-    value={browser ? undefined : $page.form?.values?.password}
+    error={$errors.password}
+    value={$data?.password}
     data-cy="loginpage-input-password"
   />
   <a class="mb-6" href="/forgot"> Forgotten passphrase?</a>
-  {#if formError}
-    <Alert
-      alertType="error"
-      title="Login failed"
-      message={formError.message}
-      code={formError.code}
-    />
+  {#if $message}
+    <Alert title="Login failed" {...$message} />
   {/if}
   <div class="flex items-center justify-between">
     <button

@@ -3,7 +3,7 @@
   import Alert from "$lib/components/Alert.svelte";
 </script>
 
-<Alert alertType="success" title="You've got mail!" class="m-8 max-w-lg">
+<Alert type="success" title="You've got mail!" class="m-8 max-w-lg">
   We've sent an email reset link to <code
     >{$page.url.searchParams.get("email")}</code
   >; click the link and follow the instructions. If you don't receive the link,

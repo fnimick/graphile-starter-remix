@@ -15,7 +15,7 @@
 <div class="flex w-full max-w-3xl flex-col gap-y-5">
   <h1 class="mb-4 text-center text-2xl">Email Addresses</h1>
   {#if !user?.isVerified}
-    <Alert title="No verified emails" alertType="warning">
+    <Alert title="No verified emails" type="warning">
       You do not have any verified email addresses, this will make account
       recovery impossible and may limit your available functionality within this
       application. Please complete email verification.
