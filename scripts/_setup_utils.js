@@ -101,6 +101,23 @@ exports.updateDotenv = function updateDotenv(add, answers) {
   );
 
   add(
+    "PUBLIC_ROOT_URL",
+    "http://localhost:5678",
+    `\
+# The PUBLIC prefix is necessary for Sveltekit to access this in the client.
+# Should be identical to ROOT_URL.`
+  );
+
+  add(
+    "SHARED_DOMAIN",
+    '""',
+    `\
+# This is the shared domain (e.g. myapp.com) that cookie domains should be set to.
+# This will allow cookies from 'api.myapp.com' to be sent to 'myapp.com' and vice versa.
+# Set to empty string on localhost to allow cookie sharing between the Sveltekit client and the backend.`
+  );
+
+  add(
     "WEB_URL",
     "http://localhost:5173",
     `\
