@@ -24,16 +24,7 @@
     "update-dotenv",
     "mkdirp",
     "@types/helmet",
-    "helmet",
-    "$env",
-    "$houdini",
-    "$lib",
-    "~icons",
-    "$app",
-    "@iconify-json/ion",
-    "houdini-svelte",
-    "classnames",
-    "@apollo/client"
+    "helmet"
   ],
   "parsers": {
     "**/*.js": "jsx",

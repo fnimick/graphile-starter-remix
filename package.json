@@ -18,7 +18,7 @@
     "lint:fix": "yarn eslint --fix . && yarn prettier:all --write",
     "eslint": "eslint --ext .js,.jsx,.ts,.tsx,.graphql,.svelte",
     "prettier:all": "prettier --ignore-path .eslintignore \"**/*.{js,jsx,ts,tsx,graphql,md,svelte}\"",
-    "depcheck": "yarn workspaces foreach --verbose --topological --exclude ROOT --exclude docker-helpers exec depcheck",
+    "depcheck": "yarn workspaces foreach --verbose --topological --exclude ROOT --exclude docker-helpers --exclude @app/client exec depcheck",
     "dev": "yarn && yarn workspaces foreach --verbose --topological --exclude ROOT --exclude docker-helpers --exclude @app/client run codegen && yarn build && concurrently --kill-others --names \"TSC,WATCH,RUN,TEST\" --prefix \"({name})\" --prefix-colors \"yellow.bold,yellow.bold,cyan.bold,greenBright.bold\" \"tsc -b --watch --preserveWatchOutput\" \"yarn workspaces foreach --verbose --parallel --interlaced --exclude ROOT --exclude docker-helpers --exclude @app/client run watch\" \"yarn workspaces foreach --verbose --parallel --interlaced --exclude ROOT --exclude docker-helpers --exclude @app/client run dev\" \"yarn test:watch --delay 10\"",
     "build": "yarn workspaces foreach --verbose --topological --exclude ROOT --exclude docker-helpers --exclude @app/client run build",
     "clean": "node ./scripts/clean.js",
