@@ -1,23 +1,36 @@
-# Graphile Starter with Remix
+# Graphile Starter with Sveltekit
 
 This is a fork of the original graphile starter, with Next replaced with
-[Remix](https://remix.run). This provides the same SSR and rapid development
-abilities while also embracing the new layout route model.
+[Sveltekit](https://kit.svelte.dev/). This provides the same SSR and rapid
+development abilities while also embracing Svelte's improved developer UX,
+runtime speed, and the layout route model.
 
-GraphQL queries and mutations are performed via Remix loaders and actions to
-allow Remix optimizations and the form model to work to their fullest.
-Subscriptions are still handled in the client via an Apollo websocket link, but
-simply retrigger the remix loaders on a new data event to keep the display logic
-clean. This means that this is **not suitable for high-throughput subscription
-use cases**.
+GraphQL queries and mutations are performed via Sveltekit loaders and actions to
+allow Sveltekit optimizations and the form model to work to their fullest.
+Subscriptions are handled in the client via a Houdini websocket link.
+
+Please note that unlike `graphile/starter`, the frontend is **not** served by
+the same server process as the backend. You should run `yarn client dev` after
+starting your backend server to run the Sveltekit frontend. This is to allow the
+frontend to be deployed and scaled independently.
+
+If you wish to serve the frontend from the save server as the backend, you can
+integrate Sveltekit into the Express application following the directions for
+[custom NodeJS server adapters](https://kit.svelte.dev/docs/adapter-node#custom-server).
 
 NOTE: The migration from `graphile/starter`'s NextJS project is incomplete, but
-this provides a good base for beginning a new Postgraphile/Remix project.
+this provides a good base for beginning a new Postgraphile/Sveltekit project.
 GraphQL queries, subscriptions, and other core elements all work as expected.
 Some account management and all organization features are missing.
 
-NOTE #2: A frontend migration to Tailwind + DaisyUI can be found under branch
-`tailwind`.
+## Powered by:
+
+- [Skeleton](https://www.skeleton.dev/) for UI styling
+- [Houdini](https://houdinigraphql.com/) for both server- and client-side
+  GraphQL operations
+- [Felte](https://felte.dev) and
+  [felte-sveltekit](https://github.com/fnimick/felte-sveltekit) for client- and
+  server-side form validation, using [Zod](https://zod.dev/)
 
 ---
 
@@ -142,7 +155,8 @@ And please give some love to our featured sponsors 🤩:
 
 ## Table of contents
 
-- [Graphile Starter with Remix](#graphile-starter-with-remix)
+- [Graphile Starter with Sveltekit](#graphile-starter-with-sveltekit)
+  - [Powered by:](#powered-by)
 - [Original Readme](#original-readme)
   - [Take it for a spin!](#take-it-for-a-spin)
   - [NOT FOR BEGINNERS](#not-for-beginners)
