@@ -58,10 +58,10 @@ __metadata:
     felte-sveltekit: 0.0.3
     graphql: ^15.8.0
     graphql-ws: 5.11.3
-    houdini: 1.0.11
-    houdini-svelte: 1.0.11
+    houdini: 1.1.0
+    houdini-svelte: 1.1.0
     set-cookie-parser: 2.5.1
-    svelte: ^3.56.0
+    svelte: ^3.57.0
     svelte-check: 3.1.0
     tailwindcss: 3.2.7
     tslib: ^2.4.1
@@ -7996,27 +7996,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"houdini-svelte@npm:1.0.11":
-  version: 1.0.11
-  resolution: "houdini-svelte@npm:1.0.11"
+"houdini-svelte@npm:1.1.0":
+  version: 1.1.0
+  resolution: "houdini-svelte@npm:1.1.0"
   dependencies:
     "@kitql/helper": ^0.5.0
     "@sveltejs/kit": ^1.9.3
     ast-types: ^0.16.1
     estree-walker: ^3.0.1
     graphql: ^15.8.0
-    houdini: ^1.0.11
+    houdini: ^1.1.0
     recast: ^0.23.1
     rollup: ^3.7.4
     svelte: ^3.55.1
     vite: ^4.1.1
-  checksum: f089e8d2ab7b490a7b56f8f6c5c5075b5365e2478f10983f240dacf88aa7be5a6655a05b4605dddb83932fd3a6d07c1f47dd56262654041ac594ddd29a794792
+  checksum: eea05add6f08e6a44feefb1f51a92c83bd4ff153b739ed0f3e369f1328bcaf0feb716dfa227abb2bef462701f0186893d7e1353bede50a97cb122587f1c2aaae
   languageName: node
   linkType: hard
 
-"houdini@npm:1.0.11, houdini@npm:^1.0.11":
-  version: 1.0.11
-  resolution: "houdini@npm:1.0.11"
+"houdini@npm:1.1.0, houdini@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "houdini@npm:1.1.0"
   dependencies:
     "@babel/parser": ^7.20.5
     "@graphql-tools/schema": ^9.0.4
@@ -8042,7 +8042,7 @@ __metadata:
     vite-plugin-watch-and-run: ^1.1.0
   bin:
     houdini: build/cmd-esm/index.js
-  checksum: 9138e8b03765366fc30d814d0141acea5197e9456b9f6ecd32f87b8369ae9ed22ba0b9dd5cb69527c3b915a3313fc0d11628985f538a4eebdffbcae7d4084429
+  checksum: 6734e6e0af53112e241a3051895871089a7c8a052ba0cea6bd23026174f020a98e60bcf03309888beb9b3515ff0927b6214c14a391ba31d619af1f75febc4580
   languageName: node
   linkType: hard
 
@@ -13147,17 +13147,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"svelte@npm:^3.55.1":
-  version: 3.55.1
-  resolution: "svelte@npm:3.55.1"
-  checksum: ce66391bae68b2055a0a63ee0477e73f036247d4dd5abd5240372d5f4971a452ad29c4ef2c630ab089697429edd61756ef7b764e7597ad7e897ce9f8a9457fec
-  languageName: node
-  linkType: hard
-
-"svelte@npm:^3.56.0":
-  version: 3.56.0
-  resolution: "svelte@npm:3.56.0"
-  checksum: d691364416632265dd0bbba23021f5766c5c4f905389978dc73c9c1261141479a7aed9f0bce5e0bde87d7f566e89f18476d95d2299bcac57f165dc7dab3a6095
+"svelte@npm:^3.55.1, svelte@npm:^3.57.0":
+  version: 3.57.0
+  resolution: "svelte@npm:3.57.0"
+  checksum: ae8e807c583935c5adb4e921789ab1339a5c7af5102388a7101d3258dc4af7dbe6579358d423e10622177d78ad9218f654ae98234150e5abe084ad26b4d7e319
   languageName: node
   linkType: hard
 
