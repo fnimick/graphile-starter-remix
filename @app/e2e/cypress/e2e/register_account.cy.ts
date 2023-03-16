@@ -22,10 +22,6 @@ context("RegisterAccount", () => {
     // Setup
     cy.visit(Cypress.env("WEB_URL") + "/register");
 
-    // Wait an extra 2000ms for the page to hydrate to guarantee that the form
-    // handlers are attached.
-    // cy.wait(2000);
-
     // Action
     cy.getCy("registerpage-submit-button").click();
 
