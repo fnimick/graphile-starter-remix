@@ -40,7 +40,7 @@
     type="text"
     autocomplete="name"
     error={$errors.name}
-    value={$data?.name}
+    value={$data?.name ?? ""}
     data-cy="registerpage-input-name"
   >
     <svelte:fragment slot="label">
@@ -70,7 +70,7 @@
     name="username"
     autocomplete="username"
     error={$errors.username}
-    value={$data?.username}
+    value={$data?.username ?? ""}
     data-cy="registerpage-input-username"
   >
     <svelte:fragment slot="label"
@@ -100,7 +100,7 @@
     name="email"
     autocomplete="email"
     error={$errors.email}
-    value={$data?.email}
+    value={$data?.email ?? ""}
     data-cy="registerpage-input-email"
   >
     <svelte:fragment slot="label">E-mail</svelte:fragment>

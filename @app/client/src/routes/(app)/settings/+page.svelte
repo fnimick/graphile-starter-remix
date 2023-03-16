@@ -65,7 +65,7 @@
     type="text"
     autocomplete="name"
     error={$errors.name}
-    value={$formData.name}
+    value={$formData.name ?? ""}
     on:input={() => {
       success = false;
     }}
@@ -98,7 +98,7 @@
     name="username"
     autocomplete="username"
     error={$errors.username}
-    value={$formData.username}
+    value={$formData.username ?? ""}
     on:input={() => {
       success = false;
     }}

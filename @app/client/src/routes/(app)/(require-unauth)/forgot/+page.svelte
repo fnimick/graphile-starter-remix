@@ -24,7 +24,7 @@
     type="email"
     autocomplete="email"
     error={$errors.email}
-    value={$data?.email}
+    value={$data?.email ?? ""}
     data-cy="forgotpage-input-email"
   />
   {#if $message}

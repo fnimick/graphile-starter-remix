@@ -29,7 +29,7 @@
     placeholder="E-mail or Username"
     autocomplete="username"
     error={$errors.username}
-    value={$data?.username}
+    value={$data?.username || ""}
     data-cy="loginpage-input-username"
   />
   <TextInput
@@ -38,7 +38,6 @@
     type="password"
     autocomplete="current-password"
     error={$errors.password}
-    value={$data?.password}
     data-cy="loginpage-input-password"
   />
   <a class="mb-6" href="/forgot"> Forgotten passphrase?</a>
