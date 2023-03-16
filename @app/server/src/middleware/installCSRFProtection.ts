@@ -17,8 +17,7 @@ export default (app: Express) => {
       // Bypass CSRF for GraphiQL
       next();
     } else if (req.headers.origin === process.env.WEB_URL) {
-      // Bypass CSRF for sveltekit, handled internally https://github.com/sveltejs/kit/issues/72
-      // TODO: confirm
+      // Bypass CSRF for sveltekit application origin
       next();
     } else {
       csrfProtection(req, res, next);

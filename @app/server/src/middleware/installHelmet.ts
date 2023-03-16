@@ -1,4 +1,3 @@
-import crypto from "crypto";
 import { Express } from "express";
 import type { HelmetOptions } from "helmet" assert { "resolution-mode": "import" };
 
@@ -14,35 +13,22 @@ const isDevOrTest =
 
 export default async function installHelmet(app: Express) {
   const { default: helmet, contentSecurityPolicy } = await import("helmet");
-  app.use((req, res, next) => {
-    res.locals.cspNonce = crypto.randomBytes(16).toString("hex");
-    const options = {
-      contentSecurityPolicy: {
-        directives: {
-          ...contentSecurityPolicy.getDefaultDirectives(),
-          "connect-src": [
-            "'self'",
-            // Safari doesn't allow using wss:// origins as 'self' from
-            // an https:// page, so we have to translate explicitly for
-            // it.
-            ROOT_URL.replace(/^http/, "ws"),
-          ],
-          "script-src": ["'self'", `'nonce-${res.locals.cspNonce}'`],
-        },
+  const options = {
+    contentSecurityPolicy: {
+      directives: {
+        ...contentSecurityPolicy.getDefaultDirectives(),
+        "connect-src": [
+          "'self'",
+          // Safari doesn't allow using wss:// origins as 'self' from
+          // an https:// page, so we have to translate explicitly for
+          // it.
+          ROOT_URL.replace(/^http/, "ws"),
+        ],
+        "script-src": ["'self'"],
       },
-      // Enables prettier script and SVG icon in GraphiQL
-      crossOriginEmbedderPolicy: !(
-        isDevOrTest || !!process.env.ENABLE_GRAPHIQL
-      ),
-    } satisfies HelmetOptions;
-    if (isDevOrTest) {
-      // Dev needs 'unsafe-eval' due to
-      // https://github.com/vercel/next.js/issues/14221
-      options.contentSecurityPolicy.directives["script-src"] = [
-        ...options.contentSecurityPolicy.directives["script-src"],
-        "'unsafe-eval'",
-      ];
-    }
-    helmet(options)(req, res, next);
-  });
+    },
+    // Enables prettier script and SVG icon in GraphiQL
+    crossOriginEmbedderPolicy: !(isDevOrTest || !!process.env.ENABLE_GRAPHIQL),
+  } satisfies HelmetOptions;
+  app.use(helmet(options));
 }
