@@ -13,13 +13,17 @@
     shift,
   } from "@floating-ui/dom";
   import { storePopup } from "@skeletonlabs/skeleton";
-
-  import { browser } from "$app/environment";
+  import { onMount } from "svelte";
 
   storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
+
+  let hydrated = false;
+  onMount(() => {
+    hydrated = true;
+  });
 </script>
 
-{#if browser}
+{#if hydrated}
   <div hidden id="sveltekit-hydrated" />
 {/if}
 
