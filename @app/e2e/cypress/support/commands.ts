@@ -155,7 +155,7 @@ Cypress.Commands.overwrite("visit", (originalFn, url) => {
   // Wait for any handlers on the target page to be registered. Otherwise we
   // could e.g. click on a form button right as the page loads, before the
   // validation is attached.
-  cy.wait(100);
+  cy.wait(Cypress.config("isInteractive") ? 500 : 1000);
 });
 
 export {}; // Make this a module so we can `declare global`
