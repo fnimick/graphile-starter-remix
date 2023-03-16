@@ -1,16 +1,30 @@
 <script lang="ts">
   import IonMailOutline from "~icons/ion/mail-outline";
   import { enhance } from "$app/forms";
-  import type { EmailsForm_UserEmail$data } from "$houdini";
+  import type { EmailsForm_UserEmail } from "$houdini";
+  import { fragment, graphql } from "$houdini";
 
-  export let email: EmailsForm_UserEmail$data;
+  export let email: EmailsForm_UserEmail;
   export let hasOtherEmails: boolean;
 
-  $: canDelete = !email.isPrimary && hasOtherEmails;
+  $: frag = fragment(
+    email,
+    graphql(`
+      fragment EmailsForm_UserEmail on UserEmail {
+        id
+        email
+        isVerified
+        isPrimary
+        createdAt
+      }
+    `)
+  );
+
+  $: canDelete = !$frag?.isPrimary && hasOtherEmails;
 </script>
 
 <div
-  data-cy={`settingsemails-emailitem-${email.email.replace(
+  data-cy={`settingsemails-emailitem-${$frag?.email.replace(
     /[^a-zA-Z0-9]/g,
     "-"
   )}`}
@@ -21,14 +35,14 @@
   </div>
   <div class="flex-grow">
     <p>
-      {email.email}{" "}
+      {$frag?.email}{" "}
       <span
-        title={email.isVerified
+        title={$frag?.isVerified
           ? "Verified"
           : "Pending verification (please check your inbox / spam folder"}
       >
         {" "}
-        {#if email.isVerified}
+        {#if $frag?.isVerified}
           ✅
         {:else}
           <small class="text-error">(unverified)</small>
@@ -36,10 +50,10 @@
       </span>
     </p>
     <p class="text-base-content/70">
-      Added {new Date(email.createdAt).toLocaleString()}
+      Added {$frag?.createdAt.toLocaleString()}
     </p>
   </div>
-  {#if email.isPrimary}
+  {#if $frag?.isPrimary}
     <span
       data-cy="settingsemails-indicator-primary"
       class="text-base-content/70"
@@ -49,7 +63,7 @@
   {/if}
   {#if canDelete}
     <form class="inline" method="post" action="?/delete" use:enhance>
-      <input type="hidden" name="emailId" value={email.id} />
+      <input type="hidden" name="emailId" value={$frag?.id} />
       <button
         type="submit"
         data-cy="settingsemails-button-delete"
@@ -59,14 +73,14 @@
       </button>
     </form>
   {/if}
-  {#if !email.isVerified}
+  {#if $frag?.isVerified}
     <form
       class="inline"
       method="post"
       action="?/resend_verification"
       use:enhance
     >
-      <input type="hidden" name="emailId" value={email.id} />
+      <input type="hidden" name="emailId" value={$frag?.id} />
       <button
         type="submit"
         class="text-primary-700 underline hover:brightness-110 dark:text-primary-500"
@@ -75,9 +89,9 @@
       </button>
     </form>
   {/if}
-  {#if email.isVerified && !email.isPrimary}
+  {#if $frag?.isVerified && !$frag?.isPrimary}
     <form class="inline" method="post" action="?/make_primary" use:enhance>
-      <input type="hidden" name="emailId" value={email.id} />
+      <input type="hidden" name="emailId" value={$frag?.id} />
       <button
         type="submit"
         data-cy="settingsemails-button-makeprimary"

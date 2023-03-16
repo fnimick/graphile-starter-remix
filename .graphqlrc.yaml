@@ -1,0 +1,9 @@
+projects:
+  default:
+    schema:
+      - ./data/schema.graphql
+      - ./@app/client/$houdini/graphql/schema.graphql
+    documents:
+      - "/@app/client/**/*.gql"
+      - "/@app/client/**/*.ts"
+      - ./@app/client/$houdini/graphql/documents.gql
