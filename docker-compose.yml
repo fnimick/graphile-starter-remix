@@ -36,8 +36,6 @@ services:
       - "9678:9678"
       - "9876:9876"
       - "9757:9757"
-      # Remix websocket for live reload
-      - "8002:8002"
     depends_on:
       - db
     command: sh -c "./docker/scripts/lsfix.sh && yarn && yarn start"
@@ -102,8 +100,6 @@ services:
       - "9678:9678"
       - "9876:9876"
       - "9757:9757"
-      # Remix websocket for live reload
-      - "8002:8002"
     depends_on:
       - db
     # Overrides default command so things don't shut down after the process ends.
@@ -145,7 +141,6 @@ volumes:
   nm_app_config:
   nm_app_db:
   nm_app_e2e:
-  nm_app_graphql:
   nm_app_server:
   nm_app_worker:
     # used for keeeping vscode-extensions while rebuilding
