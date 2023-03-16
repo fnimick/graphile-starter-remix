@@ -70,6 +70,8 @@ context("Passphrase", () => {
 
     cy.url().should("equal", Cypress.env("WEB_URL") + "/");
 
+    cy.waitForHydration();
+
     // Log back in
     cy.getCy("layout-link-login").click();
     cy.getCy("loginpage-button-withusername").click();

@@ -137,13 +137,7 @@ function clearTestUsers() {
   return serverCommand("clearTestUsers");
 }
 
-Cypress.Commands.add("getCy", getCy);
-Cypress.Commands.add("serverCommand", serverCommand);
-Cypress.Commands.add("clearTestUsers", clearTestUsers);
-Cypress.Commands.add("login", login);
-
-Cypress.Commands.overwrite("visit", (originalFn, url) => {
-  originalFn(url);
+function waitForHydration() {
   // Wait for the navigation to start, so that the subsequent `get` call doesn't
   // find the element on the page we are navigating *away* from. This appears to
   // be a race condition.
@@ -156,6 +150,17 @@ Cypress.Commands.overwrite("visit", (originalFn, url) => {
   // could e.g. click on a form button right as the page loads, before the
   // validation is attached.
   cy.wait(Cypress.config("isInteractive") ? 500 : 1000);
+}
+
+Cypress.Commands.add("getCy", getCy);
+Cypress.Commands.add("serverCommand", serverCommand);
+Cypress.Commands.add("clearTestUsers", clearTestUsers);
+Cypress.Commands.add("waitForHydration", waitForHydration);
+Cypress.Commands.add("login", login);
+
+Cypress.Commands.overwrite("visit", (originalFn, url) => {
+  originalFn(url);
+  cy.waitForHydration();
 });
 
 export {}; // Make this a module so we can `declare global`
@@ -167,6 +172,7 @@ declare global {
       serverCommand: typeof serverCommand;
       login: typeof login;
       clearTestUsers: typeof clearTestUsers;
+      waitForHydration: typeof waitForHydration;
     }
   }
 }
