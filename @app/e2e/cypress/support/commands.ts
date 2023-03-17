@@ -148,8 +148,8 @@ function waitForHydration() {
   cy.get("#sveltekit-hydrated", { timeout: 10000 });
   // Wait for any handlers on the target page to be registered. Otherwise we
   // could e.g. click on a form button right as the page loads, before the
-  // validation is attached.
-  cy.wait(Cypress.config("isInteractive") ? 100 : 1000);
+  // validation is attached. CI is unfortunately very slow.
+  cy.wait(Cypress.config("isInteractive") ? 500 : 2000);
 }
 
 Cypress.Commands.add("getCy", getCy);
