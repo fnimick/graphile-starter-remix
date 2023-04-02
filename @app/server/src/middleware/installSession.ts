@@ -63,6 +63,7 @@ export default (app: Express) => {
       httpOnly: true, // default
       sameSite: "lax", // Cannot be 'strict' otherwise OAuth won't work.
       secure: "auto", // May need to app.set('trust proxy') for this to work.
+      domain: process.env.SHARED_DOMAIN,
     },
     store,
     secret: SECRET,
