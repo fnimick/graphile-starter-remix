@@ -12,11 +12,11 @@ const config = {
       type: "Date",
       // turn the api's response into that type
       unmarshal(val) {
-        return new Date(val);
+        return val ? new Date(Date.parse(val)) : null;
       },
       // turn the value into something the API can use
       marshal(date) {
-        return date.getTime();
+        return date && date.toISOString();
       },
     },
     UUID: {
