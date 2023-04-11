@@ -67,13 +67,13 @@
       <button
         type="submit"
         data-cy="settingsemails-button-delete"
-        class="text-primary-700 underline hover:brightness-110 dark:text-primary-500"
+        class="text-primary-700 dark:text-primary-500 underline hover:brightness-110"
       >
         Delete
       </button>
     </form>
   {/if}
-  {#if $frag?.isVerified}
+  {#if !$frag?.isVerified}
     <form
       class="inline"
       method="post"
@@ -83,7 +83,7 @@
       <input type="hidden" name="emailId" value={$frag?.id} />
       <button
         type="submit"
-        class="text-primary-700 underline hover:brightness-110 dark:text-primary-500"
+        class="text-primary-700 dark:text-primary-500 underline hover:brightness-110"
       >
         Resend verification
       </button>
@@ -95,7 +95,7 @@
       <button
         type="submit"
         data-cy="settingsemails-button-makeprimary"
-        class="text-primary-700 underline hover:brightness-110 dark:text-primary-500"
+        class="text-primary-700 dark:text-primary-500 underline hover:brightness-110"
       >
         Make primary
       </button>
